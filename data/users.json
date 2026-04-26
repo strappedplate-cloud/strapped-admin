@@ -14,5 +14,18 @@
       "/team"
     ],
     "created_at": "2026-04-26T20:02:48.657Z"
+  },
+  {
+    "id": "user-kconk",
+    "username": "kconk",
+    "password": "$2b$10$jhzT3PuhBpVgkE3q4DxeduXMIbOAPBTzx3hndnGjWPlYk1xlPQDyW",
+    "name": "Kconk",
+    "role": "member",
+    "permissions": [
+      "/dashboard",
+      "/orders/ongoing",
+      "/packing"
+    ],
+    "created_at": "2026-04-26T20:57:30.000Z"
   }
 ]
