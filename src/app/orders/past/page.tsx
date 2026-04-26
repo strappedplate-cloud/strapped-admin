@@ -4,9 +4,17 @@ import React from 'react';
 import { Order, ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, OrderStatus } from '@/lib/types';
 import OrderModal from '@/components/OrderModal';
 import { formatOrderNumber } from '@/lib/utils';
+import { useSession } from 'next-auth/react';
+import AccessDenied from '@/components/AccessDenied';
 
 
 export default function PastOrdersPage() {
+  const { data: session } = useSession();
+  
+  if (session?.user && (session.user as any).role !== 'admin' && !(session.user as any).permissions?.includes('/orders/past')) {
+    return <main className="main-content"><AccessDenied /></main>;
+  }
+
   const [orders, setOrders] = React.useState<Order[]>([]);
   const [selectedOrder, setSelectedOrder] = React.useState<Order | null>(null);
   const [search, setSearch] = React.useState('');

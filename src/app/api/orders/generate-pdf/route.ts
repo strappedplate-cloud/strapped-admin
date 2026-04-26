@@ -1,11 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getOrders } from '@/lib/data';
-import { PDFDocument, rgb } from 'pdf-lib';
-import fontkit from '@pdf-lib/fontkit';
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+
+function sanitizeText(str: string): string {
+  if (!str) return '';
+  return str
+    .replace(/[\u2011\u2012\u2013\u2014\u2015]/g, '-') // replace various dashes with standard hyphen
+    .replace(/[\u2018\u2019]/g, "'") // replace smart single quotes
+    .replace(/[\u201C\u201D]/g, '"') // replace smart double quotes
+    .replace(/[^\x00-\x7F]/g, '');   // strip any other non-ASCII characters
+}
 
 function wrapText(text: string, maxWidth: number, font: any, fontSize: number): string[] {
-  if (!text) return ['—'];
-  const words = text.split(' ');
+  if (!text) return ['-'];
+  const sanitized = sanitizeText(text);
+  const words = sanitized.split(' ');
   const lines: string[] = [];
   let currentLine = words[0] || '';
 
@@ -37,20 +46,10 @@ export async function GET(req: NextRequest) {
     }
 
     const pdfDoc = await PDFDocument.create();
-    pdfDoc.registerFontkit(fontkit);
+    
+    const fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-    
-    // Fetch Inter fonts
-    const [interRegularRes, interBoldRes] = await Promise.all([
-      fetch('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjQ.ttf'),
-      fetch('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuG1fgZ9hjQ.ttf')
-    ]);
-    
-    const interRegularBytes = await interRegularRes.arrayBuffer();
-    const interBoldBytes = await interBoldRes.arrayBuffer();
-    
-    const fontRegular = await pdfDoc.embedFont(interRegularBytes);
-    const fontBold = await pdfDoc.embedFont(interBoldBytes);
 
     const margin = 20; // narrow margin
     const pageWidth = 595.28;
@@ -176,7 +175,7 @@ export async function GET(req: NextRequest) {
 
     const pdfBytes = await pdfDoc.save();
 
-    return new NextResponse(pdfBytes, {
+    return new NextResponse(Buffer.from(pdfBytes), {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': 'attachment; filename="shipping_notes.pdf"',

@@ -10,8 +10,16 @@ import {
 import { Order, OrderStatus, ALL_STATUSES, ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '@/lib/types';
 import OrderModal from '@/components/OrderModal';
 import OrderForm from '@/components/OrderForm';
+import { useSession } from 'next-auth/react';
+import AccessDenied from '@/components/AccessDenied';
 
 export default function DashboardPage() {
+  const { data: session } = useSession();
+  
+  if (session?.user && (session.user as any).role !== 'admin' && !(session.user as any).permissions?.includes('/dashboard')) {
+    return <main className="main-content"><AccessDenied /></main>;
+  }
+
   const [orders, setOrders] = React.useState<Order[]>([]);
   const [selectedOrder, setSelectedOrder] = React.useState<Order | null>(null);
   const [showForm, setShowForm] = React.useState(false);

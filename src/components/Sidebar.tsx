@@ -23,7 +23,12 @@ export default function Sidebar() {
 
   if (pathname === '/login') return null;
 
-  const user = session?.user as { name?: string; role?: string; username?: string } | undefined;
+  const user = session?.user as { name?: string; role?: string; username?: string; permissions?: string[] } | undefined;
+  
+  const hasAccess = (href: string) => {
+    if (user?.role === 'admin') return true;
+    return user?.permissions?.includes(href);
+  };
 
   return (
     <aside className="sidebar">
@@ -37,7 +42,7 @@ export default function Sidebar() {
 
       <nav className="sidebar-nav">
         <div className="sidebar-section-label">Main Menu</div>
-        {NAV_ITEMS.map(item => (
+        {NAV_ITEMS.filter(item => hasAccess(item.href)).map(item => (
           <Link
             key={item.href}
             href={item.href}
@@ -47,6 +52,13 @@ export default function Sidebar() {
             {item.label}
           </Link>
         ))}
+
+        {user?.role === 'admin' && (
+          <Link href="/team" className={`sidebar-link ${pathname === '/team' ? 'active' : ''}`}>
+            <span className="icon">🛡️</span>
+            Team Management
+          </Link>
+        )}
 
         <div className="sidebar-section-label">Coming Soon</div>
         {FUTURE_ITEMS.map(item => (

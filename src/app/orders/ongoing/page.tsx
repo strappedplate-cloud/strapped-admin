@@ -6,14 +6,23 @@ import OrderModal from '@/components/OrderModal';
 import OrderForm from '@/components/OrderForm';
 import { OrderStatus } from '@/lib/types';
 import { formatOrderNumber } from '@/lib/utils';
+import { useSession } from 'next-auth/react';
+import AccessDenied from '@/components/AccessDenied';
 
 
 export default function OngoingOrdersPage() {
+  const { data: session } = useSession();
+  
+  if (session?.user && (session.user as any).role !== 'admin' && !(session.user as any).permissions?.includes('/orders/ongoing')) {
+    return <main className="main-content"><AccessDenied /></main>;
+  }
+
   const [orders, setOrders] = React.useState<Order[]>([]);
   const [selectedOrder, setSelectedOrder] = React.useState<Order | null>(null);
   const [showForm, setShowForm] = React.useState(false);
   const [search, setSearch] = React.useState('');
   const [loading, setLoading] = React.useState(true);
+
 
   const [selectedIds, setSelectedIds] = React.useState<Set<string>>(new Set());
   const [bulkEdit, setBulkEdit] = React.useState({
@@ -34,15 +43,21 @@ export default function OngoingOrdersPage() {
     }
   };
 
+  const filtered = orders.filter(o => {
+    const matchSearch = String(o.nama || '').toLowerCase().includes(search.toLowerCase()) ||
+      String(o.nomor_plat || '').toLowerCase().includes(search.toLowerCase()) ||
+      String(o.form_detail || '').toLowerCase().includes(search.toLowerCase()) ||
+      String(o.channel_pembelian || '').toLowerCase().includes(search.toLowerCase()) ||
+      formatOrderNumber(o).toLowerCase().includes(search.toLowerCase());
+    
+    return matchSearch;
+  });
+
+
+
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      setSelectedIds(new Set(orders.filter(o => 
-        String(o.nama || '').toLowerCase().includes(search.toLowerCase()) ||
-        String(o.nomor_plat || '').toLowerCase().includes(search.toLowerCase()) ||
-        String(o.form_detail || '').toLowerCase().includes(search.toLowerCase()) ||
-        String(o.channel_pembelian || '').toLowerCase().includes(search.toLowerCase()) ||
-        formatOrderNumber(o).toLowerCase().includes(search.toLowerCase())
-      ).map(o => o.id)));
+      setSelectedIds(new Set(filtered.map(o => o.id)));
     } else {
       setSelectedIds(new Set());
     }
@@ -78,16 +93,24 @@ export default function OngoingOrdersPage() {
     fetchOrders();
   };
 
+  const handleForcePast = async () => {
+    if (!window.confirm(`Are you sure you want to move ${selectedIds.size} orders to Past Orders immediately?`)) return;
+    setLoading(true);
+    await Promise.all(Array.from(selectedIds).map(id => 
+      fetch(`/api/orders/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ force_past: true, status: 'shipped' })
+      })
+    ));
+    setSelectedIds(new Set());
+    fetchOrders();
+  };
 
   React.useEffect(() => { fetchOrders(); }, []);
 
-  const filtered = orders.filter(o =>
-    String(o.nama || '').toLowerCase().includes(search.toLowerCase()) ||
-    String(o.nomor_plat || '').toLowerCase().includes(search.toLowerCase()) ||
-    String(o.form_detail || '').toLowerCase().includes(search.toLowerCase()) ||
-    String(o.channel_pembelian || '').toLowerCase().includes(search.toLowerCase()) ||
-    formatOrderNumber(o).toLowerCase().includes(search.toLowerCase())
-  );
+
+
 
 
 
@@ -144,9 +167,17 @@ export default function OngoingOrdersPage() {
 
       </div>
 
-      <div className="search-bar" style={{ marginBottom: 20 }}>
-        <span className="search-bar-icon">🔍</span>
-        <input placeholder="Cari nama, plat, channel..." value={search} onChange={e => setSearch(e.target.value)} />
+      <div className="search-bar" style={{ marginBottom: 20, display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, position: 'relative', minWidth: '200px' }}>
+          <span className="search-bar-icon" style={{ position: 'absolute', left: 12, top: 10 }}>🔍</span>
+          <input 
+            placeholder="Cari nama, plat, channel..." 
+            value={search} 
+            onChange={e => setSearch(e.target.value)} 
+            style={{ paddingLeft: 36, width: '100%', height: '40px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--bg-secondary)', color: 'white' }}
+          />
+        </div>
+
       </div>
 
       {selectedIds.size > 0 && (
@@ -197,6 +228,7 @@ export default function OngoingOrdersPage() {
             style={{ width: '120px' }}
           />
           <button className="btn btn-primary btn-sm" onClick={handleBulkUpdate}>Apply Changes</button>
+          <button className="btn btn-secondary btn-sm" style={{ color: 'var(--accent)' }} onClick={handleForcePast}>Move to Past</button>
           <button className="btn btn-secondary btn-sm" onClick={() => setSelectedIds(new Set())}>Cancel</button>
         </div>
       )}

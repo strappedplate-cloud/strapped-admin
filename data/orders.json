@@ -245,9 +245,10 @@
     "alamat_pengiriman": "Jl. Yos Sudarso Kav. 46-48 Blok A1-8\r\nKel. Sungai Bambu Jakarta Utara Kec. Tanjung Priok 14330",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.696Z",
-    "updated_at": "2026-04-26T17:44:13.696Z",
+    "updated_at": "2026-04-26T19:56:13.130Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "44fd2aec-2edb-4e98-ab11-ff9536069e03",
@@ -270,9 +271,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.696Z",
-    "updated_at": "2026-04-26T17:44:13.696Z",
+    "updated_at": "2026-04-26T19:56:13.180Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "e41cd13e-1445-41d7-a725-8b1ea8bfbb60",
@@ -295,9 +297,10 @@
     "alamat_pengiriman": "(JNE YES) Jl. Yos Sudarso Kav. 46-48 Blok A1-8\r\nKel. Sungai Bambu Jakarta Utara Kec. Tanjung Priok 14330",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.696Z",
-    "updated_at": "2026-04-26T17:44:13.696Z",
+    "updated_at": "2026-04-26T19:56:13.238Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "647210ff-49bf-437e-b0ca-4ee99dda3018",
@@ -370,9 +373,10 @@
     "alamat_pengiriman": "Jl.by pas alang-alang lebar\nPerumahan center park blok willow 8 no 7 kel. Alang-alang lebar kel. Alang-alang lebar kota Palembang",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.696Z",
-    "updated_at": "2026-04-26T17:44:13.696Z",
+    "updated_at": "2026-04-26T19:56:13.288Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "94c24c38-3a12-41dd-bbc0-f9a33fa1a750",
@@ -870,9 +874,10 @@
     "alamat_pengiriman": "PICKUP TOKO",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.697Z",
-    "updated_at": "2026-04-26T17:44:13.697Z",
+    "updated_at": "2026-04-26T19:56:13.353Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "a4903462-0b76-4f81-ba96-9ee94589a90f",
@@ -995,9 +1000,10 @@
     "alamat_pengiriman": "jalan raya serpong perumahan villa melati mas blok m3 no 12a",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.697Z",
-    "updated_at": "2026-04-26T17:44:13.697Z",
+    "updated_at": "2026-04-26T19:56:13.410Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "d336a9e1-2021-417f-a82b-dcf85921a0e3",
@@ -1120,9 +1126,10 @@
     "alamat_pengiriman": "Alamat Lengkap : jl daan mogot, perum. Casa jardin cluster Catalya blok C3 no.12, Jakarta Barat",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.697Z",
-    "updated_at": "2026-04-26T17:44:13.697Z",
+    "updated_at": "2026-04-26T19:56:13.460Z",
     "notes": "",
-    "urutan_order": 5
+    "urutan_order": 5,
+    "force_past": true
   },
   {
     "id": "d89df3e9-274a-4c04-b29b-25ece1400cb9",
@@ -1420,9 +1427,10 @@
     "alamat_pengiriman": "Komp. TNI AL Jl. Ketapang Blok C No. 60 Jatibening Indah, Bekasi 17412",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.697Z",
-    "updated_at": "2026-04-26T17:44:13.697Z",
+    "updated_at": "2026-04-26T19:56:13.512Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "3d883a8b-21b5-4381-afa9-2c6569892bf3",
@@ -1470,9 +1478,10 @@
     "alamat_pengiriman": "Coating Garage, Jl. Danau Indah Barat Blok A9 No.2 Jakarta Utara 14350",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.697Z",
-    "updated_at": "2026-04-26T17:44:13.697Z",
+    "updated_at": "2026-04-26T19:56:13.555Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "b5b0557b-4298-4abe-9536-70e84da5f685",
@@ -1620,9 +1629,10 @@
     "alamat_pengiriman": "Jl. Yos Sudarso Kav. 46-48 Blok A1-8\r\nKel. Sungai Bambu Jakarta Utara Kec. Tanjung Priok 14330",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.697Z",
-    "updated_at": "2026-04-26T17:44:13.697Z",
+    "updated_at": "2026-04-26T19:56:13.603Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "ed3e7c0c-00b8-4142-bc5a-ac90ea301787",
@@ -1820,9 +1830,10 @@
     "alamat_pengiriman": "jalan soekarno hatta 408, Karasak, Astanaanyar, Kota Bandung, 40243 (J&T Express)",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.697Z",
-    "updated_at": "2026-04-26T17:44:13.697Z",
+    "updated_at": "2026-04-26T19:56:13.647Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "5d3eedfc-3545-44c3-99b9-6b8a3178b049",
@@ -1845,9 +1856,10 @@
     "alamat_pengiriman": "",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.697Z",
-    "updated_at": "2026-04-26T17:44:13.697Z",
+    "updated_at": "2026-04-26T19:56:13.689Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "76ff1de9-4792-48eb-8aad-66d9919842ca",
@@ -1995,9 +2007,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.697Z",
-    "updated_at": "2026-04-26T17:44:13.697Z",
+    "updated_at": "2026-04-26T19:56:13.730Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "bbaeba12-e20b-4850-bd3e-cc3dce6547d9",
@@ -3045,9 +3058,10 @@
     "alamat_pengiriman": "Alamat:  bursa mobil bsd blok b9",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.698Z",
-    "updated_at": "2026-04-26T17:44:13.698Z",
+    "updated_at": "2026-04-26T19:56:13.778Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "4a6c81c9-4114-4ddb-ae0e-22087fb626bb",
@@ -3095,9 +3109,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.698Z",
-    "updated_at": "2026-04-26T17:44:13.698Z",
+    "updated_at": "2026-04-26T19:56:13.820Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "02f4cc11-5f0e-428c-8c8d-fdf7a96fc050",
@@ -3270,9 +3285,10 @@
     "alamat_pengiriman": "Toko Skuterain, Jalan RE Martadinata No. 25, Ciwaringin, Bogor Tengah, Kota Bogor, Jawa Barat 16129\n(Antar di jam operasional 08.00 - 17.00)",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.698Z",
-    "updated_at": "2026-04-26T17:44:13.698Z",
+    "updated_at": "2026-04-26T19:56:13.877Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "0897399c-6d09-4e80-8728-57be252e9f61",
@@ -3295,9 +3311,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.698Z",
-    "updated_at": "2026-04-26T17:44:13.698Z",
+    "updated_at": "2026-04-26T19:56:13.925Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "e89bbe75-9429-43f0-906e-26872f3073a8",
@@ -3370,9 +3387,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.698Z",
-    "updated_at": "2026-04-26T17:44:13.698Z",
+    "updated_at": "2026-04-26T19:56:13.978Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "c8431de7-1dc3-4448-b022-76004ca63f10",
@@ -3395,9 +3413,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.698Z",
-    "updated_at": "2026-04-26T17:44:13.698Z",
+    "updated_at": "2026-04-26T19:56:14.038Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "b2456c7f-9702-4d86-a51c-ab23ca5cd28a",
@@ -3495,9 +3514,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.698Z",
-    "updated_at": "2026-04-26T17:44:13.698Z",
+    "updated_at": "2026-04-26T19:56:14.090Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "83c5ffad-c297-4ae1-9463-e2594cd9fb8a",
@@ -3720,9 +3740,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.698Z",
-    "updated_at": "2026-04-26T17:44:13.698Z",
+    "updated_at": "2026-04-26T19:56:14.134Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "ecda2242-9846-4bed-a4a3-3897d046fba0",
@@ -4195,9 +4216,10 @@
     "alamat_pengiriman": "Jl Melati indah 2, Komp. Melati indah baru jalur 1 (Telpon sebelum nganter) Banjarmasin timur, kota banjarmasin, kalimantan selatan. kode pos 70236",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.698Z",
-    "updated_at": "2026-04-26T17:44:13.698Z",
+    "updated_at": "2026-04-26T19:56:14.189Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "a287d229-fe95-4e65-b7fc-2d162d72d4a5",
@@ -4295,9 +4317,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.698Z",
-    "updated_at": "2026-04-26T17:44:13.698Z",
+    "updated_at": "2026-04-26T19:56:14.243Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "3287cea5-d583-4ac9-a662-bf80f3d2cece",
@@ -4895,9 +4918,10 @@
     "alamat_pengiriman": "NANTI KIRIM SEKALIAN KEVIN B KEYCHAIN\nKomp Greenville Blok J No. 8, Kebun Jeruk, Jakarta Barat 11510",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.698Z",
-    "updated_at": "2026-04-26T17:44:13.698Z",
+    "updated_at": "2026-04-26T19:56:14.288Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "e79af5d5-8e46-454d-80e8-5ce4834f6efc",
@@ -5120,9 +5144,10 @@
     "alamat_pengiriman": "pickup (kantor Matthew BCA)",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.698Z",
-    "updated_at": "2026-04-26T17:44:13.698Z",
+    "updated_at": "2026-04-26T19:56:14.346Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "dc1b4766-eeba-4e45-a6d7-a693cdda9b05",
@@ -5195,9 +5220,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.698Z",
-    "updated_at": "2026-04-26T17:44:13.698Z",
+    "updated_at": "2026-04-26T19:56:14.410Z",
     "notes": "",
-    "urutan_order": 6
+    "urutan_order": 6,
+    "force_past": true
   },
   {
     "id": "718e6554-d422-41e5-88ac-ded21d87cff6",
@@ -5570,9 +5596,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.699Z",
-    "updated_at": "2026-04-26T17:44:13.699Z",
+    "updated_at": "2026-04-26T19:56:14.455Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "1cb698b5-f6de-4eee-9ee9-2479ac125150",
@@ -5595,9 +5622,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.699Z",
-    "updated_at": "2026-04-26T17:44:13.699Z",
+    "updated_at": "2026-04-26T19:56:14.501Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "2af8904a-034d-468b-9829-e0c0501bf2c4",
@@ -5620,9 +5648,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.699Z",
-    "updated_at": "2026-04-26T17:44:13.699Z",
+    "updated_at": "2026-04-26T19:56:14.543Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "2d26c1a5-78d5-4ffd-8b62-f8f1d8295432",
@@ -5645,9 +5674,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.699Z",
-    "updated_at": "2026-04-26T17:44:13.699Z",
+    "updated_at": "2026-04-26T19:56:14.585Z",
     "notes": "",
-    "urutan_order": 5
+    "urutan_order": 5,
+    "force_past": true
   },
   {
     "id": "c2d200b1-962a-4807-8560-25315ab9ea95",
@@ -5670,9 +5700,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.699Z",
-    "updated_at": "2026-04-26T17:44:13.699Z",
+    "updated_at": "2026-04-26T19:56:14.630Z",
     "notes": "",
-    "urutan_order": 6
+    "urutan_order": 6,
+    "force_past": true
   },
   {
     "id": "d51b8c62-ea6b-480e-8734-dddda80272af",
@@ -5695,9 +5726,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.699Z",
-    "updated_at": "2026-04-26T17:44:13.699Z",
+    "updated_at": "2026-04-26T19:56:14.681Z",
     "notes": "",
-    "urutan_order": 7
+    "urutan_order": 7,
+    "force_past": true
   },
   {
     "id": "94295fdb-2f2e-4e12-9ee6-f51c504c428e",
@@ -6145,9 +6177,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.699Z",
-    "updated_at": "2026-04-26T17:44:13.699Z",
+    "updated_at": "2026-04-26T19:56:14.725Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "9c120922-6bb7-445b-abe7-c0f5992cb60e",
@@ -6195,9 +6228,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.699Z",
-    "updated_at": "2026-04-26T17:44:13.699Z",
+    "updated_at": "2026-04-26T19:56:14.781Z",
     "notes": "",
-    "urutan_order": 5
+    "urutan_order": 5,
+    "force_past": true
   },
   {
     "id": "a2ff0a92-6e7c-4975-ae33-b0a4b5e90998",
@@ -6495,9 +6529,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.699Z",
-    "updated_at": "2026-04-26T17:44:13.699Z",
+    "updated_at": "2026-04-26T19:56:14.827Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "d0ff74ab-75c4-475a-a7cd-9003692236cd",
@@ -6545,9 +6580,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.699Z",
-    "updated_at": "2026-04-26T17:48:23.715Z",
+    "updated_at": "2026-04-26T19:56:14.876Z",
     "notes": "",
-    "urutan_order": 5
+    "urutan_order": 5,
+    "force_past": true
   },
   {
     "id": "eb549075-1ff8-4c54-be8c-ab497d77c968",
@@ -6570,9 +6606,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.699Z",
-    "updated_at": "2026-04-26T17:48:33.503Z",
+    "updated_at": "2026-04-26T19:56:14.940Z",
     "notes": "",
-    "urutan_order": 6
+    "urutan_order": 6,
+    "force_past": true
   },
   {
     "id": "a84853ff-85bc-418f-9333-80d7a378be99",
@@ -6770,9 +6807,10 @@
     "alamat_pengiriman": "jl cempaka lestari blok g 22, 12440",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.699Z",
-    "updated_at": "2026-04-26T17:44:13.699Z",
+    "updated_at": "2026-04-26T19:56:14.991Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "a1700786-6b4b-4d46-862b-181c48674911",
@@ -7120,9 +7158,10 @@
     "alamat_pengiriman": "Ira Homestay, Jl. Tukad Pekasih no. 10, Serangan, Denpasar Selatan, Kota Denpasar, Bali 80229",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.699Z",
-    "updated_at": "2026-04-26T17:44:13.699Z",
+    "updated_at": "2026-04-26T19:56:15.038Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "24de3d12-2266-4fe2-88c9-a55f9c0a03da",
@@ -7895,9 +7934,10 @@
     "alamat_pengiriman": "Jln. Kartini 7 dalam no.11 (komplek Hiu) jakarta pusat",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.700Z",
-    "updated_at": "2026-04-26T17:44:13.700Z",
+    "updated_at": "2026-04-26T19:56:15.102Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "3ea38e46-5195-4411-8c71-8ac6dcb63aa0",
@@ -8070,9 +8110,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.700Z",
-    "updated_at": "2026-04-26T17:44:13.700Z",
+    "updated_at": "2026-04-26T19:56:15.150Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "3b425571-53ba-43a7-9cd7-993847ea2444",
@@ -8170,9 +8211,10 @@
     "alamat_pengiriman": "Komp Puri industrial park 2000 Blok D no.2\nBatam centre\nPT. CHUCK ENGINEERING BATAM, Batam Kota, Kota Batam, Kepulauan Riau 29464\nKota: Batam",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.700Z",
-    "updated_at": "2026-04-26T17:44:13.700Z",
+    "updated_at": "2026-04-26T19:56:15.201Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "a601d55f-6ccc-48e7-aa7d-7ea70fc7981e",
@@ -8420,9 +8462,10 @@
     "alamat_pengiriman": "Jl. Cibulan 1 no 17, petogogan, kebayoran baru, jakarta selatan",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.700Z",
-    "updated_at": "2026-04-26T17:44:13.700Z",
+    "updated_at": "2026-04-26T19:56:15.258Z",
     "notes": "",
-    "urutan_order": 6
+    "urutan_order": 6,
+    "force_past": true
   },
   {
     "id": "f79b7366-77fc-4953-a432-d5b5ae1bf02f",
@@ -8495,9 +8538,10 @@
     "alamat_pengiriman": "Jl Karya Barat III No. 35 B, RT 01/Rw 05 , Wijaya Kusuma, Grogol Petamburan, Kota Jakarta Barat, 11440 (Depan Alco Kost) ",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.700Z",
-    "updated_at": "2026-04-26T17:44:13.700Z",
+    "updated_at": "2026-04-26T19:56:15.307Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "f076ef19-18d3-411b-95e4-702c8944b03f",
@@ -8945,9 +8989,10 @@
     "alamat_pengiriman": "ada 2 plat\nvirginia lagoon b7 no 12, lengkong gudang, serpong 15321\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.700Z",
-    "updated_at": "2026-04-26T17:44:13.700Z",
+    "updated_at": "2026-04-26T19:56:15.359Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "ecc45910-cc66-412b-a01c-914c4ae9a3b9",
@@ -9220,9 +9265,10 @@
     "alamat_pengiriman": "fullset japan + halfset indo\nkompleks greenville blok j no 8 duri kepa kebon jeruk ",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.700Z",
-    "updated_at": "2026-04-26T17:44:13.700Z",
+    "updated_at": "2026-04-26T19:56:15.410Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "8f46fcd7-376e-4dae-ae1a-adba0630f2d7",
@@ -10145,9 +10191,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.701Z",
-    "updated_at": "2026-04-26T17:44:13.701Z",
+    "updated_at": "2026-04-26T19:56:15.453Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "16a39713-8c16-4618-aabc-55b3cb580986",
@@ -10345,9 +10392,10 @@
     "alamat_pengiriman": "perumahan setia budi estate G12 pasar 1 tanjung sari medan\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.701Z",
-    "updated_at": "2026-04-26T17:44:13.701Z",
+    "updated_at": "2026-04-26T19:56:15.492Z",
     "notes": "",
-    "urutan_order": 5
+    "urutan_order": 5,
+    "force_past": true
   },
   {
     "id": "73eee853-b806-4193-9bb5-a6aabdd7d6eb",
@@ -10670,9 +10718,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.702Z",
-    "updated_at": "2026-04-26T17:50:41.043Z",
+    "updated_at": "2026-04-26T19:56:15.538Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "a3348f62-b206-4940-b9b9-e8b49c1caefc",
@@ -10845,9 +10894,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.702Z",
-    "updated_at": "2026-04-26T17:44:13.702Z",
+    "updated_at": "2026-04-26T19:56:15.597Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "9242c49b-374a-496d-8850-1c09db3aa5dd",
@@ -10870,9 +10920,10 @@
     "alamat_pengiriman": "velcro halus\nToko Skuterain, Jalan RE Martadinata No. 25, Ciwaringin, Bogor Tengah, Kota Bogor, Jawa Barat 16129\n(Antar di jam operasional 08.00 - 17.00)\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.702Z",
-    "updated_at": "2026-04-26T17:44:13.702Z",
+    "updated_at": "2026-04-26T19:56:15.649Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "083f8ac9-ee4a-4389-9b4b-45f024c9c63d",
@@ -10895,9 +10946,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.702Z",
-    "updated_at": "2026-04-26T17:44:13.702Z",
+    "updated_at": "2026-04-26T19:56:15.697Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "945b8f97-2ef0-4e2e-b8a2-fb236ed80a48",
@@ -11270,9 +11322,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.702Z",
-    "updated_at": "2026-04-26T17:44:13.702Z",
+    "updated_at": "2026-04-26T19:56:15.747Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "6701bcc5-68f1-480b-b3ea-5250cadc6dfd",
@@ -11320,9 +11373,10 @@
     "alamat_pengiriman": "details mafia, fullset velcro",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.702Z",
-    "updated_at": "2026-04-26T17:44:13.702Z",
+    "updated_at": "2026-04-26T19:56:15.796Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "eed26899-973d-4114-939c-7f387208c646",
@@ -11695,9 +11749,10 @@
     "alamat_pengiriman": "411",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.702Z",
-    "updated_at": "2026-04-26T17:44:13.702Z",
+    "updated_at": "2026-04-26T19:56:15.864Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "97e4da18-6217-4491-9cfb-453aa936da59",
@@ -11895,9 +11950,10 @@
     "alamat_pengiriman": "frame honda access chrome.\nPerumahan Wisteria Metland Menteng , jalan ujung menteng , cakung timur , blok Basilia 5 no 27, jakarta timur (taruh di box paket) \nRumah erwin ",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.702Z",
-    "updated_at": "2026-04-26T17:44:13.702Z",
+    "updated_at": "2026-04-26T19:56:15.905Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "65d8455d-02c5-4cde-8ceb-4cf647fb03b4",
@@ -12545,9 +12601,10 @@
     "alamat_pengiriman": "pakai JNE YES\nvelcro halus 2pcs, 1 langsung mau dipasangin mentok atas plat\njl keadilan 2a no 39 rt 12 rw 05 kelurahan glodok kecamatan tamansari jakarta barat kode pos 11120",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.702Z",
-    "updated_at": "2026-04-26T17:44:13.702Z",
+    "updated_at": "2026-04-26T19:56:15.955Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "1850b380-2a7b-4461-a0d2-3667f284007b",
@@ -12595,9 +12652,10 @@
     "alamat_pengiriman": "bca matthew",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.702Z",
-    "updated_at": "2026-04-26T17:44:13.702Z",
+    "updated_at": "2026-04-26T19:56:16.012Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "03ab129f-6b8e-4409-8f7c-dd1d68a15efd",
@@ -13020,9 +13078,10 @@
     "alamat_pengiriman": "Bsd City Puspita Loka ext. sedap malam ll blok ac 27",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.703Z",
-    "updated_at": "2026-04-26T17:44:13.703Z",
+    "updated_at": "2026-04-26T19:56:16.062Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "838a16a6-410a-4689-bfeb-92f3b26afa84",
@@ -13045,9 +13104,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.703Z",
-    "updated_at": "2026-04-26T17:44:13.703Z",
+    "updated_at": "2026-04-26T19:56:16.151Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "5287cadd-d5ef-419f-815f-79bf4fdaa6e9",
@@ -13120,9 +13180,10 @@
     "alamat_pengiriman": "setiabudhi regency G.62 (sebelah sekolah starland) , bandung 40559",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.703Z",
-    "updated_at": "2026-04-26T17:44:13.703Z",
+    "updated_at": "2026-04-26T19:56:16.213Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "525f6e09-33ea-486e-a9bc-b9e88dce39f6",
@@ -13170,9 +13231,10 @@
     "alamat_pengiriman": "bca dmg",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.703Z",
-    "updated_at": "2026-04-26T17:44:13.703Z",
+    "updated_at": "2026-04-26T19:56:16.262Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "364bf4a1-8895-4364-8672-84296d954de5",
@@ -13245,9 +13307,10 @@
     "alamat_pengiriman": "Toko Skuterain, Jalan RE Martadinata No. 25, Ciwaringin, Bogor Tengah, Kota Bogor, Jawa Barat 16129\n(Antar di jam operasional 08.00 - 17.00)",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.703Z",
-    "updated_at": "2026-04-26T17:44:13.703Z",
+    "updated_at": "2026-04-26T19:56:16.315Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "23393da2-8520-4447-85e7-f2601085f3f1",
@@ -13270,9 +13333,10 @@
     "alamat_pengiriman": "Toko Skuterain, Jalan RE Martadinata No. 25, Ciwaringin, Bogor Tengah, Kota Bogor, Jawa Barat 16129\n(Antar di jam operasional 08.00 - 17.00)",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.703Z",
-    "updated_at": "2026-04-26T17:44:13.703Z",
+    "updated_at": "2026-04-26T19:56:16.364Z",
     "notes": "",
-    "urutan_order": 5
+    "urutan_order": 5,
+    "force_past": true
   },
   {
     "id": "e8cec078-c2d2-4f8c-95af-f993e197d105",
@@ -13370,9 +13434,10 @@
     "alamat_pengiriman": "Jl. Setia Damai blok C NO.81, RT 001/01 kec.parung Parung Kab. Bogor Jawa Barat 16330",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.703Z",
-    "updated_at": "2026-04-26T17:44:13.703Z",
+    "updated_at": "2026-04-26T19:56:16.406Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "3a641362-83e7-4800-a0c5-cdbc85e5acfc",
@@ -13520,9 +13585,10 @@
     "alamat_pengiriman": "Royal Furniture\nJl.Imambonjol No.478 Denpsar-Bali",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.703Z",
-    "updated_at": "2026-04-26T17:44:13.703Z",
+    "updated_at": "2026-04-26T19:56:16.446Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "41ade7ab-40c8-41a4-9efd-2f75545d693c",
@@ -13845,9 +13911,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.703Z",
-    "updated_at": "2026-04-26T17:44:13.703Z",
+    "updated_at": "2026-04-26T19:56:16.489Z",
     "notes": "",
-    "urutan_order": 6
+    "urutan_order": 6,
+    "force_past": true
   },
   {
     "id": "53025c67-4ba9-42ff-b100-4b1cac077b26",
@@ -13895,9 +13962,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.703Z",
-    "updated_at": "2026-04-26T17:44:13.703Z",
+    "updated_at": "2026-04-26T19:56:16.537Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "12c0a20b-9b36-420d-b333-00e4a3eea6f7",
@@ -14170,9 +14238,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.703Z",
-    "updated_at": "2026-04-26T17:44:13.703Z",
+    "updated_at": "2026-04-26T19:56:16.601Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "8b13c534-ce05-4a60-bf31-e9ec0528e7bb",
@@ -14195,9 +14264,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.703Z",
-    "updated_at": "2026-04-26T17:44:13.703Z",
+    "updated_at": "2026-04-26T19:56:16.643Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "1e902b85-d057-4ccc-b036-1bad10d8ca3a",
@@ -14320,9 +14390,10 @@
     "alamat_pengiriman": "Panji skuterain\nKirana Green Valley Blok A5 No.13\nAtang Sanjaya, Kemang, Bogor\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:16.693Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "7b58d709-ebe5-4aed-afea-bb82a7b4f435",
@@ -14370,9 +14441,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:16.744Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "66ecd617-ce31-4296-8ffe-be3028d3df43",
@@ -14645,9 +14717,10 @@
     "alamat_pengiriman": "Mall MGK Lantai UG Blok A11 No 2 (Rca Store Pemasangan Parkiran Gedung P1, RW.10, Gn. Sahari Sel., Kec. Kemayoran, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10620",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:16.805Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "c5e668d4-ce0b-4f6e-b7b3-df27f53d3714",
@@ -14770,9 +14843,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:16.846Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "9ffb70fd-b001-499e-beb5-0192fbeaec25",
@@ -14795,9 +14869,10 @@
     "alamat_pengiriman": "Jl. Dago Blok K3/12 A Komplek Puri Cinere, Depok ",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:16.905Z",
     "notes": "",
-    "urutan_order": 5
+    "urutan_order": 5,
+    "force_past": true
   },
   {
     "id": "bf1e9603-001c-48a4-b710-41ea28c7b496",
@@ -14845,9 +14920,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:16.956Z",
     "notes": "",
-    "urutan_order": 7
+    "urutan_order": 7,
+    "force_past": true
   },
   {
     "id": "2293426a-fb12-490b-bf48-62255229d655",
@@ -15020,9 +15096,10 @@
     "alamat_pengiriman": "Taman Semanan Indah Blok NG Nomor 15 A",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.005Z",
     "notes": "",
-    "urutan_order": 14
+    "urutan_order": 14,
+    "force_past": true
   },
   {
     "id": "62a37429-2833-4e3a-aaf2-20843b60e99d",
@@ -15070,9 +15147,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.060Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "540aaeff-f920-44c1-ad52-4468ea176f0b",
@@ -15195,9 +15273,10 @@
     "alamat_pengiriman": "kirim pake lion parcel\nJalan 14 Februari, Lingkungan 6, Kampung Baru, Wanea.\nSULAWESI UTARA, KOTA MANADO, WANEA, 95119",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.115Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "a4ba3d27-ab10-4995-8883-9c09c71f8434",
@@ -15220,9 +15299,10 @@
     "alamat_pengiriman": "kirim pake lion parcel\nJalan 14 Februari, Lingkungan 6, Kampung Baru, Wanea.\nSULAWESI UTARA, KOTA MANADO, WANEA, 95119",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.168Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "11f8147f-9fdf-4277-9b6e-ba840e773f30",
@@ -15270,9 +15350,10 @@
     "alamat_pengiriman": "free giveaway velcro, 1 ukr indo 1 ukr\nJKIND \nJl. Panjang No 41-45",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.223Z",
     "notes": "",
-    "urutan_order": 6
+    "urutan_order": 6,
+    "force_past": true
   },
   {
     "id": "f1d976b7-bff2-4115-96c9-a6ff2eb6efaf",
@@ -15445,9 +15526,10 @@
     "alamat_pengiriman": "Bursa Otomotif Sunter Blok E no 1\nJalan yos sudarso kav 87-88 Jakarta Utara 14230 ",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.260Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "4825872d-ade3-41cf-b0ee-8283006af557",
@@ -15670,9 +15752,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.305Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "d49f3a49-9a9a-406a-9ea5-9535482093d7",
@@ -15695,9 +15778,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.357Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "25bf026a-f208-44d7-bbe4-416a4dc9887a",
@@ -15720,9 +15804,10 @@
     "alamat_pengiriman": "crystal",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.404Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "3bf304dc-a690-4551-b114-9c3044f16224",
@@ -15745,9 +15830,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.453Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "fa8083fd-7569-40ff-bb39-92d817a4a3fc",
@@ -15770,9 +15856,10 @@
     "alamat_pengiriman": "bca",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.504Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "1426f93a-3a19-4cdf-a523-a917592c42a3",
@@ -15945,9 +16032,10 @@
     "alamat_pengiriman": "Rocket Plus Tuning HQ,\nRuko Element, Jl. Jalur Sutera No.12 Kav. 25B-C, No. A, Panunggangan Tim., Kec. Pinang, Kota Tangerang Selatan, Banten 15325",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.556Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "2baec406-f6d2-4efc-ac8b-502a8bd592e7",
@@ -16245,9 +16333,10 @@
     "alamat_pengiriman": "pasang 4eleven sekalian beli baut",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.609Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "0b5fccd8-c69f-459f-81c0-8bad93b814ed",
@@ -16420,9 +16509,10 @@
     "alamat_pengiriman": "Pickup 411",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.660Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "f518c8ed-681b-49f3-82dd-496579549803",
@@ -16445,9 +16535,10 @@
     "alamat_pengiriman": "Pickup 411",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.720Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "646577a7-9fb2-4de2-a924-9d0e63f6f7d0",
@@ -16520,9 +16611,10 @@
     "alamat_pengiriman": "Rocket Plus Tuning HQ,\nRuko Element, Jl. Jalur Sutera No.12 Kav. 25B-C, No. A, Panunggangan Tim., Kec. Pinang, Kota Tangerang Selatan, Banten 15325",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.773Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "35df958e-1e88-4be1-a84e-11b1486a475b",
@@ -16645,9 +16737,10 @@
     "alamat_pengiriman": "Jl. Gading Elok Utara 2 FE 1/11, Kelapa Gading, Jakarta Utara, 14240",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.835Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "2f20f02a-b0b7-46d5-9673-8694db9f9573",
@@ -16870,9 +16963,10 @@
     "alamat_pengiriman": "dikirim bareng plat\nJalan Bendi XII No.34, Tanah Kusir, Kebayoran Lama, Kota Jakarta Selatan, DKI Jakarta, 12240",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.886Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "40579523-9755-407c-b23a-6e3bd46d4b25",
@@ -16920,9 +17014,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.704Z",
-    "updated_at": "2026-04-26T17:44:13.704Z",
+    "updated_at": "2026-04-26T19:56:17.933Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "3030affb-1b2e-477e-9518-d3ed71f92550",
@@ -16945,9 +17040,10 @@
     "alamat_pengiriman": "jalan delima jaya no.6 rt02 rw08 rempoa ciputat timur tangerang selatan banten 15412",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:17.999Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "d9eab8fd-0706-4a2e-bf1a-33f05326ab9b",
@@ -17345,9 +17441,10 @@
     "alamat_pengiriman": "pickup 4eleven",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:18.051Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "eabf3fb0-a250-48c0-9194-a4c78dee2c2f",
@@ -17545,9 +17642,10 @@
     "alamat_pengiriman": "Pondok Pesantren Nurul Hakim Jl \nTaruna no. 5 Sedayu Selatan. Desa Kediri Selatan. Kab. Lombok Barat. Prop. NTB 83362\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:18.103Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "65d2afc9-de89-40d4-b6d6-5abd44c6d412",
@@ -17870,9 +17968,10 @@
     "alamat_pengiriman": "Kirana Green Valley Blok A5 No.13\nAtang Sanjaya, Kemang, Bogor, 16330",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:18.151Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "6a8cc9f4-66e6-486f-a934-c79534e60682",
@@ -17895,9 +17994,10 @@
     "alamat_pengiriman": "Kirana Green Valley Blok A5 No.13\nAtang Sanjaya, Kemang, Bogor, 16330",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:18.196Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "a855613f-a895-4235-8d78-6ab1c866eba3",
@@ -17945,9 +18045,10 @@
     "alamat_pengiriman": "Mall MGK Lantai UG Blok A11 No 2 (Rca Store Pemasangan Parkiran Gedung P1, RW.10, Gn. Sahari Sel., Kec. Kemayoran, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10620",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:18.242Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "27ded664-a81f-4716-8482-fcfd124be9a1",
@@ -17970,9 +18071,10 @@
     "alamat_pengiriman": "Mall MGK Lantai UG Blok A11 No 2 (Rca Store Pemasangan Parkiran Gedung P1, RW.10, Gn. Sahari Sel., Kec. Kemayoran, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10620",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:18.292Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "c9717b2b-655e-4a13-ad87-59dc96cee38e",
@@ -18120,9 +18222,10 @@
     "alamat_pengiriman": "Mall MGK Lantai UG Blok A11 No 2 (Rca Store Pemasangan Parkiran Gedung P1, RW.10, Gn. Sahari Sel., Kec. Kemayoran, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10620",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:18.336Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "cbc2929d-306d-4947-80ff-760db6630132",
@@ -18695,9 +18798,10 @@
     "alamat_pengiriman": "JL. SAPTA PRASETYA UTARA XIV NO.41 RT/RW 05/03 KEL. PEDURUNGAN KIDUL KEC. PEDURUNGAN KOTA SEMARANG\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:18.393Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "9b29d2de-6cab-4a15-b8f6-a01258f33521",
@@ -19270,9 +19374,10 @@
     "alamat_pengiriman": "Perumahan Royal Family Blok C no.1, Semarang Barat, Kota Semarang, Jawa Tengah 50144\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:18.437Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "e1f15da8-fef8-46c4-bcea-017eec3b76d8",
@@ -19320,9 +19425,10 @@
     "alamat_pengiriman": "Jl. Setia Damai blok C NO.81, RT 001/01 kec.parung Parung Kab. Bogor Jawa Barat 16330\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:18.479Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "60d77e5d-4db6-4d1c-bc1d-3b968c58ba58",
@@ -19820,9 +19926,10 @@
     "alamat_pengiriman": "Jl. Pluit Mas 4 blok c no 10 b\n Kec. Penjaringan, Kota Jkt Utara, Daerah Khusus Ibukota Jakarta, 14450",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:18.529Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "3225cb36-c598-4062-b01f-07527db60112",
@@ -20120,9 +20227,10 @@
     "alamat_pengiriman": "permata hijau 2 blok G no ",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:18.587Z",
     "notes": "",
-    "urutan_order": 5
+    "urutan_order": 5,
+    "force_past": true
   },
   {
     "id": "cf7f8a12-2eff-4638-862b-f3fc629bfa7d",
@@ -20195,9 +20303,10 @@
     "alamat_pengiriman": "4Eleven, velcro fullset (mix. indo 1, japan 2)",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.705Z",
-    "updated_at": "2026-04-26T17:44:13.705Z",
+    "updated_at": "2026-04-26T19:56:18.626Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "f671f31b-b275-42a9-9115-38cbf3a43953",
@@ -20245,9 +20354,10 @@
     "alamat_pengiriman": "pickup 411",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:18.679Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "fe7ebc11-8bb9-47fc-a09a-8458e00a5f0f",
@@ -20470,9 +20580,10 @@
     "alamat_pengiriman": "ambil toko",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:18.722Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "3b12d8b0-54c5-4953-b668-e1eb86e01576",
@@ -20520,9 +20631,10 @@
     "alamat_pengiriman": "pickup 411",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:18.777Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "25911895-a4ce-4b8f-b6ec-dc53ecd134f9",
@@ -20570,9 +20682,10 @@
     "alamat_pengiriman": "Jl. Tosiga V, Kec. Kb, Jeruk, Kota Jakarta\nBarat, Daerah Khusus lbukota Jakarta, 11530\n[Tokopedia Note: Jl. Tosiga V blok L. No. 21\nKebon Jeruk, Jakarta Barat]",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:18.826Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "272502a1-f3f3-4ee7-a203-548b552d8f50",
@@ -20595,9 +20708,10 @@
     "alamat_pengiriman": "Jl. Tosiga V, Kec. Kb, Jeruk, Kota Jakarta\nBarat, Daerah Khusus lbukota Jakarta, 11530\n[Tokopedia Note: Jl. Tosiga V blok L. No. 21\nKebon Jeruk, Jakarta Barat]",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:51:05.066Z",
+    "updated_at": "2026-04-26T19:56:18.886Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "16a99dda-5093-4417-adf4-c3856e429170",
@@ -20770,9 +20884,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:18.937Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "2eea8001-d4bb-430e-aecd-2bf12aa64b4d",
@@ -20870,9 +20985,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:18.992Z",
     "notes": "",
-    "urutan_order": 6
+    "urutan_order": 6,
+    "force_past": true
   },
   {
     "id": "aedeaa9d-8be6-4089-9ceb-87be3971886c",
@@ -20995,9 +21111,10 @@
     "alamat_pengiriman": "velcro udh diambil",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.040Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "5135c40d-4a4e-4569-b722-b7c5e38828ed",
@@ -21145,9 +21262,10 @@
     "alamat_pengiriman": "Condominium greenbay pluit tower K unit K12AJ.. \npenjaringan, jakarta utara 14450.\n\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.088Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "c077e5c1-0c88-416c-ba9b-84b53c2f8f6d",
@@ -21170,9 +21288,10 @@
     "alamat_pengiriman": "PT PLN (Persero) Gardu Induk Bone. Jl. Poros Leppangeng - Watampone, Pasippo, Kec. Palakka, Kabupaten Bone, Sulawesi Selatan 92731",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.127Z",
     "notes": "",
-    "urutan_order": 5
+    "urutan_order": 5,
+    "force_past": true
   },
   {
     "id": "f3a98701-3e40-4a6c-9c21-376dc0356282",
@@ -21245,9 +21364,10 @@
     "alamat_pengiriman": "Jl. Suroso No. 24 \nKel. Solokpandan\nKec. Cianjur\nCianjur - Jawa Barat\n43211",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.186Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "3d377d04-52ab-4a02-95ff-a1bd154addc5",
@@ -21645,9 +21765,10 @@
     "alamat_pengiriman": "Galeri Ciumbuleuit Apartment 3 Unit 2005, Hegarmanah, Cidadap, Bandung",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.226Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "8872b316-81fe-4dbe-aca4-cdc23e90485b",
@@ -21670,9 +21791,10 @@
     "alamat_pengiriman": "411",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.273Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "1bcf09d6-863d-4e3a-9118-4ad624f01d20",
@@ -21770,9 +21892,10 @@
     "alamat_pengiriman": "(belom bayar ongkir dan DP pelunasan)\nKirana Green Valley\nBlok A1 No.6\nKemang, Bogor\n(Tingkat Putih)\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.316Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "da069922-921d-415f-a1bd-e1c56b0cfdde",
@@ -21845,9 +21968,10 @@
     "alamat_pengiriman": "",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.383Z",
     "notes": "",
-    "urutan_order": 7
+    "urutan_order": 7,
+    "force_past": true
   },
   {
     "id": "0bcfa17f-9178-4a28-a2a4-84985f12daf9",
@@ -21870,9 +21994,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.427Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "b043fd6a-d06e-4bf2-9c1f-f7ede362152f",
@@ -22170,9 +22295,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.493Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "4e7f2e51-87b1-4cec-8747-d7c8275c2f2b",
@@ -22195,9 +22321,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.536Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "e5918e41-226c-4a87-a5c3-777da181463b",
@@ -23020,9 +23147,10 @@
     "alamat_pengiriman": "-Jl. Titihan Blok HG 12A No.7\nKel. Perigi, Kec. Pondok Aren\nBintaro Sektor 9, Tangerang Selatan\nBanten 15224\n(Seberang Sekolah Jepang)\nTangerang Selatan 15224\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.605Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "5f3213aa-b8d7-4405-88e8-35f3f81d21ea",
@@ -23620,9 +23748,10 @@
     "alamat_pengiriman": "bca",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.653Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "657df8b0-072d-4e0e-bd6e-9d8de80804d6",
@@ -24070,9 +24199,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.706Z",
-    "updated_at": "2026-04-26T17:44:13.706Z",
+    "updated_at": "2026-04-26T19:56:19.708Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "cc35df09-ae0c-4178-b4c2-48ae5cbc4288",
@@ -24845,9 +24975,10 @@
     "alamat_pengiriman": "Perumahan Wisteria Metland Menteng , jalan ujung menteng , cakung timur , blok Basilia 5 no 27, jakarta timur (taruh di box paket)",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.707Z",
-    "updated_at": "2026-04-26T17:44:13.707Z",
+    "updated_at": "2026-04-26T19:56:19.757Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "9a76747e-82b2-47c4-848a-2ba41282a06b",
@@ -25170,9 +25301,10 @@
     "alamat_pengiriman": "Details Mafia, Bavaria Grande, Jl. Fatmawati No.6, Klp. Dua, Kec. Klp. Dua, Kabupaten Tangerang, Banten 15810",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.707Z",
-    "updated_at": "2026-04-26T17:44:13.707Z",
+    "updated_at": "2026-04-26T19:56:19.812Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "63c3cff7-5f0b-4d45-b29b-21d92c87e02a",
@@ -25220,9 +25352,10 @@
     "alamat_pengiriman": "Kirim ke RPM",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.707Z",
-    "updated_at": "2026-04-26T17:44:13.707Z",
+    "updated_at": "2026-04-26T19:56:19.862Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "73450f99-1132-4ddc-916c-9418449b3204",
@@ -25270,9 +25403,10 @@
     "alamat_pengiriman": "Perum. Bumi Citra Fajar Jl. Sekawan Nyaman 1 No. A4, Sidoarjo (Pagar Putih\r\nNO A4), Sidoarjo, Kab. Sidoarjo, Jawa Timur 61234\r\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.707Z",
-    "updated_at": "2026-04-26T17:44:13.707Z",
+    "updated_at": "2026-04-26T19:56:19.931Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "3d1ef4d1-ee4f-484a-aa90-8bd5c2d562b8",
@@ -25870,9 +26004,10 @@
     "alamat_pengiriman": "wili brill",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.707Z",
-    "updated_at": "2026-04-26T17:44:13.707Z",
+    "updated_at": "2026-04-26T19:56:19.975Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "947f4ac8-557f-42e3-a346-bb5784d6379c",
@@ -26520,9 +26655,10 @@
     "alamat_pengiriman": " (Sebrang Indomaret) \r\nJalan Jembatan Besi VIII no.6  Kelurahan Jembatan Besi, Kecamatan Tambora Jakarta Barat - 11320\r\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.707Z",
-    "updated_at": "2026-04-26T17:44:13.707Z",
+    "updated_at": "2026-04-26T19:56:20.041Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "3256d2ea-b567-4c1b-858a-b85a31861c7d",
@@ -26545,9 +26681,10 @@
     "alamat_pengiriman": " (Sebrang Indomaret) \r\nJalan Jembatan Besi VIII no.6  Kelurahan Jembatan Besi, Kecamatan Tambora Jakarta Barat - 11320\r\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.707Z",
-    "updated_at": "2026-04-26T17:44:13.707Z",
+    "updated_at": "2026-04-26T19:56:20.079Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "807a9b0a-7200-4c3c-8124-5a6f84023f33",
@@ -27020,9 +27157,10 @@
     "alamat_pengiriman": "Jl. H. Nawi Raya No.45b-1, RT.6/RW.10, Gandaria Utara, Kec. Kby. Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12140",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.707Z",
-    "updated_at": "2026-04-26T17:44:13.707Z",
+    "updated_at": "2026-04-26T19:56:20.124Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "d3b553a2-03e6-4139-9536-8a2249ab390a",
@@ -27120,9 +27258,10 @@
     "alamat_pengiriman": "JNE YES  komplek perumahan mediteranian boulevard cluster Venice 2 no 28 , PIK, Jakarta Utara",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.707Z",
-    "updated_at": "2026-04-26T17:44:13.707Z",
+    "updated_at": "2026-04-26T19:56:20.163Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "cc0bd6ca-acca-4566-936a-c3e6c2ea7114",
@@ -27445,9 +27584,10 @@
     "alamat_pengiriman": "JI. K No.2, RT.6/RW.7, Mampang Prpt., Kec. Mampang Prpt., Jakarta, Daerah Khusus lbukota Jakarta 12790 (W Mampang Five, Kamar 011)\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.707Z",
-    "updated_at": "2026-04-26T17:44:13.707Z",
+    "updated_at": "2026-04-26T19:56:20.208Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "42bb42fd-df2c-4d05-ae45-65597acd7c28",
@@ -28070,9 +28210,10 @@
     "alamat_pengiriman": "luxxmotocare",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.708Z",
-    "updated_at": "2026-04-26T17:44:13.708Z",
+    "updated_at": "2026-04-26T19:56:20.251Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "58724d4f-2dc9-4031-9571-e37ad2bbbdeb",
@@ -28345,9 +28486,10 @@
     "alamat_pengiriman": "Jl. Imam Bonjol no. 35, Lebakgede, Kec Coblong, Kota Bandung, Jawa Barat 40132\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.708Z",
-    "updated_at": "2026-04-26T17:44:13.708Z",
+    "updated_at": "2026-04-26T19:56:20.306Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "7d4cc139-35d5-4bf3-bf90-2a58afa43d79",
@@ -29170,9 +29312,10 @@
     "alamat_pengiriman": "Pickup 411",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.708Z",
-    "updated_at": "2026-04-26T17:44:13.708Z",
+    "updated_at": "2026-04-26T19:56:20.352Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "5c2ed4d7-28cc-4bce-b126-6e77e255d30a",
@@ -29195,9 +29338,10 @@
     "alamat_pengiriman": "Sokudo",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.708Z",
-    "updated_at": "2026-04-26T17:44:13.708Z",
+    "updated_at": "2026-04-26T19:56:20.412Z",
     "notes": "",
-    "urutan_order": 5
+    "urutan_order": 5,
+    "force_past": true
   },
   {
     "id": "cf122cf8-50dc-408e-a50a-3a2b46f7b7a8",
@@ -29245,9 +29389,10 @@
     "alamat_pengiriman": "komplek permata regency. Blok c no 58\nJl h kelik \nSrengseng , jakbar\n\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.708Z",
-    "updated_at": "2026-04-26T17:44:13.708Z",
+    "updated_at": "2026-04-26T19:56:20.460Z",
     "notes": "",
-    "urutan_order": 7
+    "urutan_order": 7,
+    "force_past": true
   },
   {
     "id": "8d10f6c4-d7af-4941-ab30-6295fd5e983a",
@@ -29295,9 +29440,10 @@
     "alamat_pengiriman": "Jl batu ceper V No 59 RT13/RW1, kecamatan ",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.708Z",
-    "updated_at": "2026-04-26T17:44:13.708Z",
+    "updated_at": "2026-04-26T19:56:20.518Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "895b51ab-5100-4a2f-b193-fef09d4624c2",
@@ -29345,9 +29491,10 @@
     "alamat_pengiriman": "Jl batu ceper V No 59 RT13/RW1, kecamatan ",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.708Z",
-    "updated_at": "2026-04-26T17:44:13.708Z",
+    "updated_at": "2026-04-26T19:56:20.568Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "a66eb404-61cc-4196-8a43-dba38049f1c4",
@@ -29520,9 +29667,10 @@
     "alamat_pengiriman": "Malibu Village, Jl. Inland No. 29, Kec. Pagedangan, Kabupaten Tangerang, Banten\n\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.708Z",
-    "updated_at": "2026-04-26T17:44:13.708Z",
+    "updated_at": "2026-04-26T19:56:20.626Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "e14e712d-bd93-4bc2-9cc7-9ef4f1f816f5",
@@ -29920,9 +30068,10 @@
     "alamat_pengiriman": "Otolazer",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.708Z",
-    "updated_at": "2026-04-26T17:44:13.708Z",
+    "updated_at": "2026-04-26T19:56:20.672Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "31656513-1dda-4946-89f6-e96224418514",
@@ -30095,9 +30244,10 @@
     "alamat_pengiriman": "",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.708Z",
-    "updated_at": "2026-04-26T17:44:13.708Z",
+    "updated_at": "2026-04-26T19:56:20.731Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "57af36e1-faee-4720-8fc9-74a94e46200b",
@@ -30145,9 +30295,10 @@
     "alamat_pengiriman": "Home Service, Nusa Loka Jalan Kalimantan 1 Blok E2 No. 11 Belakang Kantor Pos",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.708Z",
-    "updated_at": "2026-04-26T17:44:13.708Z",
+    "updated_at": "2026-04-26T19:56:20.807Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "3703393d-81f4-48a2-bb21-88f239ffd5cf",
@@ -30895,9 +31046,10 @@
     "alamat_pengiriman": "Pickup 411",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.708Z",
-    "updated_at": "2026-04-26T17:44:13.708Z",
+    "updated_at": "2026-04-26T19:56:20.857Z",
     "notes": "",
-    "urutan_order": 9
+    "urutan_order": 9,
+    "force_past": true
   },
   {
     "id": "c7935f62-228e-49c4-a8e7-48ac33b7d32e",
@@ -31195,9 +31347,10 @@
     "alamat_pengiriman": "Sokudo",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:20.905Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "2148f4a1-a4b3-4a2e-8ec2-f6f9b9b34c3f",
@@ -31320,9 +31473,10 @@
     "alamat_pengiriman": " Jl. Gempol Raya jl. Wadas II B1 no 14 Ceger Cipayung Jaktim\n\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:20.956Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "01c57e5b-c9c9-410c-95fb-543b728a8f56",
@@ -31395,9 +31549,10 @@
     "alamat_pengiriman": "",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:20.993Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "4674bcad-8a16-4d0b-a263-ccf8bdb888e3",
@@ -31520,9 +31675,10 @@
     "alamat_pengiriman": "Galeri Ciumbuleuit Apartment 3, Unit 1931 Jl. Ciumbuleuit No.67, Hegarmanah, Cidadap, Bandung City, West Java 40142",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.039Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "5340b6ea-ed33-4891-a7c3-8b254bfe7637",
@@ -31845,9 +32001,10 @@
     "alamat_pengiriman": "\nJl. Kh harun nafsi masuk perumahan hm. Yahya blok D. No 65A\nLoa janan ilir, samarinda kaltim. \"",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.081Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "ec717516-911e-49fb-a93b-c7cd8a9e9572",
@@ -31920,9 +32077,10 @@
     "alamat_pengiriman": "perumahan kori nuansa taman griya,jalan nuansa utama IX no a 1, jimbaran , kuta selatan , bali , badung 80363\n\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.142Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "7701e1c8-3ea7-497e-8565-25e9edf47d6b",
@@ -32020,9 +32178,10 @@
     "alamat_pengiriman": "411",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.193Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "3b295ebb-f918-49e8-b88e-976db4e19446",
@@ -32370,9 +32529,10 @@
     "alamat_pengiriman": "Jl.Aries Utama I No.7 Blok E10, Meruya Utara, Kec. Kembangan, Jakarta Barat 11620",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.246Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "747369e3-c1fe-409a-a453-259d2aa35766",
@@ -32770,9 +32930,10 @@
     "alamat_pengiriman": "-",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.295Z",
     "notes": "",
-    "urutan_order": 6
+    "urutan_order": 6,
+    "force_past": true
   },
   {
     "id": "dd71e0d2-fee4-4af1-b1a1-e230b4602d23",
@@ -32795,9 +32956,10 @@
     "alamat_pengiriman": "",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.342Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "45cdde7b-c508-403d-9883-7a4c895fe6f7",
@@ -33020,9 +33182,10 @@
     "alamat_pengiriman": "ambil di 411",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.386Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "f6a2e2b1-6d7e-41a8-bda6-78e64c5619ca",
@@ -33245,9 +33408,10 @@
     "alamat_pengiriman": "Puri harapan blok d2/1 rt010 rw021. kelurahan setia asih, kecamatan tarumajaya, kabupaten bekasi. kode pos 17215\n\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.429Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "07fdcd9e-8a35-4a15-aa2c-d00dffa66eda",
@@ -33295,9 +33459,10 @@
     "alamat_pengiriman": "Jl Kenangan III Blok C9 / No 18 Kaliabang Tengah, Bekasi Utara, Kota Bekasi Jawa Barat\n\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.486Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "798d48b9-f590-41d6-a623-bbc971ec6cd9",
@@ -33345,9 +33510,10 @@
     "alamat_pengiriman": "Pesona Permata Gading 1 blok K-8 Bluru Kidul, Sidoarjo, Jawa Timur\n\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.549Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "4fd9d001-952c-4cf1-8f65-a767862da5e6",
@@ -33370,9 +33536,10 @@
     "alamat_pengiriman": "BOGOR, Gn.putri gg.asem rt03/12 no.38\n\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.595Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "5cee45f3-10c4-4f4f-ba9f-b81f7310cf1e",
@@ -33495,9 +33662,10 @@
     "alamat_pengiriman": "Cipinang Elok 1 Blok B No. 54, Jatinegara, Jakarta Timur\n\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.650Z",
     "notes": "",
-    "urutan_order": 2
+    "urutan_order": 2,
+    "force_past": true
   },
   {
     "id": "0703bce2-ca17-4585-bf95-51ddec918514",
@@ -33570,9 +33738,10 @@
     "alamat_pengiriman": "Kotabaru Parahyangan, Tatar Naganingrum, Jalan Nagakusuma No.6, Padalarang, Kabupaten Bandung Barat, 40553.",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.709Z",
-    "updated_at": "2026-04-26T17:44:13.709Z",
+    "updated_at": "2026-04-26T19:56:21.698Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "3c71c66c-38ca-4e0e-bbbb-9293222ca0e9",
@@ -35095,9 +35264,10 @@
     "alamat_pengiriman": "2Step",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.710Z",
-    "updated_at": "2026-04-26T17:44:13.710Z",
+    "updated_at": "2026-04-26T19:56:21.744Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "2fa7dfb9-0536-46a8-be7a-dc4b369e92d5",
@@ -35170,9 +35340,10 @@
     "alamat_pengiriman": "Jalan Grha Kencana No.21 Kav-10\nDago Resort. Kota Bandung\nJawa Barat 40197\n\n(Velcro di plat jangan lupa) \n\n",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.710Z",
-    "updated_at": "2026-04-26T17:44:13.710Z",
+    "updated_at": "2026-04-26T19:56:21.808Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "1e4987f3-705e-4e4d-81d8-9963e10b4254",
@@ -35420,9 +35591,10 @@
     "alamat_pengiriman": "Crystal Carwash",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.710Z",
-    "updated_at": "2026-04-26T17:44:13.710Z",
+    "updated_at": "2026-04-26T19:56:21.874Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "9f9a0569-acaa-42a1-9aea-358e9edd6b5b",
@@ -35545,9 +35717,10 @@
     "alamat_pengiriman": "Sokudo",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.710Z",
-    "updated_at": "2026-04-26T17:44:13.710Z",
+    "updated_at": "2026-04-26T19:56:21.925Z",
     "notes": "",
-    "urutan_order": 4
+    "urutan_order": 4,
+    "force_past": true
   },
   {
     "id": "8d37685a-b9ce-4541-a61a-0d71116b6b89",
@@ -35570,9 +35743,10 @@
     "alamat_pengiriman": "Sokudo",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.710Z",
-    "updated_at": "2026-04-26T17:44:13.710Z",
+    "updated_at": "2026-04-26T19:56:21.978Z",
     "notes": "",
-    "urutan_order": 5
+    "urutan_order": 5,
+    "force_past": true
   },
   {
     "id": "46a11fd7-a2e3-4beb-b91e-b9a6cac627f6",
@@ -35695,9 +35869,10 @@
     "alamat_pengiriman": "Latief Residence\nJl. Mampang Prapatan II No. 7 Rt.05 Rw. 04\nMampang Prapatan - JakSel 12790",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.710Z",
-    "updated_at": "2026-04-26T17:44:13.710Z",
+    "updated_at": "2026-04-26T19:56:22.016Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "e20e1f9f-4aec-4280-bdf8-2c9bd29727f4",
@@ -36295,9 +36470,10 @@
     "alamat_pengiriman": "Komplek Jl. Grand Poris Blok AA6 no.25, Cipondoh Indah, Cipondoh, Tangerang City, Banten 15148",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.710Z",
-    "updated_at": "2026-04-26T17:44:13.710Z",
+    "updated_at": "2026-04-26T19:56:22.055Z",
     "notes": "",
-    "urutan_order": 1
+    "urutan_order": 1,
+    "force_past": true
   },
   {
     "id": "233afe38-b409-45d9-b4fd-6c2b7476b681",
@@ -36795,9 +36971,10 @@
     "alamat_pengiriman": "583094108666430553",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.710Z",
-    "updated_at": "2026-04-26T17:44:13.710Z",
+    "updated_at": "2026-04-26T19:56:22.099Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "2f1092ea-9b3e-49a7-8340-f0d6eb7d1904",
@@ -37095,9 +37272,10 @@
     "alamat_pengiriman": "Kost Puri Canggu \nResidence, blok Fransisco C No.1, Dendengan Dalam, Kec. Paal Dua, Kota Manado, Sulawesi Utara 9612",
     "shipped_at": "2026-04-18T17:44:13.689Z",
     "created_at": "2026-04-26T17:44:13.710Z",
-    "updated_at": "2026-04-26T17:44:13.710Z",
+    "updated_at": "2026-04-26T19:56:22.143Z",
     "notes": "",
-    "urutan_order": 3
+    "urutan_order": 3,
+    "force_past": true
   },
   {
     "id": "5768921d-481d-490c-a080-2e9916bd7703",

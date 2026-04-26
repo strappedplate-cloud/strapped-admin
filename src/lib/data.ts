@@ -7,7 +7,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { Order, User, Reseller, PackingItem } from './types';
+import { Order, User, Reseller, PackingItem, AccessRequest } from './types';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 
@@ -32,7 +32,7 @@ function readJsonFile<T>(filename: string, defaultValue: T[]): T[] {
   }
 }
 
-function writeJsonFile<T>(filename: string, data: T[]): void {
+export function writeJsonFile<T>(filename: string, data: T[]): void {
   ensureDataDir();
   const filepath = path.join(DATA_DIR, filename);
   fs.writeFileSync(filepath, JSON.stringify(data, null, 2));
@@ -90,9 +90,15 @@ export function getOngoingOrders(): Order[] {
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
   
   return orders.filter(order => {
+    if (order.force_past) return false;
     if (order.status !== 'shipped') return true;
-    if (order.payment_status !== 'Paid') return true;
+    
+    const isOldData = new Date(order.created_at || order.tanggal_pembelian) < new Date('2026-04-26');
+    if (!isOldData && order.payment_status !== 'Paid') return true;
+    
+    if (!order.shipped_at && isOldData) return false;
     if (!order.shipped_at) return true;
+    
     return new Date(order.shipped_at) > sevenDaysAgo;
   });
 
@@ -104,9 +110,15 @@ export function getPastOrders(): Order[] {
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
   
   return orders.filter(order => {
+    if (order.force_past) return true;
     if (order.status !== 'shipped') return false;
-    if (order.payment_status !== 'Paid') return false;
+    
+    const isOldData = new Date(order.created_at || order.tanggal_pembelian) < new Date('2026-04-26');
+    if (!isOldData && order.payment_status !== 'Paid') return false;
+    
+    if (!order.shipped_at && isOldData) return true;
     if (!order.shipped_at) return false;
+    
     return new Date(order.shipped_at) <= sevenDaysAgo;
   });
 
@@ -128,6 +140,28 @@ export function createUser(user: User): User {
   users.push(user);
   writeJsonFile('users.json', users);
   return user;
+}
+
+export function updateUser(id: string, updates: Partial<User>): User | null {
+  const users = getUsers();
+  const index = users.findIndex(u => u.id === id);
+  if (index === -1) return null;
+  
+  users[index] = {
+    ...users[index],
+    ...updates,
+    // note: if updating password, it should be pre-hashed before calling this
+  };
+  writeJsonFile('users.json', users);
+  return users[index];
+}
+
+export function deleteUser(id: string): boolean {
+  const users = getUsers();
+  const filtered = users.filter(u => u.id !== id);
+  if (filtered.length === users.length) return false;
+  writeJsonFile('users.json', filtered);
+  return true;
 }
 
 // ─── Resellers ───────────────────────────────────────────────
@@ -203,4 +237,27 @@ export function deletePackingItem(id: string): boolean {
   if (filtered.length === items.length) return false;
   writeJsonFile('packing.json', filtered);
   return true;
+}
+
+// ─── Access Requests ──────────────────────────────────────────
+
+export function getAccessRequests(): AccessRequest[] {
+  return readJsonFile<AccessRequest>('access_requests.json', []);
+}
+
+export function createAccessRequest(req: AccessRequest): AccessRequest {
+  const requests = getAccessRequests();
+  requests.push(req);
+  writeJsonFile('access_requests.json', requests);
+  return req;
+}
+
+export function updateAccessRequest(id: string, status: 'approved' | 'rejected'): AccessRequest | null {
+  const requests = getAccessRequests();
+  const index = requests.findIndex(r => r.id === id);
+  if (index === -1) return null;
+  
+  requests[index].status = status;
+  writeJsonFile('access_requests.json', requests);
+  return requests[index];
 }

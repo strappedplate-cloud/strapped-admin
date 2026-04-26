@@ -31,7 +31,8 @@ export const authOptions: NextAuthOptions = {
           name: user.name,
           email: user.username,
           role: user.role,
-        } as { id: string; name: string; email: string; role: string };
+          permissions: user.permissions || [],
+        } as { id: string; name: string; email: string; role: string; permissions: string[] };
       },
     }),
   ],
@@ -42,16 +43,18 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = (user as { role: string }).role;
+        token.role = (user as any).role;
         token.username = user.email;
+        token.permissions = (user as any).permissions;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        (session.user as { id?: string; role?: string; username?: string }).id = token.sub;
-        (session.user as { id?: string; role?: string; username?: string }).role = token.role as string;
-        (session.user as { id?: string; role?: string; username?: string }).username = token.username as string;
+        (session.user as { id?: string; role?: string; username?: string; permissions?: string[] }).id = token.sub;
+        (session.user as { id?: string; role?: string; username?: string; permissions?: string[] }).role = token.role as string;
+        (session.user as { id?: string; role?: string; username?: string; permissions?: string[] }).username = token.username as string;
+        (session.user as { id?: string; role?: string; username?: string; permissions?: string[] }).permissions = token.permissions as string[];
       }
       return session;
     },

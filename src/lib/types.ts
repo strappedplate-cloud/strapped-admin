@@ -96,6 +96,7 @@ export interface Order {
   shipped_at: string | null;
   created_at: string;
   updated_at: string;
+  force_past?: boolean;
 }
 
 
@@ -104,7 +105,10 @@ export interface User {
   username: string;
   password: string;
   name: string;
+  email?: string;
+  no_hp?: string;
   role: 'admin' | 'member';
+  permissions: string[]; // array of paths like '/dashboard', '/orders/ongoing', etc
   created_at: string;
 }
 
@@ -127,4 +131,13 @@ export interface PackingItem {
   is_packed: boolean;
   created_at: string;
   updated_at: string;
+}
+
+export interface AccessRequest {
+  id: string;
+  user_id: string;
+  username: string;
+  path: string; // The menu path requested
+  status: 'pending' | 'approved' | 'rejected';
+  created_at: string;
 }

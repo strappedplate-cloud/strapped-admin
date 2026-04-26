@@ -2,8 +2,16 @@
 
 import React from 'react';
 import { Reseller } from '@/lib/types';
+import { useSession } from 'next-auth/react';
+import AccessDenied from '@/components/AccessDenied';
 
 export default function ResellersPage() {
+  const { data: session } = useSession();
+  
+  if (session?.user && (session.user as any).role !== 'admin' && !(session.user as any).permissions?.includes('/resellers')) {
+    return <main className="main-content"><AccessDenied /></main>;
+  }
+
   const [resellers, setResellers] = React.useState<Reseller[]>([]);
   const [showForm, setShowForm] = React.useState(false);
   const [editing, setEditing] = React.useState<Reseller | null>(null);

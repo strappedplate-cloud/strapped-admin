@@ -2,8 +2,16 @@
 
 import React from 'react';
 import { PackingItem, Order } from '@/lib/types';
+import { useSession } from 'next-auth/react';
+import AccessDenied from '@/components/AccessDenied';
 
 export default function PackingPage() {
+  const { data: session } = useSession();
+  
+  if (session?.user && (session.user as any).role !== 'admin' && !(session.user as any).permissions?.includes('/packing')) {
+    return <main className="main-content"><AccessDenied /></main>;
+  }
+
   const [items, setItems] = React.useState<PackingItem[]>([]);
   const [orders, setOrders] = React.useState<Order[]>([]);
   const [showForm, setShowForm] = React.useState(false);
