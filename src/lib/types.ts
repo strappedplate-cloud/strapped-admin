@@ -133,6 +133,18 @@ export interface PackingItem {
   updated_at: string;
 }
 
+export interface ChatMessage {
+  id: string;
+  from_user_id: string;
+  from_username: string;
+  from_name: string;
+  to_user_id: string;
+  to_username: string;
+  content: string;
+  read: boolean;
+  created_at: string;
+}
+
 export interface AccessRequest {
   id: string;
   user_id: string;

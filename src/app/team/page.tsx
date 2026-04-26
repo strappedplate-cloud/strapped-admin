@@ -155,54 +155,70 @@ export default function TeamPage() {
       {showForm && (
         <div className="modal-overlay">
           <div className="modal-content" style={{ maxWidth: '600px' }}>
-            <div className="modal-header">
-              <h2 className="modal-title">{editingId ? 'Edit Anggota' : 'Anggota Baru'}</h2>
+            <div className="modal-header" style={{ padding: '16px 20px', border: 'none', background: 'var(--bg-primary)', borderRadius: '16px 16px 0 0' }}>
+              <h2 className="modal-title" style={{ fontSize: '16px' }}>{editingId ? 'Edit Anggota' : 'Anggota Baru'}</h2>
               <button className="modal-close" onClick={() => setShowForm(false)}>×</button>
             </div>
-            <form onSubmit={handleSave} className="modal-body" style={{ padding: '0 24px 24px' }}>
+            <form onSubmit={handleSave} className="modal-body" style={{ padding: '0 20px 20px' }}>
               <div style={{ 
-                background: 'rgba(255,255,255,0.02)', 
+                background: 'var(--bg-primary)', 
                 border: '1px solid var(--border)', 
                 borderRadius: '16px', 
-                padding: '24px',
-                marginTop: '10px'
+                padding: '20px',
               }}>
-                <div style={{ marginBottom: '24px', padding: '20px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', border: '1px solid var(--border)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+
+                <div style={{ marginBottom: '20px', padding: '16px', background: 'var(--bg-secondary)', borderRadius: '12px', border: '1px solid var(--border)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div className="form-group">
-                    <label className="form-label" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', marginBottom: '8px', display: 'block' }}>Nama Lengkap</label>
-                    <input className="form-input" required value={formData.name || ''} onChange={e => setFormData({...formData, name: e.target.value})} style={{ width: '100%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', padding: '10px 12px', borderRadius: '6px', color: 'white' }} />
+                    <label className="form-label" style={{ fontSize: '10px', fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', marginBottom: '6px', display: 'block' }}>Nama Lengkap</label>
+                    <input className="form-input" required value={formData.name || ''} onChange={e => setFormData({...formData, name: e.target.value})} style={{ width: '100%', background: 'var(--bg-tertiary)', border: '1px solid var(--border)', padding: '8px 10px', borderRadius: '6px', color: 'white', fontSize: '13px' }} />
                   </div>
                   <div className="form-group">
-                    <label className="form-label" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', marginBottom: '8px', display: 'block' }}>Username</label>
-                    <input className="form-input" required value={formData.username || ''} onChange={e => setFormData({...formData, username: e.target.value})} style={{ width: '100%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', padding: '10px 12px', borderRadius: '6px', color: 'white' }} />
+                    <label className="form-label" style={{ fontSize: '10px', fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', marginBottom: '6px', display: 'block' }}>Username</label>
+                    <input className="form-input" required value={formData.username || ''} onChange={e => setFormData({...formData, username: e.target.value})} style={{ width: '100%', background: 'var(--bg-tertiary)', border: '1px solid var(--border)', padding: '8px 10px', borderRadius: '6px', color: 'white', fontSize: '13px' }} />
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                  <div className="form-group" style={{ marginBottom: '15px' }}>
-                    <label className="form-label" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-tertiary)', textTransform: 'uppercase', marginBottom: '8px', display: 'block' }}>Password {editingId && '(Kosongkan jika tidak ingin ganti)'}</label>
-                    <input className="form-input" type="password" required={!editingId} value={formData.password || ''} onChange={e => setFormData({...formData, password: e.target.value})} style={{ width: '100%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', padding: '10px 12px', borderRadius: '6px', color: 'white' }} />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div className="form-group" style={{ marginBottom: '12px' }}>
+                    <label className="form-label" style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-tertiary)', textTransform: 'uppercase', marginBottom: '6px', display: 'block' }}>Password {editingId && '(Kosongkan jika tidak ingin ganti)'}</label>
+                    <input className="form-input" type="password" required={!editingId} value={formData.password || ''} onChange={e => setFormData({...formData, password: e.target.value})} style={{ width: '100%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', padding: '8px 10px', borderRadius: '6px', color: 'white', fontSize: '13px' }} />
                   </div>
-                  <div className="form-group" style={{ marginBottom: '15px' }}>
-                    <label className="form-label" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-tertiary)', textTransform: 'uppercase', marginBottom: '8px', display: 'block' }}>Role</label>
-                    <select className="form-input" value={formData.role || 'member'} onChange={e => setFormData({...formData, role: e.target.value as 'admin'|'member'})} style={{ width: '100%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', padding: '10px 12px', borderRadius: '6px', color: 'white' }}>
+                  <div className="form-group" style={{ marginBottom: '12px' }}>
+                    <label className="form-label" style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-tertiary)', textTransform: 'uppercase', marginBottom: '6px', display: 'block' }}>Role</label>
+                    <select className="form-input" value={formData.role || 'member'} onChange={e => setFormData({...formData, role: e.target.value as 'admin'|'member'})} style={{ width: '100%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', padding: '8px 10px', borderRadius: '6px', color: 'white', fontSize: '13px' }}>
                       <option value="member">Member</option>
                       <option value="admin">Admin</option>
                     </select>
                   </div>
-                  <div className="form-group" style={{ marginBottom: '15px' }}>
-                    <label className="form-label" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-tertiary)', textTransform: 'uppercase', marginBottom: '8px', display: 'block' }}>Email</label>
-                    <input className="form-input" type="email" value={formData.email || ''} onChange={e => setFormData({...formData, email: e.target.value})} style={{ width: '100%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', padding: '10px 12px', borderRadius: '6px', color: 'white' }} />
+                  <div className="form-group" style={{ marginBottom: '12px' }}>
+                    <label className="form-label" style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-tertiary)', textTransform: 'uppercase', marginBottom: '6px', display: 'block' }}>Email</label>
+                    <input className="form-input" type="email" value={formData.email || ''} onChange={e => setFormData({...formData, email: e.target.value})} style={{ width: '100%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', padding: '8px 10px', borderRadius: '6px', color: 'white', fontSize: '13px' }} />
                   </div>
-                  <div className="form-group" style={{ marginBottom: '15px' }}>
-                    <label className="form-label" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-tertiary)', textTransform: 'uppercase', marginBottom: '8px', display: 'block' }}>Nomor WhatsApp</label>
-                    <input className="form-input" value={formData.no_hp || ''} onChange={e => setFormData({...formData, no_hp: e.target.value})} style={{ width: '100%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', padding: '10px 12px', borderRadius: '6px', color: 'white' }} />
+                  <div className="form-group" style={{ marginBottom: '12px' }}>
+                    <label className="form-label" style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-tertiary)', textTransform: 'uppercase', marginBottom: '6px', display: 'block' }}>Nomor WhatsApp</label>
+                    <input className="form-input" value={formData.no_hp || ''} onChange={e => setFormData({...formData, no_hp: e.target.value})} style={{ width: '100%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', padding: '8px 10px', borderRadius: '6px', color: 'white', fontSize: '13px' }} />
                   </div>
                 </div>
 
-                <div style={{ marginTop: '24px', padding: '20px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', border: '1px solid var(--border)' }}>
-                  <label className="form-label" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '16px', display: 'block' }}>Akses Menu (Permissions)</label>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
+                <div style={{ marginTop: '20px', padding: '16px', background: 'var(--bg-secondary)', borderRadius: '12px', border: '1px solid var(--border)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                    <label className="form-label" style={{ fontSize: '10px', fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>Akses Menu (Permissions)</label>
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        const allSelected = formData.permissions?.length === PERMISSIONS_LIST.length;
+                        setFormData({
+                          ...formData,
+                          permissions: allSelected ? [] : PERMISSIONS_LIST.map(p => p.path)
+                        });
+                      }}
+                      style={{ fontSize: '11px', color: 'var(--accent)', fontWeight: 600 }}
+                    >
+                      {formData.permissions?.length === PERMISSIONS_LIST.length ? 'Uncheck All' : 'Check All'}
+                    </button>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '12px' }}>
+
                     {PERMISSIONS_LIST.map(p => (
                       <label key={p.path} style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', padding: '8px 12px', background: formData.permissions?.includes(p.path) ? 'var(--accent-soft)' : 'transparent', borderRadius: '8px', border: '1px solid', borderColor: formData.permissions?.includes(p.path) ? 'var(--accent)' : 'var(--border)', transition: 'all 0.2s' }}>
                         <div style={{ position: 'relative', width: '18px', height: '18px' }}>
