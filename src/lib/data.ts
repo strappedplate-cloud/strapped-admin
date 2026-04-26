@@ -7,7 +7,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { Order, User, Reseller, PackingItem, AccessRequest, ChatMessage } from './types';
+import { Order, User, Reseller, PackingItem, AccessRequest } from './types';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 
@@ -262,93 +262,3 @@ export function updateAccessRequest(id: string, status: 'approved' | 'rejected')
   return requests[index];
 }
 
-// ─── Chat Messages ────────────────────────────────────────────
-
-export function getMessages(): ChatMessage[] {
-  return readJsonFile<ChatMessage>('messages.json', []);
-}
-
-export function getMessagesBetween(userA: string, userB: string): ChatMessage[] {
-  const messages = getMessages();
-  // Auto-delete messages older than 30 days
-  const thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-  const valid = messages.filter(m => new Date(m.created_at) > thirtyDaysAgo);
-  if (valid.length !== messages.length) {
-    writeJsonFile('messages.json', valid);
-  }
-  return valid.filter(m =>
-    (m.from_user_id === userA && m.to_user_id === userB) ||
-    (m.from_user_id === userB && m.to_user_id === userA)
-  );
-}
-
-export function createMessage(msg: ChatMessage): ChatMessage {
-  const messages = getMessages();
-  // Purge messages older than 30 days on write too
-  const thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-  const valid = messages.filter(m => new Date(m.created_at) > thirtyDaysAgo);
-  valid.push(msg);
-  writeJsonFile('messages.json', valid);
-  return msg;
-}
-
-export function markMessagesRead(fromUserId: string, toUserId: string): void {
-  const messages = getMessages();
-  let changed = false;
-  messages.forEach(m => {
-    if (m.from_user_id === fromUserId && m.to_user_id === toUserId && !m.read) {
-      m.read = true;
-      changed = true;
-    }
-  });
-  if (changed) writeJsonFile('messages.json', messages);
-}
-
-export function getUnreadCount(toUserId: string): Record<string, number> {
-  const messages = getMessages();
-  const counts: Record<string, number> = {};
-  messages.forEach(m => {
-    if (m.to_user_id === toUserId && !m.read) {
-      counts[m.from_user_id] = (counts[m.from_user_id] || 0) + 1;
-    }
-  });
-  return counts;
-}
-
-// ─── Online Presence ──────────────────────────────────────────
-
-function readPresence(): Record<string, string> {
-  ensureDataDir();
-  const filepath = path.join(DATA_DIR, 'online_presence.json');
-  if (!fs.existsSync(filepath)) {
-    fs.writeFileSync(filepath, JSON.stringify({}));
-    return {};
-  }
-  try {
-    return JSON.parse(fs.readFileSync(filepath, 'utf-8'));
-  } catch {
-    return {};
-  }
-}
-
-function writePresence(data: Record<string, string>): void {
-  ensureDataDir();
-  const filepath = path.join(DATA_DIR, 'online_presence.json');
-  fs.writeFileSync(filepath, JSON.stringify(data));
-}
-
-export function updatePresence(userId: string): void {
-  const presence = readPresence();
-  presence[userId] = new Date().toISOString();
-  writePresence(presence);
-}
-
-export function getOnlineUsers(thresholdSeconds = 30): string[] {
-  const presence = readPresence();
-  const threshold = new Date(Date.now() - thresholdSeconds * 1000);
-  return Object.entries(presence)
-    .filter(([, lastSeen]) => new Date(lastSeen) > threshold)
-    .map(([userId]) => userId);
-}
