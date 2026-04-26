@@ -174,11 +174,13 @@ export async function GET(req: NextRequest) {
     }
 
     const pdfBytes = await pdfDoc.save();
+    const date = new Date().toISOString().split('T')[0];
+    const filename = `strapped-shipping note-${date}.pdf`;
 
     return new NextResponse(Buffer.from(pdfBytes), {
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'attachment; filename="shipping_notes.pdf"',
+        'Content-Disposition': `attachment; filename="${filename}"`,
       },
     });
 
