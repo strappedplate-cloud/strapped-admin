@@ -1,0 +1,18 @@
+[
+  {
+    "id": "4b78279f-c552-4e04-bd2d-1c48fe84c725",
+    "username": "admin",
+    "password": "$2b$10$bEPqN6qXrR.Zi230VLlaHuxNK.emLQPoUyyXdGLQxzpxjI.Pg3iKO",
+    "name": "Admin Strapped",
+    "role": "admin",
+    "created_at": "2026-04-26T08:31:26.017Z"
+  },
+  {
+    "id": "716a11fd-18cf-42d4-8438-7e9e51b26e7b",
+    "username": "josh",
+    "password": "$2b$10$3Q4xy9DS5oV8jbjK7P5rHON6JbCStRsApbgyeZGa2Tmchxmz1j3YG",
+    "name": "Joshua",
+    "role": "admin",
+    "created_at": "2026-04-26T08:31:26.112Z"
+  }
+]
