@@ -161,7 +161,6 @@ export default function OngoingOrdersPage() {
           <p className="page-subtitle">{filtered.length} active orders</p>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button className="btn btn-secondary" onClick={() => window.open('/api/orders/generate-pdf', '_blank')}>🖨️ Print Shipping</button>
           <button className="btn btn-primary" onClick={() => setShowForm(true)}>✚ Order Baru</button>
         </div>
 
