@@ -48,7 +48,9 @@ export default function OngoingOrdersPage() {
       String(o.nomor_plat || '').toLowerCase().includes(search.toLowerCase()) ||
       String(o.form_detail || '').toLowerCase().includes(search.toLowerCase()) ||
       String(o.channel_pembelian || '').toLowerCase().includes(search.toLowerCase()) ||
+      String(o.production_number || '').toLowerCase().includes(search.toLowerCase()) ||
       formatOrderNumber(o).toLowerCase().includes(search.toLowerCase());
+
     
     return matchSearch;
   });
@@ -168,9 +170,10 @@ export default function OngoingOrdersPage() {
 
       <div className="search-bar" style={{ marginBottom: 20, display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
         <div style={{ flex: 1, position: 'relative', minWidth: '200px' }}>
-          <span className="search-bar-icon" style={{ position: 'absolute', left: 12, top: 10 }}>🔍</span>
+          <span className="search-bar-icon" style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>🔍</span>
           <input 
-            placeholder="Cari nama, plat, channel..." 
+            placeholder="Cari nama, plat, prod #, channel..." 
+
             value={search} 
             onChange={e => setSearch(e.target.value)} 
             style={{ paddingLeft: 36, width: '100%', height: '40px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--bg-secondary)', color: 'white' }}

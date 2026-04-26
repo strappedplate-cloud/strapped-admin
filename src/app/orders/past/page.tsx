@@ -44,7 +44,9 @@ export default function PastOrdersPage() {
       String(o.nama || '').toLowerCase().includes(search.toLowerCase()) ||
       String(o.nomor_plat || '').toLowerCase().includes(search.toLowerCase()) ||
       String(o.form_detail || '').toLowerCase().includes(search.toLowerCase()) ||
+      String(o.production_number || '').toLowerCase().includes(search.toLowerCase()) ||
       formatOrderNumber(o).toLowerCase().includes(search.toLowerCase());
+
       
     if (!matchesSearch) return false;
     
@@ -95,10 +97,11 @@ export default function PastOrdersPage() {
       </div>
 
       <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: 20 }}>
-        <div className="search-bar" style={{ flex: 1, minWidth: '200px', marginBottom: 0 }}>
-          <span className="search-bar-icon">🔍</span>
-          <input placeholder="Cari nama, plat..." value={search} onChange={e => setSearch(e.target.value)} />
+        <div className="search-bar" style={{ flex: 1, minWidth: '200px', marginBottom: 0, position: 'relative' }}>
+          <span className="search-bar-icon" style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>🔍</span>
+          <input placeholder="Cari nama, plat, prod #..." value={search} onChange={e => setSearch(e.target.value)} style={{ paddingLeft: 36, width: '100%' }} />
         </div>
+
         
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           <input 

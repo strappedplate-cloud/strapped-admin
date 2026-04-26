@@ -79,10 +79,11 @@ export default function ResellersPage() {
         <button className="btn btn-primary" onClick={() => { setForm({ nama: '', no_hp: '', alamat: '', channel: '', notes: '' }); setEditing(null); setShowForm(true); }}>✚ Tambah Reseller</button>
       </div>
 
-      <div className="search-bar" style={{ marginBottom: 20 }}>
-        <span className="search-bar-icon">🔍</span>
-        <input placeholder="Cari nama, channel..." value={search} onChange={e => setSearch(e.target.value)} />
+      <div className="search-bar" style={{ marginBottom: 20, position: 'relative' }}>
+        <span className="search-bar-icon" style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>🔍</span>
+        <input placeholder="Cari nama, channel..." value={search} onChange={e => setSearch(e.target.value)} style={{ paddingLeft: 36 }} />
       </div>
+
 
       {loading ? (
         <div className="empty-state"><div className="empty-state-icon">⏳</div><div className="empty-state-title">Loading...</div></div>
