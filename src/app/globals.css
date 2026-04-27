@@ -915,6 +915,28 @@ select {
   text-align: center;
 }
 
+.form-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.form-checkbox-group input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+
+.form-checkbox-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
 /* ─── Coming Soon ──────────────────────────── */
 
 .coming-soon {

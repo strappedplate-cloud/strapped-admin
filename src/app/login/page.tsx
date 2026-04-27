@@ -64,6 +64,12 @@ export default function LoginPage() {
                 required
               />
             </div>
+            <div className="form-checkbox-group">
+              <input type="checkbox" id="remember" defaultChecked />
+              <label htmlFor="remember" className="form-checkbox-label">
+                Ingat saya selama 1 minggu
+              </label>
+            </div>
             <button
               type="submit"
               className="btn btn-primary"
