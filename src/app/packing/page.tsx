@@ -164,28 +164,16 @@ export default function PackingPage() {
               <div className="packing-grid">
                 {packedOrders.map(order => (
                   <div className="packing-card" key={order.id}>
-                    <div className="packing-card-header">
-                      <div className="packing-card-name" style={{ color: 'var(--accent)', fontWeight: 700 }}>{order.nomor_plat || 'NO DESIGN'}</div>
-                      <div style={{ fontSize: '11px', color: 'var(--text-tertiary)' }}>{order.nama}</div>
+                    <div style={{ marginBottom: '10px', fontSize: '15px' }}>
+                      <span style={{ fontWeight: 700, color: 'white', marginRight: '8px' }}>{order.nama}</span>
+                      <span style={{ fontWeight: 700, color: 'var(--accent)' }}>{order.nomor_plat || 'NO DESIGN'}</span>
                     </div>
-                    <div className="packing-card-field">
-                      <div className="packing-card-label">Detail</div>
-                      <div className="packing-card-value">{order.form_detail}</div>
-                    </div>
-                    <div className="packing-card-field">
-                      <div className="packing-card-label">Ukuran</div>
-                      <div className="packing-card-value">{order.ukuran_plat || '—'}</div>
-                    </div>
-                    <div className="packing-card-field">
-                      <div className="packing-card-label">Bundling</div>
-                      <div className="packing-card-value">{order.jenis_bundling || '—'}</div>
-                    </div>
-                    <div className="packing-card-field">
-                      <div className="packing-card-label">Alamat</div>
-                      <div className="packing-card-value" style={{ fontSize: '11px' }}>{order.alamat_pengiriman || '—'}</div>
-                    </div>
+                    <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '4px' }}>{order.ukuran_plat || '—'}</div>
+                    <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '4px' }}>{order.jenis_bundling || '—'}</div>
+                    <div style={{ fontSize: '12px', color: 'var(--text-tertiary)', lineHeight: '1.5', marginTop: '8px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '8px' }}>{order.alamat_pengiriman || '—'}</div>
                   </div>
                 ))}
+
               </div>
             </div>
           )}

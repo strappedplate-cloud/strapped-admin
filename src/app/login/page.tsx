@@ -67,7 +67,7 @@ export default function LoginPage() {
             <div className="form-checkbox-group">
               <input type="checkbox" id="remember" defaultChecked />
               <label htmlFor="remember" className="form-checkbox-label">
-                Ingat saya selama 1 minggu
+                Remember this device
               </label>
             </div>
             <button

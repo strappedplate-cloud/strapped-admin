@@ -7,7 +7,8 @@
     "channel": "Whatsapp",
     "notes": "Revive_jdmparts",
     "created_at": "2026-04-27T02:50:01.720Z",
-    "updated_at": "2026-04-27T02:50:36.862Z"
+    "updated_at": "2026-04-27T02:54:27.069Z",
+    "contact_name": "Rico"
   },
   {
     "id": "3d7dd7c7-c1f7-473d-9573-06b8328cf775",
@@ -17,7 +18,8 @@
     "channel": "Whatsapp",
     "notes": "",
     "created_at": "2026-04-27T02:52:14.834Z",
-    "updated_at": "2026-04-27T02:52:19.630Z"
+    "updated_at": "2026-04-27T02:54:32.462Z",
+    "contact_name": "Steven"
   },
   {
     "id": "5c1b276b-d687-4efc-afcc-b1bbe83cf57b",
@@ -27,6 +29,49 @@
     "channel": "Whatsapp",
     "notes": "",
     "created_at": "2026-04-27T02:53:04.217Z",
-    "updated_at": "2026-04-27T02:53:04.217Z"
+    "updated_at": "2026-04-27T02:54:39.557Z",
+    "contact_name": "Irvine"
+  },
+  {
+    "id": "08346af2-2175-4859-9e9e-f85fb13a7ad3",
+    "nama": "GHST Automotive",
+    "no_hp": "081297687743",
+    "alamat": "Ruko Bavaria, Jl. Fatmawati No.37, Kelapa Dua, Tangerang Regency, Banten 15810",
+    "channel": "Whatsapp",
+    "notes": "",
+    "created_at": "2026-04-27T02:55:57.872Z",
+    "updated_at": "2026-04-27T02:56:04.035Z",
+    "contact_name": "Kiki"
+  },
+  {
+    "id": "ac713933-db7e-42ae-8ebb-52ff517fb845",
+    "nama": "Details Mafia",
+    "no_hp": "0858-8877-9000",
+    "alamat": "Bavaria Grande, Jl. Fatmawati No.6, Klp. Dua, Kecamatan Kelapa Dua, Kabupaten Tangerang, Banten 15810",
+    "channel": "Instagram",
+    "notes": "@braann17",
+    "created_at": "2026-04-27T02:56:50.958Z",
+    "updated_at": "2026-04-27T02:57:00.944Z",
+    "contact_name": "Brandon"
+  },
+  {
+    "id": "a4107d5d-8698-4f25-89b1-d0b6c455755b",
+    "nama": "Genesis Auto Care",
+    "no_hp": "085922937993",
+    "alamat": "Jl. Danau Singkarak No.4c, Helvetia Tim., Kec. Medan Helvetia, Kota Medan, Sumatera Utara 20117",
+    "channel": "Whatsapp",
+    "notes": "",
+    "created_at": "2026-04-27T02:57:36.115Z",
+    "updated_at": "2026-04-27T02:57:36.115Z"
+  },
+  {
+    "id": "9f4a59ae-94b2-4cf7-94dc-310fb587a3a3",
+    "nama": "Temen Modif",
+    "no_hp": "0813-2769-0505",
+    "alamat": "Jalan Dokter Cipto No.117, Karangturi, Kec. Semarang Tim., Kota Semarang, Jawa Tengah 50124",
+    "channel": "Instagram",
+    "notes": "@temenmodif.id",
+    "created_at": "2026-04-27T02:58:24.663Z",
+    "updated_at": "2026-04-27T02:58:24.663Z"
   }
 ]
