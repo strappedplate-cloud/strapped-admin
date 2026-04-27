@@ -198,7 +198,41 @@ input:focus, textarea:focus, select:focus {
   color: var(--text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  padding: 16px 12px 8px;
+  padding: 12px 12px 8px;
+}
+
+.sidebar-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  padding: 0;
+}
+
+.sidebar-section-header:hover {
+  opacity: 0.8;
+}
+
+.sidebar-section-header .chevron {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  margin-right: 12px;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.sidebar-section-header .chevron.collapsed {
+  transform: rotate(-90deg);
+}
+
+.sidebar-category-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .sidebar-link {

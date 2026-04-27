@@ -103,10 +103,10 @@ export default function ResellersPage() {
         <div className="data-table-wrapper" style={{ overflowX: 'auto' }}>
           <table className="data-table">
             <thead>
-              <tr>
                 <th>Nama Bengkel</th>
-                <th>Nama</th>
+                <th>Nama PIC</th>
                 <th>No. HP</th>
+
                 <th>Channel</th>
 
                 <th>Alamat</th>
@@ -165,9 +165,10 @@ export default function ResellersPage() {
                     <input value={form.nama} onChange={e => setForm({ ...form, nama: e.target.value })} required placeholder="Nama bengkel/store" />
                   </div>
                   <div className="form-group full-width">
-                    <label className="form-label">Nama (Person)</label>
-                    <input value={form.contact_name} onChange={e => setForm({ ...form, contact_name: e.target.value })} placeholder="Nama orang/pemilik" />
+                    <label className="form-label">Nama PIC</label>
+                    <input value={form.contact_name} onChange={e => setForm({ ...form, contact_name: e.target.value })} placeholder="Nama penanggung jawab" />
                   </div>
+
 
                   <div className="form-group">
                     <label className="form-label">No. HP</label>

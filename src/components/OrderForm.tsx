@@ -38,6 +38,31 @@ export default function OrderForm({ onSubmit, onCancel, initialData }: OrderForm
     ...initialData,
   });
 
+  const [resellers, setResellers] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    fetch('/api/resellers')
+      .then(res => res.json())
+      .then(data => setResellers(data))
+      .catch(err => console.error('Failed to fetch resellers:', err));
+  }, []);
+
+  const handleResellerChange = (resellerName: string) => {
+    const reseller = resellers.find(r => r.nama === resellerName);
+    if (reseller) {
+      setForm(prev => ({
+        ...prev,
+        reseller_name: resellerName,
+        nama_penerima: reseller.contact_name || reseller.nama,
+        no_hp: reseller.no_hp,
+        alamat_pengiriman: `${reseller.nama}\n${reseller.alamat}`.trim()
+      }));
+    } else {
+      setForm(prev => ({ ...prev, reseller_name: resellerName }));
+    }
+  };
+
+
 
   const [showQuickInput, setShowQuickInput] = React.useState(false);
   const [quickInputText, setQuickInputText] = React.useState('');
@@ -167,9 +192,18 @@ export default function OrderForm({ onSubmit, onCancel, initialData }: OrderForm
               {form.channel_pembelian === 'Reseller' && (
                 <div className="form-group">
                   <label className="form-label">Nama Reseller</label>
-                  <input value={form.reseller_name || ''} onChange={e => setForm({ ...form, reseller_name: e.target.value })} placeholder="Masukkan nama reseller" />
+                  <select 
+                    value={form.reseller_name || ''} 
+                    onChange={e => handleResellerChange(e.target.value)}
+                  >
+                    <option value="">Pilih reseller...</option>
+                    {resellers.map(r => (
+                      <option key={r.id} value={r.nama}>{r.nama}</option>
+                    ))}
+                  </select>
                 </div>
               )}
+
 
 
               {/* 3. Payment */}
