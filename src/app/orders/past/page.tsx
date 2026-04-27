@@ -24,6 +24,8 @@ export default function PastOrdersPage() {
   const [filterProdNum, setFilterProdNum] = React.useState('');
   const [filterChannel, setFilterChannel] = React.useState('');
   const [loading, setLoading] = React.useState(true);
+  const [showExportModal, setShowExportModal] = React.useState(false);
+  const [exportSettings, setExportSettings] = React.useState({ type: 'month' as 'month' | 'year', month: new Date().getMonth() + 1, year: new Date().getFullYear() });
 
 
   const fetchOrders = async () => {
@@ -89,6 +91,68 @@ export default function PastOrdersPage() {
     fetchOrders();
   };
 
+  const exportToCSV = () => {
+    const dataToExport = orders.filter(o => {
+      const d = new Date(o.tanggal_pembelian);
+      if (exportSettings.type === 'month') {
+        return (d.getMonth() + 1) === exportSettings.month && d.getFullYear() === exportSettings.year;
+      } else {
+        return d.getFullYear() === exportSettings.year;
+      }
+    });
+
+    if (dataToExport.length === 0) {
+      alert('Tidak ada data untuk periode ini.');
+      return;
+    }
+
+    const headers = [
+      'Order Number', 'Tanggal', 'Nama', 'Channel', 'Payment', 
+      'Status', 'No Plat', 'Form Detail', 'Ukuran', 'Bundling', 
+      'Editor', 'Prod #', 'Penerima', 'No HP', 'Alamat'
+    ];
+
+    const rows = dataToExport.map(o => [
+      formatOrderNumber(o),
+      o.tanggal_pembelian,
+      o.nama,
+      o.channel_pembelian,
+      o.payment_status,
+      ORDER_STATUS_LABELS[o.status],
+      o.nomor_plat,
+      o.form_detail,
+      o.ukuran_plat,
+      o.jenis_bundling,
+      o.editor_name,
+      o.production_number,
+      o.nama_penerima || o.nama,
+      o.no_hp,
+      (o.alamat_pengiriman || '').replace(/\n/g, ' ')
+    ].map(val => `"${String(val || '').replace(/"/g, '""')}"`).join(','));
+
+    const csvContent = "\uFEFF" + [headers.join(','), ...rows].join('\r\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const filename = exportSettings.type === 'month' 
+      ? `strapped past order- ${exportSettings.year}-${String(exportSettings.month).padStart(2, '0')}.csv`
+      : `strapped past order- ${exportSettings.year}.csv`;
+      
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    
+    // Clean up
+    setTimeout(() => {
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    }, 100);
+    
+    setShowExportModal(false);
+  };
+
   return (
     <main className="main-content">
       <div className="page-header">
@@ -150,6 +214,13 @@ export default function PastOrdersPage() {
             }}
           >
             Reset
+          </button>
+          <button 
+            className="btn btn-primary btn-sm" 
+            style={{ height: '38px', gap: '6px', display: 'flex', alignItems: 'center' }}
+            onClick={() => setShowExportModal(true)}
+          >
+            <span>📥</span> Export
           </button>
         </div>
       </div>
@@ -234,6 +305,56 @@ export default function PastOrdersPage() {
 
       {selectedOrder && (
         <OrderModal order={selectedOrder} onClose={() => setSelectedOrder(null)} onStatusChange={handleStatusChange} onSave={handleSave} onDelete={handleDelete} />
+      )}
+
+      {showExportModal && (
+        <div className="modal-overlay" onClick={() => setShowExportModal(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()} style={{ maxWidth: 400 }}>
+            <div className="modal-header">
+              <div className="modal-title">Export Orders</div>
+              <button className="modal-close" onClick={() => setShowExportModal(false)}>×</button>
+            </div>
+            <div className="modal-body">
+              <div className="form-group" style={{ marginBottom: 16 }}>
+                <label className="form-label">Tipe Export</label>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+                    <input type="radio" checked={exportSettings.type === 'month'} onChange={() => setExportSettings({ ...exportSettings, type: 'month' })} />
+                    Bulanan
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+                    <input type="radio" checked={exportSettings.type === 'year'} onChange={() => setExportSettings({ ...exportSettings, type: 'year' })} />
+                    Tahunan
+                  </label>
+                </div>
+              </div>
+              
+              <div style={{ display: 'flex', gap: '12px' }}>
+                {exportSettings.type === 'month' && (
+                  <div className="form-group" style={{ flex: 1 }}>
+                    <label className="form-label">Bulan</label>
+                    <select value={exportSettings.month} onChange={e => setExportSettings({ ...exportSettings, month: parseInt(e.target.value) })}>
+                      {['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'].map((m, i) => (
+                        <option key={m} value={i + 1}>{m}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+                <div className="form-group" style={{ flex: 1 }}>
+                  <label className="form-label">Tahun</label>
+                  <input type="number" value={exportSettings.year} onChange={e => setExportSettings({ ...exportSettings, year: parseInt(e.target.value) })} />
+                </div>
+              </div>
+              <p style={{ marginTop: 12, fontSize: 12, color: 'var(--text-tertiary)' }}>
+                * Mengambil data dari kategori Past Orders saja.
+              </p>
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-secondary" onClick={() => setShowExportModal(false)}>Batal</button>
+              <button className="btn btn-primary" onClick={exportToCSV}>Download CSV</button>
+            </div>
+          </div>
+        </div>
       )}
     </main>
   );
