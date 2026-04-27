@@ -103,6 +103,7 @@ export default function ResellersPage() {
         <div className="data-table-wrapper" style={{ overflowX: 'auto' }}>
           <table className="data-table">
             <thead>
+              <tr>
                 <th>Nama Bengkel</th>
                 <th>Nama PIC</th>
                 <th>No. HP</th>
