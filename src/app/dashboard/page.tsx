@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import {
   DragDropContext,
   Droppable,
@@ -14,7 +14,7 @@ import { useSession } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import AccessDenied from '@/components/AccessDenied';
 
-export default function DashboardPage() {
+function DashboardContent() {
   const { data: session } = useSession();
   const searchParams = useSearchParams();
   
@@ -268,5 +268,20 @@ export default function DashboardPage() {
         />
       )}
     </main>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={
+      <main className="main-content">
+        <div className="empty-state">
+          <div className="empty-state-icon">⏳</div>
+          <div className="empty-state-title">Loading dashboard...</div>
+        </div>
+      </main>
+    }>
+      <DashboardContent />
+    </Suspense>
   );
 }
