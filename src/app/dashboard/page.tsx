@@ -11,10 +11,12 @@ import { Order, OrderStatus, ALL_STATUSES, ORDER_STATUS_LABELS, ORDER_STATUS_COL
 import OrderModal from '@/components/OrderModal';
 import OrderForm from '@/components/OrderForm';
 import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 import AccessDenied from '@/components/AccessDenied';
 
 export default function DashboardPage() {
   const { data: session } = useSession();
+  const searchParams = useSearchParams();
   
   if (session?.user && (session.user as any).role !== 'admin' && !(session.user as any).permissions?.includes('/dashboard')) {
     return <main className="main-content"><AccessDenied /></main>;
@@ -43,6 +45,12 @@ export default function DashboardPage() {
   React.useEffect(() => {
     fetchOrders();
   }, [fetchOrders]);
+
+  React.useEffect(() => {
+    if (searchParams.get('new') === 'true') {
+      setShowForm(true);
+    }
+  }, [searchParams]);
 
   const ordersByStatus = React.useMemo(() => {
     const map: Record<OrderStatus, Order[]> = {} as Record<OrderStatus, Order[]>;

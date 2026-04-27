@@ -229,10 +229,20 @@ input:focus, textarea:focus, select:focus {
   transform: rotate(-90deg);
 }
 
-.sidebar-category-items {
+.sidebar-category-items, .mobile-category-items {
   display: flex;
   flex-direction: column;
   gap: 2px;
+}
+
+.desktop-nav-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mobile-bottom-nav {
+  display: none;
 }
 
 .sidebar-link {
@@ -1111,17 +1121,27 @@ select {
     background: var(--bg-primary); /* Less transparent to hide content scrolling behind */
   }
   
-  .sidebar-header, .sidebar-footer, .sidebar-section-label {
+  .sidebar .sidebar-header, 
+  .sidebar .sidebar-footer {
     display: none;
   }
   
   .sidebar-nav {
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    display: flex;
     padding: 0;
     flex: 1;
     overflow: hidden;
+  }
+
+  .desktop-nav-items {
+    display: none;
+  }
+
+  .mobile-bottom-nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
   }
   
   .sidebar-link {
@@ -1133,6 +1153,7 @@ select {
     flex: 1;
     text-align: center;
     border-radius: 0;
+    height: 100%;
   }
   
   .sidebar-link:hover {
@@ -1153,19 +1174,10 @@ select {
     display: none;
   }
 
-  .sidebar-nav a[href="/inventory"],
-  .sidebar-nav a[href="/accounting"] {
-    display: none;
-  }
-
   .main-content {
     margin-left: 0;
     margin-bottom: 70px;
     padding: 16px 12px;
-  }
-
-  .nav-item-team {
-    display: none !important;
   }
 
   .mobile-nav-trigger {
@@ -1307,6 +1319,30 @@ select {
   font-size: 20px;
   width: 24px;
   text-align: center;
+}
+
+.mobile-menu-section {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.mobile-menu-section .sidebar-section-label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.mobile-menu-section .chevron {
+  color: var(--text-secondary);
+}
+
+.mobile-category-items {
+  padding-left: 12px;
+  border-left: 1px solid var(--border);
+  margin-left: 24px;
+  margin-top: 4px;
+  margin-bottom: 8px;
 }
 
 @media (max-width: 768px) {

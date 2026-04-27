@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import { useState } from 'react';
 
@@ -39,6 +39,7 @@ const FUTURE_ITEMS = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({});
@@ -58,6 +59,11 @@ export default function Sidebar() {
     }));
   };
 
+  const handleAddOrder = () => {
+    router.push('/dashboard?new=true');
+    setIsOpen(false);
+  };
+
   if (pathname === '/login') return null;
 
   return (
@@ -67,7 +73,7 @@ export default function Sidebar() {
         <div className="mobile-menu-content" onClick={e => e.stopPropagation()}>
           <div className="mobile-menu-header">
             <div className="sidebar-logo">S</div>
-            <div className="sidebar-title">Menu Utama</div>
+            <div className="sidebar-title">Strapped Admin</div>
             <button className="mobile-menu-close" onClick={() => setIsOpen(false)}>×</button>
           </div>
           <div className="mobile-menu-list">
@@ -80,24 +86,42 @@ export default function Sidebar() {
               Dashboard
             </Link>
 
-            {NAVIGATION.map(section => (
-              <div key={section.id} className="mobile-menu-section">
-                <div className="sidebar-section-label" style={{ padding: '16px 12px 8px' }}>{section.category}</div>
-                {section.items.filter(item => hasAccess(item)).map(item => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`mobile-menu-link ${pathname === item.href ? 'active' : ''}`}
-                    onClick={() => setIsOpen(false)}
+            {NAVIGATION.map(section => {
+              const visibleItems = section.items.filter(item => hasAccess(item));
+              if (visibleItems.length === 0) return null;
+              const isCollapsed = collapsedSections[`mobile-${section.id}`];
+
+              return (
+                <div key={section.id} className="mobile-menu-section">
+                  <button 
+                    className="sidebar-section-header"
+                    style={{ padding: '8px 16px' }}
+                    onClick={() => toggleSection(`mobile-${section.id}`)}
                   >
-                    <span className="icon">{item.icon}</span>
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            ))}
+                    <div className="sidebar-section-label" style={{ padding: 0 }}>{section.category}</div>
+                    <span className={`chevron ${isCollapsed ? 'collapsed' : ''}`}>▾</span>
+                  </button>
+                  
+                  {!isCollapsed && (
+                    <div className="mobile-category-items">
+                      {visibleItems.map(item => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className={`mobile-menu-link ${pathname === item.href ? 'active' : ''}`}
+                          onClick={() => setIsOpen(false)}
+                        >
+                          <span className="icon">{item.icon}</span>
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
             
-            <div className="sidebar-section-label" style={{ padding: '20px 12px 10px' }}>Lainnya</div>
+            <div className="sidebar-section-label" style={{ padding: '20px 16px 10px' }}>Lainnya</div>
             <button 
               onClick={() => signOut({ callbackUrl: '/login' })}
               className="mobile-menu-link"
@@ -120,58 +144,77 @@ export default function Sidebar() {
         </div>
 
         <nav className="sidebar-nav">
-          <Link
-            href="/dashboard"
-            className={`sidebar-link ${pathname === '/dashboard' ? 'active' : ''}`}
-          >
-            <span className="icon">⊞</span>
-            Dashboard
-          </Link>
+          {/* Desktop Only items */}
+          <div className="desktop-nav-items">
+            <Link
+              href="/dashboard"
+              className={`sidebar-link ${pathname === '/dashboard' ? 'active' : ''}`}
+            >
+              <span className="icon">⊞</span>
+              Dashboard
+            </Link>
 
-          {NAVIGATION.map(section => {
-            const visibleItems = section.items.filter(item => hasAccess(item));
-            if (visibleItems.length === 0) return null;
+            {NAVIGATION.map(section => {
+              const visibleItems = section.items.filter(item => hasAccess(item));
+              if (visibleItems.length === 0) return null;
+              
+              const isCollapsed = collapsedSections[section.id];
+
+              return (
+                <div key={section.id} className="sidebar-category">
+                  <button 
+                    className="sidebar-section-header"
+                    onClick={() => toggleSection(section.id)}
+                  >
+                    <span className="sidebar-section-label">{section.category}</span>
+                    <span className={`chevron ${isCollapsed ? 'collapsed' : ''}`}>▾</span>
+                  </button>
+                  
+                  {!isCollapsed && (
+                    <div className="sidebar-category-items">
+                      {visibleItems.map(item => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className={`sidebar-link ${pathname === item.href ? 'active' : ''}`}
+                        >
+                          <span className="icon">{item.icon}</span>
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Mobile Bottom Nav items */}
+          <div className="mobile-bottom-nav">
+            <Link
+              href="/dashboard"
+              className={`sidebar-link ${pathname === '/dashboard' ? 'active' : ''}`}
+            >
+              <span className="icon">⊞</span>
+              Dashboard
+            </Link>
             
-            const isCollapsed = collapsedSections[section.id];
+            <button className="sidebar-link" onClick={handleAddOrder}>
+              <span className="icon">✚</span>
+              Order Baru
+            </button>
 
-            return (
-              <div key={section.id} className="sidebar-category">
-                <button 
-                  className="sidebar-section-header"
-                  onClick={() => toggleSection(section.id)}
-                >
-                  <span className="sidebar-section-label">{section.category}</span>
-                  <span className={`chevron ${isCollapsed ? 'collapsed' : ''}`}>▾</span>
-                </button>
-                
-                {!isCollapsed && (
-                  <div className="sidebar-category-items">
-                    {visibleItems.map(item => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className={`sidebar-link ${pathname === item.href ? 'active' : ''}`}
-                      >
-                        <span className="icon">{item.icon}</span>
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+            <button className="sidebar-link mobile-nav-trigger" onClick={() => setIsOpen(true)}>
+              <span className="icon">☰</span>
+              Menu
+            </button>
+          </div>
 
-          <button className="sidebar-link mobile-nav-trigger" onClick={() => setIsOpen(true)}>
-            <span className="icon">☰</span>
-            Menu
-          </button>
-
-          <div className="sidebar-section-label">Coming Soon</div>
+          <div className="sidebar-section-label desktop-nav-items">Coming Soon</div>
           {FUTURE_ITEMS.map(item => (
             <div
               key={item.href}
-              className="sidebar-link disabled"
+              className="sidebar-link disabled desktop-nav-items"
               style={{ opacity: 0.6, cursor: 'default' }}
             >
               <span className="icon">{item.icon}</span>
@@ -204,4 +247,3 @@ export default function Sidebar() {
     </>
   );
 }
-
