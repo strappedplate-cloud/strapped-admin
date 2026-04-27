@@ -1,12 +1,32 @@
 [
   {
-    "id": "c215232b-93dc-4a46-859c-b65a4d0cfbab",
-    "nama": "Toko Plat Jaya",
-    "no_hp": "081111222333",
-    "alamat": "Jl. Mangga Dua No. 10, Jakarta",
-    "channel": "WhatsApp",
-    "notes": "Reseller aktif sejak 2023",
-    "created_at": "2026-04-26T08:31:26.112Z",
-    "updated_at": "2026-04-26T08:31:26.112Z"
+    "id": "2e9697ca-dd3b-4487-8204-1e0dd25698fb",
+    "nama": "RCA Store",
+    "no_hp": "0822-4217-9892",
+    "alamat": "Mall MGK Lantai UG Blok A11 No 2 (Rca Store Pemasangan Parkiran Gedung P1, RW.10, Gn. Sahari Sel., Kec. Kemayoran, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10620",
+    "channel": "Whatsapp",
+    "notes": "Revive_jdmparts",
+    "created_at": "2026-04-27T02:50:01.720Z",
+    "updated_at": "2026-04-27T02:50:36.862Z"
+  },
+  {
+    "id": "3d7dd7c7-c1f7-473d-9573-06b8328cf775",
+    "nama": "Tenka Details",
+    "no_hp": "081334666549",
+    "alamat": "Jl. Dr. M. Isa No.24, Duku, Kec. Ilir Tim. II, Kota Palembang, Sumatera Selatan 30163",
+    "channel": "Whatsapp",
+    "notes": "",
+    "created_at": "2026-04-27T02:52:14.834Z",
+    "updated_at": "2026-04-27T02:52:19.630Z"
+  },
+  {
+    "id": "5c1b276b-d687-4efc-afcc-b1bbe83cf57b",
+    "nama": "2Step Garage",
+    "no_hp": "089648807066",
+    "alamat": "Ruko Bolsena, Jl. Newton Raya Bolsena Gading Serpong Blok E12, Curug Sangereng, Kelapa Dua, Tangerang Regency, Banten 15810",
+    "channel": "Whatsapp",
+    "notes": "",
+    "created_at": "2026-04-27T02:53:04.217Z",
+    "updated_at": "2026-04-27T02:53:04.217Z"
   }
 ]

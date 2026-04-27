@@ -115,7 +115,9 @@ export interface User {
 export interface Reseller {
   id: string;
   nama: string;
+  contact_name?: string;
   no_hp: string;
+
   alamat: string;
   channel: string;
   notes: string;

@@ -16,7 +16,8 @@ export default function ResellersPage() {
   const [showForm, setShowForm] = React.useState(false);
   const [editing, setEditing] = React.useState<Reseller | null>(null);
   const [search, setSearch] = React.useState('');
-  const [form, setForm] = React.useState({ nama: '', no_hp: '', alamat: '', channel: '', notes: '' });
+  const [form, setForm] = React.useState({ nama: '', contact_name: '', no_hp: '', alamat: '', channel: '', notes: '' });
+
   const [loading, setLoading] = React.useState(true);
 
   const fetchResellers = async () => {
@@ -31,8 +32,10 @@ export default function ResellersPage() {
 
   const filtered = resellers.filter(r =>
     r.nama.toLowerCase().includes(search.toLowerCase()) ||
+    (r.contact_name || '').toLowerCase().includes(search.toLowerCase()) ||
     r.channel.toLowerCase().includes(search.toLowerCase())
   );
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,15 +56,17 @@ export default function ResellersPage() {
     }
     setShowForm(false);
     setEditing(null);
-    setForm({ nama: '', no_hp: '', alamat: '', channel: '', notes: '' });
+    setForm({ nama: '', contact_name: '', no_hp: '', alamat: '', channel: '', notes: '' });
     fetchResellers();
+
   };
 
   const handleEdit = (r: Reseller) => {
-    setForm({ nama: r.nama, no_hp: r.no_hp, alamat: r.alamat, channel: r.channel, notes: r.notes });
+    setForm({ nama: r.nama, contact_name: r.contact_name || '', no_hp: r.no_hp, alamat: r.alamat, channel: r.channel, notes: r.notes });
     setEditing(r);
     setShowForm(true);
   };
+
 
   const handleDelete = async (id: string) => {
     if (!window.confirm('Hapus reseller ini?')) return;
@@ -76,7 +81,8 @@ export default function ResellersPage() {
           <h1 className="page-title">Reseller List</h1>
           <p className="page-subtitle">{resellers.length} resellers terdaftar</p>
         </div>
-        <button className="btn btn-primary" onClick={() => { setForm({ nama: '', no_hp: '', alamat: '', channel: '', notes: '' }); setEditing(null); setShowForm(true); }}>✚ Tambah Reseller</button>
+        <button className="btn btn-primary" onClick={() => { setForm({ nama: '', contact_name: '', no_hp: '', alamat: '', channel: '', notes: '' }); setEditing(null); setShowForm(true); }}>✚ Tambah Reseller</button>
+
       </div>
 
       <div className="search-bar" style={{ marginBottom: 20, position: 'relative' }}>
@@ -98,9 +104,11 @@ export default function ResellersPage() {
           <table className="data-table">
             <thead>
               <tr>
+                <th>Nama Bengkel</th>
                 <th>Nama</th>
                 <th>No. HP</th>
                 <th>Channel</th>
+
                 <th>Alamat</th>
                 <th>Notes</th>
                 <th style={{ width: 100 }}>Aksi</th>
@@ -110,8 +118,10 @@ export default function ResellersPage() {
               {filtered.map(r => (
                 <tr key={r.id}>
                   <td style={{ fontWeight: 600 }}>{r.nama}</td>
+                  <td>{r.contact_name || '—'}</td>
                   <td>{r.no_hp || '—'}</td>
                   <td>{r.channel || '—'}</td>
+
                   <td style={{ maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.alamat || '—'}</td>
                   <td style={{ maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.notes || '—'}</td>
                   <td>
@@ -138,9 +148,14 @@ export default function ResellersPage() {
               <div className="modal-body">
                 <div className="form-grid">
                   <div className="form-group full-width">
-                    <label className="form-label">Nama *</label>
-                    <input value={form.nama} onChange={e => setForm({ ...form, nama: e.target.value })} required placeholder="Nama reseller" />
+                    <label className="form-label">Nama Bengkel *</label>
+                    <input value={form.nama} onChange={e => setForm({ ...form, nama: e.target.value })} required placeholder="Nama bengkel/store" />
                   </div>
+                  <div className="form-group full-width">
+                    <label className="form-label">Nama (Person)</label>
+                    <input value={form.contact_name} onChange={e => setForm({ ...form, contact_name: e.target.value })} placeholder="Nama orang/pemilik" />
+                  </div>
+
                   <div className="form-group">
                     <label className="form-label">No. HP</label>
                     <input value={form.no_hp} onChange={e => setForm({ ...form, no_hp: e.target.value })} placeholder="08xxxxxxxxxx" />
