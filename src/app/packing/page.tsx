@@ -113,50 +113,45 @@ export default function PackingPage() {
               <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 12 }}>
                 📋 Packing Needs
               </h3>
-              <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
-                
-                {/* Packaging Table */}
-                <table className="data-table" style={{ width: '240px', background: 'var(--bg-secondary)' }}>
+              <div style={{ overflowX: 'auto', background: 'var(--bg-secondary)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+                <table className="data-table" style={{ minWidth: '600px' }}>
                   <thead>
-                    <tr><th colSpan={2} style={{ textAlign: 'center', background: 'var(--bg-tertiary)' }}>Packaging</th></tr>
+                    <tr>
+                      <th colSpan={4} style={{ textAlign: 'center', background: 'var(--bg-tertiary)', borderRight: '1px solid var(--border)' }}>Packaging</th>
+                      <th colSpan={2} style={{ textAlign: 'center', background: 'var(--bg-tertiary)', borderRight: '1px solid var(--border)' }}>Velcro</th>
+                      <th colSpan={3} style={{ textAlign: 'center', background: 'var(--bg-tertiary)' }}>Cards & Sticker</th>
+                    </tr>
+                    <tr style={{ background: 'rgba(255,255,255,0.02)' }}>
+                      <th style={{ fontSize: '10px' }}>Indo</th>
+                      <th style={{ fontSize: '10px' }}>Japan</th>
+                      <th style={{ fontSize: '10px' }}>Keychain</th>
+                      <th style={{ fontSize: '10px', borderRight: '1px solid var(--border)' }}>Custom</th>
+                      <th style={{ fontSize: '10px' }}>Indo</th>
+                      <th style={{ fontSize: '10px', borderRight: '1px solid var(--border)' }}>Japan</th>
+                      <th style={{ fontSize: '10px' }}>Thanks</th>
+                      <th style={{ fontSize: '10px' }}>Sticker</th>
+                      <th style={{ fontSize: '10px' }}>Warranty</th>
+                    </tr>
                   </thead>
                   <tbody>
-                    <tr><td>Indo</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{packIndo}</td></tr>
-                    <tr><td>Japan</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{packJapan}</td></tr>
-                    <tr><td>Keychain</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{packKeychain}</td></tr>
-                    <tr><td>Custom Size</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{packCustom}</td></tr>
+                    <tr style={{ textAlign: 'center' }}>
+                      <td style={{ fontWeight: 700, fontSize: '16px' }}>{packIndo}</td>
+                      <td style={{ fontWeight: 700, fontSize: '16px' }}>{packJapan}</td>
+                      <td style={{ fontWeight: 700, fontSize: '16px' }}>{packKeychain}</td>
+                      <td style={{ fontWeight: 700, fontSize: '16px', borderRight: '1px solid var(--border)' }}>{packCustom}</td>
+                      <td style={{ fontWeight: 700, fontSize: '16px' }}>{velcroIndo}</td>
+                      <td style={{ fontWeight: 700, fontSize: '16px', borderRight: '1px solid var(--border)' }}>{velcroJapan}</td>
+                      <td style={{ fontWeight: 700, fontSize: '16px' }}>{totalCards}</td>
+                      <td style={{ fontWeight: 700, fontSize: '16px' }}>{totalCards}</td>
+                      <td style={{ fontWeight: 700, fontSize: '16px' }}>{qrWarranty}</td>
+                    </tr>
                   </tbody>
                 </table>
-
-                {/* Velcro Table */}
-                <table className="data-table" style={{ width: '240px', background: 'var(--bg-secondary)' }}>
-                  <thead>
-                    <tr><th colSpan={2} style={{ textAlign: 'center', background: 'var(--bg-tertiary)' }}>Velcro</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td>Indo</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{velcroIndo}</td></tr>
-                    <tr><td>Japan</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{velcroJapan}</td></tr>
-                  </tbody>
-                </table>
-
-                {/* Cards & Sticker Table */}
-                <table className="data-table" style={{ width: '240px', background: 'var(--bg-secondary)' }}>
-                  <thead>
-                    <tr><th colSpan={2} style={{ textAlign: 'center', background: 'var(--bg-tertiary)' }}>Cards & Sticker</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td>Thank You</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{totalCards}</td></tr>
-                    <tr><td>Sticker</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{totalCards}</td></tr>
-                    <tr><td>QR Warranty</td><td style={{ textAlign: 'right', fontWeight: 600 }}>{qrWarranty}</td></tr>
-                  </tbody>
-                </table>
-
               </div>
             </div>
           )}
 
           {/* Orders ready to pack */}
-
           {packedOrders.length > 0 && (
             <div style={{ marginBottom: 28 }}>
               <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 12 }}>
@@ -166,7 +161,12 @@ export default function PackingPage() {
                 {packedOrders.map(order => (
                   <div className="packing-card" key={order.id}>
                     <div className="packing-card-header">
-                      <div className="packing-card-name">{order.nama} — {order.form_detail}</div>
+                      <div className="packing-card-name" style={{ color: 'var(--accent)', fontWeight: 700 }}>{order.nomor_plat || 'NO DESIGN'}</div>
+                      <div style={{ fontSize: '11px', color: 'var(--text-tertiary)' }}>{order.nama}</div>
+                    </div>
+                    <div className="packing-card-field">
+                      <div className="packing-card-label">Detail</div>
+                      <div className="packing-card-value">{order.form_detail}</div>
                     </div>
                     <div className="packing-card-field">
                       <div className="packing-card-label">Ukuran</div>
@@ -178,13 +178,14 @@ export default function PackingPage() {
                     </div>
                     <div className="packing-card-field">
                       <div className="packing-card-label">Alamat</div>
-                      <div className="packing-card-value">{order.alamat_pengiriman || '—'}</div>
+                      <div className="packing-card-value" style={{ fontSize: '11px' }}>{order.alamat_pengiriman || '—'}</div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
           )}
+
 
           {/* Packing items */}
           <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 12 }}>
