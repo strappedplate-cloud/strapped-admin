@@ -174,16 +174,14 @@ export default function OrderForm({ onSubmit, onCancel, initialData }: OrderForm
                 <label className="form-label">2. Channel</label>
                 <select value={form.channel_pembelian || ''} onChange={e => setForm({ ...form, channel_pembelian: e.target.value })}>
                   <option value="">Pilih channel...</option>
-                  <option value="Tokopedia">Tokopedia</option>
                   <option value="WhatsApp">WhatsApp</option>
                   <option value="Instagram">Instagram</option>
+                  <option value="Tokopedia / Tiktok Shop">Tokopedia / Tiktok Shop</option>
                   <option value="Shopee">Shopee</option>
-                  <option value="TikTok Shop">TikTok Shop</option>
-                  <option value="Tokopedia/Tiktok">Tokopedia/Tiktok</option>
-                  <option value="Offline Pickup (COD)">Offline Pickup (COD)</option>
-                  <option value="Offline Pickup">Offline Pickup</option>
                   <option value="Reseller">Reseller</option>
-                  <option value="Other">Other</option>
+                  <option value="Offline">Offline</option>
+                  <option value="Event">Event</option>
+
                 </select>
 
               </div>
@@ -203,6 +201,16 @@ export default function OrderForm({ onSubmit, onCancel, initialData }: OrderForm
                   </select>
                 </div>
               )}
+
+              {/* Conditional Event Name */}
+              {form.channel_pembelian === 'Event' && (
+                <div className="form-group">
+                  <label className="form-label">Nama Event</label>
+                  <input value={form.event_name || ''} onChange={e => setForm({ ...form, event_name: e.target.value })} placeholder="Masukkan nama event" />
+                </div>
+              )}
+
+
 
 
 

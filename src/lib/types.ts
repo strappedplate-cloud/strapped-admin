@@ -83,8 +83,10 @@ export interface Order {
   status: OrderStatus;
   editor_name: string;
   production_number: string;
+  event_name?: string;
   
   // Shipping Note
+
   nama_penerima: string;
   no_hp: string;
   alamat_pengiriman: string;
