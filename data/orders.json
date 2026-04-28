@@ -38429,5 +38429,32 @@
     "shipped_at": null,
     "created_at": "2026-04-28T14:29:38.171Z",
     "updated_at": "2026-04-28T14:29:38.171Z"
+  },
+  {
+    "id": "2f118d06-2839-408f-9122-740de4ebc8f8",
+    "form_detail": "Ukuran : Mobil - Indo\nQty : Double (2 pcs)\nWarna Background : Hitam",
+    "nama": "Sean",
+    "tanggal_pembelian": "2026-04-28",
+    "channel_pembelian": "WhatsApp",
+    "jenis_bundling": "Non-Bundle",
+    "ukuran_plat": "Mobil - Indo",
+    "qty": 2,
+    "urutan_order": 1,
+    "status": "not_started",
+    "payment_status": "Have Not Paid",
+    "nomor_plat": "Carbonized",
+    "finishing": "",
+    "revision_note": "",
+    "editor_name": "",
+    "production_number": "",
+    "reseller_name": "",
+    "event_name": "",
+    "nama_penerima": "Sean",
+    "no_hp": "081291422466",
+    "alamat_pengiriman": "",
+    "notes": "",
+    "shipped_at": null,
+    "created_at": "2026-04-28T14:29:39.150Z",
+    "updated_at": "2026-04-28T14:29:39.150Z"
   }
 ]
