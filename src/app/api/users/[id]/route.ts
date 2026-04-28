@@ -14,11 +14,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     
     // Check username uniqueness if changing
     if (body.username) {
-      const existing = getUsers().find(u => u.username === body.username && u.id !== id);
+      const existing = (await getUsers()).find(u => u.username === body.username && u.id !== id);
       if (existing) return NextResponse.json({ error: 'Username already exists' }, { status: 400 });
     }
 
-    const updated = updateUser(id, body);
+    const updated = await updateUser(id, body);
     if (!updated) return NextResponse.json({ error: 'User not found' }, { status: 404 });
     
     const { password, ...rest } = updated;
@@ -31,7 +31,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const success = deleteUser(id);
+    const success = await deleteUser(id);
     if (!success) return NextResponse.json({ error: 'User not found' }, { status: 404 });
     return NextResponse.json({ success: true });
   } catch (err) {

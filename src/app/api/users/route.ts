@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import { User } from '@/lib/types';
 
 export async function GET() {
-  const users = getUsers().map(u => {
+  const users = (await getUsers()).map(u => {
     const { password, ...rest } = u;
     return rest;
   });
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Username and password are required' }, { status: 400 });
     }
 
-    const existing = getUsers().find(u => u.username === body.username);
+    const existing = (await getUsers()).find(u => u.username === body.username);
     if (existing) return NextResponse.json({ error: 'Username already exists' }, { status: 400 });
 
     const hashedPassword = await bcrypt.hash(body.password, 10);
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
       created_at: new Date().toISOString()
     };
     
-    createUser(newUser);
+    await createUser(newUser);
     
     const { password, ...rest } = newUser;
     return NextResponse.json(rest);
@@ -45,4 +45,3 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: `Failed to create user: ${err.message || 'Unknown error'}` }, { status: 500 });
   }
 }
-

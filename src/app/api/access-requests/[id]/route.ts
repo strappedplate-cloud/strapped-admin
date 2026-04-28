@@ -17,17 +17,17 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       return NextResponse.json({ error: 'Invalid status' }, { status: 400 });
     }
 
-    const request = updateAccessRequest(id, status);
+    const request = await updateAccessRequest(id, status);
     if (!request) return NextResponse.json({ error: 'Request not found' }, { status: 404 });
 
     if (status === 'approved') {
-      const users = getUsers();
+      const users = await getUsers();
       const userIndex = users.findIndex(u => u.id === request.user_id);
       if (userIndex !== -1) {
         if (!users[userIndex].permissions) users[userIndex].permissions = [];
         if (!users[userIndex].permissions.includes(request.path)) {
           users[userIndex].permissions.push(request.path);
-          writeJsonFile('users.json', users);
+          await writeJsonFile('users.json', users);
         }
       }
     }

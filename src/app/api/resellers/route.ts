@@ -4,7 +4,7 @@ import { Reseller } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
 
 export async function GET() {
-  return NextResponse.json(getResellers());
+  return NextResponse.json(await getResellers());
 }
 
 export async function POST(req: NextRequest) {
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       created_at: now,
       updated_at: now,
     };
-    return NextResponse.json(createReseller(reseller), { status: 201 });
+    return NextResponse.json(await createReseller(reseller), { status: 201 });
   } catch {
     return NextResponse.json({ error: 'Invalid data' }, { status: 400 });
   }
@@ -32,7 +32,7 @@ export async function PATCH(req: NextRequest) {
     const body = await req.json();
     const { id, ...updates } = body;
     if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
-    const updated = updateReseller(id, updates);
+    const updated = await updateReseller(id, updates);
     if (!updated) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     return NextResponse.json(updated);
   } catch {
@@ -44,7 +44,7 @@ export async function DELETE(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
   if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
-  const success = deleteReseller(id);
+  const success = await deleteReseller(id);
   if (!success) return NextResponse.json({ error: 'Not found' }, { status: 404 });
   return NextResponse.json({ success: true });
 }

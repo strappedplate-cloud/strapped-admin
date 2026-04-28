@@ -1,15 +1,17 @@
 // ============================================================
-// Strapped Admin - Data Access Layer (JSON File Storage)
+// Strapped Admin - Data Access Layer (Async, Dual Backend)
 // ============================================================
-// This module provides CRUD operations using local JSON files.
-// For production on Vercel, this should be replaced with
-// Vercel Postgres or another persistent storage solution.
+// In development (no GITHUB_TOKEN): uses local JSON files.
+// In production (GITHUB_TOKEN set): uses GitHub API.
+// All functions are async.
 
 import fs from 'fs';
 import path from 'path';
 import { Order, User, Reseller, PackingItem, AccessRequest } from './types';
+import { readGithubJson, writeGithubJson } from './github-storage';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
+const USE_GITHUB = !!process.env.GITHUB_TOKEN;
 
 function ensureDataDir() {
   if (!fs.existsSync(DATA_DIR)) {
@@ -17,7 +19,13 @@ function ensureDataDir() {
   }
 }
 
-function readJsonFile<T>(filename: string, defaultValue: T[]): T[] {
+async function readJsonFile<T>(filename: string, defaultValue: T[] = []): Promise<T[]> {
+  if (USE_GITHUB) {
+    const { data } = await readGithubJson<T>(`data/${filename}`, defaultValue);
+    return data;
+  }
+
+  // Local filesystem (development)
   ensureDataDir();
   const filepath = path.join(DATA_DIR, filename);
   if (!fs.existsSync(filepath)) {
@@ -32,233 +40,241 @@ function readJsonFile<T>(filename: string, defaultValue: T[]): T[] {
   }
 }
 
-export function writeJsonFile<T>(filename: string, data: T[]): void {
+async function writeJsonFileInternal<T>(filename: string, data: T[]): Promise<void> {
+  if (USE_GITHUB) {
+    await writeGithubJson<T>(`data/${filename}`, data);
+    return;
+  }
+
+  // Local filesystem (development)
   ensureDataDir();
   const filepath = path.join(DATA_DIR, filename);
   fs.writeFileSync(filepath, JSON.stringify(data, null, 2));
 }
 
+// Public export for direct writes (used by access-requests/[id])
+export async function writeJsonFile<T>(filename: string, data: T[]): Promise<void> {
+  await writeJsonFileInternal(filename, data);
+}
+
 // ─── Orders ──────────────────────────────────────────────────
 
-export function getOrders(): Order[] {
+export async function getOrders(): Promise<Order[]> {
   return readJsonFile<Order>('orders.json', []);
 }
 
-export function getOrderById(id: string): Order | undefined {
-  const orders = getOrders();
+export async function getOrderById(id: string): Promise<Order | undefined> {
+  const orders = await getOrders();
   return orders.find(o => o.id === id);
 }
 
-export function createOrder(order: Order): Order {
-  const orders = getOrders();
+export async function createOrder(order: Order): Promise<Order> {
+  const orders = await getOrders();
   orders.push(order);
-  writeJsonFile('orders.json', orders);
+  await writeJsonFileInternal('orders.json', orders);
   return order;
 }
 
-export function updateOrder(id: string, updates: Partial<Order>): Order | null {
-  const orders = getOrders();
+export async function updateOrder(id: string, updates: Partial<Order>): Promise<Order | null> {
+  const orders = await getOrders();
   const index = orders.findIndex(o => o.id === id);
   if (index === -1) return null;
-  
+
   orders[index] = {
     ...orders[index],
     ...updates,
     updated_at: new Date().toISOString(),
   };
-  
+
   // If status changed to 'shipped', set shipped_at
   if (updates.status === 'shipped' && !orders[index].shipped_at) {
     orders[index].shipped_at = new Date().toISOString();
   }
-  
-  writeJsonFile('orders.json', orders);
+
+  await writeJsonFileInternal('orders.json', orders);
   return orders[index];
 }
 
-export function deleteOrder(id: string): boolean {
-  const orders = getOrders();
+export async function deleteOrder(id: string): Promise<boolean> {
+  const orders = await getOrders();
   const filtered = orders.filter(o => o.id !== id);
   if (filtered.length === orders.length) return false;
-  writeJsonFile('orders.json', filtered);
+  await writeJsonFileInternal('orders.json', filtered);
   return true;
 }
 
-export function getOngoingOrders(): Order[] {
-  const orders = getOrders();
+export async function getOngoingOrders(): Promise<Order[]> {
+  const orders = await getOrders();
   const sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-  
+
   return orders.filter(order => {
     if (order.force_past) return false;
     if (order.status !== 'shipped') return true;
-    
+
     const isOldData = new Date(order.created_at || order.tanggal_pembelian) < new Date('2026-04-26');
     if (!isOldData && order.payment_status !== 'Paid') return true;
-    
+
     if (!order.shipped_at && isOldData) return false;
     if (!order.shipped_at) return true;
-    
+
     return new Date(order.shipped_at) > sevenDaysAgo;
   });
-
 }
 
-export function getPastOrders(): Order[] {
-  const orders = getOrders();
+export async function getPastOrders(): Promise<Order[]> {
+  const orders = await getOrders();
   const sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-  
+
   return orders.filter(order => {
     if (order.force_past) return true;
     if (order.status !== 'shipped') return false;
-    
+
     const isOldData = new Date(order.created_at || order.tanggal_pembelian) < new Date('2026-04-26');
     if (!isOldData && order.payment_status !== 'Paid') return false;
-    
+
     if (!order.shipped_at && isOldData) return true;
     if (!order.shipped_at) return false;
-    
+
     return new Date(order.shipped_at) <= sevenDaysAgo;
   });
-
 }
 
 // ─── Users ───────────────────────────────────────────────────
 
-export function getUsers(): User[] {
+export async function getUsers(): Promise<User[]> {
   return readJsonFile<User>('users.json', []);
 }
 
-export function getUserByUsername(username: string): User | undefined {
-  const users = getUsers();
+export async function getUserByUsername(username: string): Promise<User | undefined> {
+  const users = await getUsers();
   return users.find(u => u.username === username);
 }
 
-export function createUser(user: User): User {
-  const users = getUsers();
+export async function createUser(user: User): Promise<User> {
+  const users = await getUsers();
   users.push(user);
-  writeJsonFile('users.json', users);
+  await writeJsonFileInternal('users.json', users);
   return user;
 }
 
-export function updateUser(id: string, updates: Partial<User>): User | null {
-  const users = getUsers();
+export async function updateUser(id: string, updates: Partial<User>): Promise<User | null> {
+  const users = await getUsers();
   const index = users.findIndex(u => u.id === id);
   if (index === -1) return null;
-  
+
   users[index] = {
     ...users[index],
     ...updates,
     // note: if updating password, it should be pre-hashed before calling this
   };
-  writeJsonFile('users.json', users);
+  await writeJsonFileInternal('users.json', users);
   return users[index];
 }
 
-export function deleteUser(id: string): boolean {
-  const users = getUsers();
+export async function deleteUser(id: string): Promise<boolean> {
+  const users = await getUsers();
   const filtered = users.filter(u => u.id !== id);
   if (filtered.length === users.length) return false;
-  writeJsonFile('users.json', filtered);
+  await writeJsonFileInternal('users.json', filtered);
   return true;
 }
 
 // ─── Resellers ───────────────────────────────────────────────
 
-export function getResellers(): Reseller[] {
+export async function getResellers(): Promise<Reseller[]> {
   return readJsonFile<Reseller>('resellers.json', []);
 }
 
-export function getResellerById(id: string): Reseller | undefined {
-  const resellers = getResellers();
+export async function getResellerById(id: string): Promise<Reseller | undefined> {
+  const resellers = await getResellers();
   return resellers.find(r => r.id === id);
 }
 
-export function createReseller(reseller: Reseller): Reseller {
-  const resellers = getResellers();
+export async function createReseller(reseller: Reseller): Promise<Reseller> {
+  const resellers = await getResellers();
   resellers.push(reseller);
-  writeJsonFile('resellers.json', resellers);
+  await writeJsonFileInternal('resellers.json', resellers);
   return reseller;
 }
 
-export function updateReseller(id: string, updates: Partial<Reseller>): Reseller | null {
-  const resellers = getResellers();
+export async function updateReseller(id: string, updates: Partial<Reseller>): Promise<Reseller | null> {
+  const resellers = await getResellers();
   const index = resellers.findIndex(r => r.id === id);
   if (index === -1) return null;
-  
+
   resellers[index] = {
     ...resellers[index],
     ...updates,
     updated_at: new Date().toISOString(),
   };
-  writeJsonFile('resellers.json', resellers);
+  await writeJsonFileInternal('resellers.json', resellers);
   return resellers[index];
 }
 
-export function deleteReseller(id: string): boolean {
-  const resellers = getResellers();
+export async function deleteReseller(id: string): Promise<boolean> {
+  const resellers = await getResellers();
   const filtered = resellers.filter(r => r.id !== id);
   if (filtered.length === resellers.length) return false;
-  writeJsonFile('resellers.json', filtered);
+  await writeJsonFileInternal('resellers.json', filtered);
   return true;
 }
 
 // ─── Packing Items ───────────────────────────────────────────
 
-export function getPackingItems(): PackingItem[] {
+export async function getPackingItems(): Promise<PackingItem[]> {
   return readJsonFile<PackingItem>('packing.json', []);
 }
 
-export function createPackingItem(item: PackingItem): PackingItem {
-  const items = getPackingItems();
+export async function createPackingItem(item: PackingItem): Promise<PackingItem> {
+  const items = await getPackingItems();
   items.push(item);
-  writeJsonFile('packing.json', items);
+  await writeJsonFileInternal('packing.json', items);
   return item;
 }
 
-export function updatePackingItem(id: string, updates: Partial<PackingItem>): PackingItem | null {
-  const items = getPackingItems();
+export async function updatePackingItem(id: string, updates: Partial<PackingItem>): Promise<PackingItem | null> {
+  const items = await getPackingItems();
   const index = items.findIndex(i => i.id === id);
   if (index === -1) return null;
-  
+
   items[index] = {
     ...items[index],
     ...updates,
     updated_at: new Date().toISOString(),
   };
-  writeJsonFile('packing.json', items);
+  await writeJsonFileInternal('packing.json', items);
   return items[index];
 }
 
-export function deletePackingItem(id: string): boolean {
-  const items = getPackingItems();
+export async function deletePackingItem(id: string): Promise<boolean> {
+  const items = await getPackingItems();
   const filtered = items.filter(i => i.id !== id);
   if (filtered.length === items.length) return false;
-  writeJsonFile('packing.json', filtered);
+  await writeJsonFileInternal('packing.json', filtered);
   return true;
 }
 
 // ─── Access Requests ──────────────────────────────────────────
 
-export function getAccessRequests(): AccessRequest[] {
+export async function getAccessRequests(): Promise<AccessRequest[]> {
   return readJsonFile<AccessRequest>('access_requests.json', []);
 }
 
-export function createAccessRequest(req: AccessRequest): AccessRequest {
-  const requests = getAccessRequests();
+export async function createAccessRequest(req: AccessRequest): Promise<AccessRequest> {
+  const requests = await getAccessRequests();
   requests.push(req);
-  writeJsonFile('access_requests.json', requests);
+  await writeJsonFileInternal('access_requests.json', requests);
   return req;
 }
 
-export function updateAccessRequest(id: string, status: 'approved' | 'rejected'): AccessRequest | null {
-  const requests = getAccessRequests();
+export async function updateAccessRequest(id: string, status: 'approved' | 'rejected'): Promise<AccessRequest | null> {
+  const requests = await getAccessRequests();
   const index = requests.findIndex(r => r.id === id);
   if (index === -1) return null;
-  
+
   requests[index].status = status;
-  writeJsonFile('access_requests.json', requests);
+  await writeJsonFileInternal('access_requests.json', requests);
   return requests[index];
 }
-

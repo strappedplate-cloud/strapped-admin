@@ -10,7 +10,7 @@ export async function GET() {
   if (!session || (session.user as any).role !== 'admin') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  return NextResponse.json(getAccessRequests());
+  return NextResponse.json(await getAccessRequests());
 }
 
 export async function POST(req: NextRequest) {
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { path } = body;
 
-    const existing = getAccessRequests().find(
+    const existing = (await getAccessRequests()).find(
       r => r.user_id === (session.user as any).id && r.path === path && r.status === 'pending'
     );
     if (existing) return NextResponse.json({ message: 'Request already pending' });
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       created_at: new Date().toISOString()
     };
 
-    createAccessRequest(newRequest);
+    await createAccessRequest(newRequest);
     return NextResponse.json(newRequest);
   } catch (err) {
     return NextResponse.json({ error: 'Failed to create request' }, { status: 500 });

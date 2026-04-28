@@ -34,7 +34,7 @@ function wrapText(text: string, maxWidth: number, font: any, fontSize: number): 
 
 export async function GET(req: NextRequest) {
   try {
-    const orders = getOrders();
+    const orders = await getOrders();
     const productionStatuses = ['production'];
     
     const filteredOrders = orders

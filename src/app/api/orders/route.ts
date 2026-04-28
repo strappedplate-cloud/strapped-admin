@@ -9,11 +9,11 @@ export async function GET(req: NextRequest) {
 
   let orders: Order[];
   if (filter === 'ongoing') {
-    orders = getOngoingOrders();
+    orders = await getOngoingOrders();
   } else if (filter === 'past') {
-    orders = getPastOrders();
+    orders = await getPastOrders();
   } else {
-    orders = getOrders();
+    orders = await getOrders();
   }
 
   return NextResponse.json(orders);
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     // Calculate urutan_order if not provided
     let urutan_order = body.urutan_order;
     if (!urutan_order) {
-      const allOrders = getOrders();
+      const allOrders = await getOrders();
       const ordersOnSameDate = allOrders.filter(o => o.tanggal_pembelian.split('T')[0] === tanggal.split('T')[0]);
       const maxUrutan = ordersOnSameDate.reduce((max, o) => Math.max(max, o.urutan_order || 0), 0);
       urutan_order = maxUrutan + 1;
@@ -52,6 +52,8 @@ export async function POST(req: NextRequest) {
       revision_note: body.revision_note || '',
       editor_name: body.editor_name || '',
       production_number: body.production_number || '',
+      reseller_name: body.reseller_name || '',
+      event_name: body.event_name || '',
       nama_penerima: body.nama_penerima || body.nama || '',
       no_hp: body.no_hp || '',
       alamat_pengiriman: body.alamat_pengiriman || '',
@@ -61,10 +63,11 @@ export async function POST(req: NextRequest) {
       updated_at: now,
     };
 
-    const created = createOrder(order);
+    const created = await createOrder(order);
     return NextResponse.json(created, { status: 201 });
-  } catch {
-    return NextResponse.json({ error: 'Invalid data' }, { status: 400 });
+  } catch (err: any) {
+    console.error('Order creation error:', err);
+    return NextResponse.json({ error: err.message || 'Invalid data' }, { status: 400 });
   }
 }
 
@@ -72,7 +75,7 @@ export async function DELETE(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
   if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
-  const success = deleteOrder(id);
+  const success = await deleteOrder(id);
   if (!success) return NextResponse.json({ error: 'Not found' }, { status: 404 });
   return NextResponse.json({ success: true });
 }

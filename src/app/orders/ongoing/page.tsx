@@ -146,13 +146,22 @@ export default function OngoingOrdersPage() {
   };
 
   const handleNew = async (data: Partial<Order>) => {
-    await fetch('/api/orders', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    setShowForm(false);
-    fetchOrders();
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: 'Unknown error' }));
+        alert(`Gagal membuat order: ${err.error || res.statusText}`);
+        return;
+      }
+      setShowForm(false);
+      fetchOrders();
+    } catch (err: any) {
+      alert(`Gagal membuat order: ${err.message || 'Network error'}`);
+    }
   };
 
   return (
