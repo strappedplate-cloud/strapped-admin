@@ -38360,7 +38360,7 @@
     "qty": 1,
     "urutan_order": 1,
     "status": "design_approved",
-    "payment_status": "Have Not Paid",
+    "payment_status": "Paid",
     "nomor_plat": "B1148EBD",
     "finishing": "Polos",
     "revision_note": "",
@@ -38374,7 +38374,7 @@
     "notes": "",
     "shipped_at": null,
     "created_at": "2026-04-28T13:40:27.386Z",
-    "updated_at": "2026-04-28T14:16:33.621Z"
+    "updated_at": "2026-04-28T17:22:12.673Z"
   },
   {
     "id": "01436871-1104-46b1-97fe-1590507dcebe",
