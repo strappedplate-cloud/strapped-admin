@@ -38456,5 +38456,32 @@
     "shipped_at": null,
     "created_at": "2026-04-28T14:29:39.150Z",
     "updated_at": "2026-04-28T14:29:39.150Z"
+  },
+  {
+    "id": "4bc02a06-1fd1-4eba-b2fc-fbc1eef275d8",
+    "form_detail": "Ukuran : Keychain - Indo\nQty : 50 pcs\nWarna Background : Hitam",
+    "nama": "Sean",
+    "tanggal_pembelian": "2026-04-28",
+    "channel_pembelian": "Instagram",
+    "jenis_bundling": "Non-Bundle",
+    "ukuran_plat": "Keychain",
+    "qty": 50,
+    "urutan_order": 1,
+    "status": "editing_done",
+    "payment_status": "Have Not Paid",
+    "nomor_plat": "Raveil",
+    "finishing": "",
+    "revision_note": "",
+    "editor_name": "Joshua",
+    "production_number": "",
+    "reseller_name": "",
+    "event_name": "",
+    "nama_penerima": "Sean",
+    "no_hp": "081291422466",
+    "alamat_pengiriman": "",
+    "notes": "",
+    "shipped_at": null,
+    "created_at": "2026-04-28T14:31:37.207Z",
+    "updated_at": "2026-04-28T14:31:37.207Z"
   }
 ]
