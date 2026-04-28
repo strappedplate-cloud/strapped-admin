@@ -38359,7 +38359,7 @@
     "ukuran_plat": "Mobil - Japan",
     "qty": 1,
     "urutan_order": 1,
-    "status": "editing_done",
+    "status": "design_approved",
     "payment_status": "Have Not Paid",
     "nomor_plat": "B1148EBD",
     "finishing": "Polos",
@@ -38374,6 +38374,6 @@
     "notes": "",
     "shipped_at": null,
     "created_at": "2026-04-28T13:40:27.386Z",
-    "updated_at": "2026-04-28T14:15:27.305Z"
+    "updated_at": "2026-04-28T14:16:33.621Z"
   }
 ]
