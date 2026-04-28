@@ -6,6 +6,9 @@ import Sidebar from '@/components/Sidebar';
 export const metadata: Metadata = {
   title: 'Strapped Admin',
   description: 'Internal admin dashboard for Strapped Indonesia',
+  icons: {
+    icon: '/icon.svg',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
