@@ -38359,7 +38359,7 @@
     "ukuran_plat": "Mobil - Japan",
     "qty": 1,
     "urutan_order": 1,
-    "status": "not_started",
+    "status": "editing_done",
     "payment_status": "Have Not Paid",
     "nomor_plat": "B1148EBD",
     "finishing": "Polos",
@@ -38374,33 +38374,6 @@
     "notes": "",
     "shipped_at": null,
     "created_at": "2026-04-28T13:40:27.386Z",
-    "updated_at": "2026-04-28T14:13:38.376Z"
-  },
-  {
-    "id": "e090778a-31c9-40d7-a480-8e02a572ebbd",
-    "form_detail": "Ukuran : Mobil - Indo\nQty : Double (2 pcs)\nWarna Background : Hitam",
-    "nama": "Sean",
-    "tanggal_pembelian": "2026-04-28",
-    "channel_pembelian": "WhatsApp",
-    "jenis_bundling": "Non-Bundle",
-    "ukuran_plat": "Mobil - Indo",
-    "qty": 2,
-    "urutan_order": 1,
-    "status": "editing_done",
-    "payment_status": "Paid",
-    "nomor_plat": "Carbonized",
-    "finishing": "",
-    "revision_note": "",
-    "editor_name": "Joshua",
-    "production_number": "",
-    "reseller_name": "",
-    "event_name": "",
-    "nama_penerima": "Sean",
-    "no_hp": "081291422466",
-    "alamat_pengiriman": "",
-    "notes": "",
-    "shipped_at": null,
-    "created_at": "2026-04-28T14:13:40.517Z",
-    "updated_at": "2026-04-28T14:13:40.517Z"
+    "updated_at": "2026-04-28T14:13:41.301Z"
   }
 ]
