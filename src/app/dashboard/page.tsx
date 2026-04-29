@@ -27,6 +27,15 @@ function DashboardContent() {
   const [showForm, setShowForm] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
+  // Quick action menu state
+  const [quickActionOrder, setQuickActionOrder] = React.useState<Order | null>(null);
+  const [quickActionPos, setQuickActionPos] = React.useState({ x: 0, y: 0 });
+  const longPressTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const longPressTriggered = React.useRef(false);
+
+  // Swipe-to-scroll: rely on native overflow-x: auto (CSS handles touch scrolling)
+  const kanbanRef = React.useRef<HTMLDivElement>(null);
+
   const fetchOrders = React.useCallback(async () => {
     try {
       const res = await fetch('/api/orders?filter=ongoing');
@@ -146,6 +155,72 @@ function DashboardContent() {
     }
   };
 
+  // Quick action: move to category
+  const handleQuickMove = async (order: Order, newStatus: OrderStatus) => {
+    setQuickActionOrder(null);
+
+    let additionalUpdates: Partial<Order> = {};
+    if (newStatus === 'production') {
+      const prodNum = window.prompt(`Masukkan Production Number untuk order ${order.nama}:`, order.production_number || '');
+      if (prodNum !== null) {
+        additionalUpdates = { production_number: prodNum };
+      }
+    }
+
+    setOrders(prev =>
+      prev.map(o =>
+        o.id === order.id
+          ? { ...o, status: newStatus, ...additionalUpdates, updated_at: new Date().toISOString() }
+          : o
+      )
+    );
+
+    try {
+      await fetch(`/api/orders/${order.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus, ...additionalUpdates }),
+      });
+    } catch {
+      fetchOrders();
+    }
+  };
+
+  // Long press handlers
+  const handleTouchStart = (e: React.TouchEvent, order: Order) => {
+    longPressTriggered.current = false;
+    const touch = e.touches[0];
+    longPressTimer.current = setTimeout(() => {
+      longPressTriggered.current = true;
+      setQuickActionOrder(order);
+      setQuickActionPos({ x: touch.clientX, y: touch.clientY });
+    }, 500);
+  };
+
+  const handleTouchEnd = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+  };
+
+  const handleTouchMove = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+  };
+
+
+
+  // Close quick action on outside click
+  React.useEffect(() => {
+    if (!quickActionOrder) return;
+    const close = () => setQuickActionOrder(null);
+    window.addEventListener('click', close);
+    return () => window.removeEventListener('click', close);
+  }, [quickActionOrder]);
+
   if (loading) {
     return (
       <main className="main-content">
@@ -170,7 +245,10 @@ function DashboardContent() {
       </div>
 
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="kanban-wrapper">
+        <div
+          className="kanban-wrapper"
+          ref={kanbanRef}
+        >
           {ALL_STATUSES.map(status => {
             const isEmpty = ordersByStatus[status].length === 0;
             return (
@@ -211,7 +289,19 @@ function DashboardContent() {
                             {...dragProvided.draggableProps}
                             {...dragProvided.dragHandleProps}
                             className={`order-card ${dragSnapshot.isDragging ? 'dragging' : ''}`}
-                            onClick={() => setSelectedOrder(order)}
+                            onClick={() => {
+                              if (!longPressTriggered.current) {
+                                setSelectedOrder(order);
+                              }
+                            }}
+                            onTouchStart={(e) => handleTouchStart(e, order)}
+                            onTouchEnd={handleTouchEnd}
+                            onTouchMove={handleTouchMove}
+                            onContextMenu={(e) => {
+                              e.preventDefault();
+                              setQuickActionOrder(order);
+                              setQuickActionPos({ x: e.clientX, y: e.clientY });
+                            }}
                           >
                             <div className="order-card-name">
                               {order.nama}
@@ -250,6 +340,49 @@ function DashboardContent() {
 
         </div>
       </DragDropContext>
+
+      {/* Quick Action Context Menu */}
+      {quickActionOrder && (
+        <div
+          className="quick-action-overlay"
+          onClick={() => setQuickActionOrder(null)}
+          onTouchEnd={() => setQuickActionOrder(null)}
+        >
+          <div
+            className="quick-action-menu"
+            style={{
+              top: Math.min(quickActionPos.y, window.innerHeight - 400),
+              left: Math.min(quickActionPos.x, window.innerWidth - 220),
+            }}
+            onClick={(e) => e.stopPropagation()}
+            onTouchEnd={(e) => e.stopPropagation()}
+          >
+            <div className="quick-action-header">
+              <div className="quick-action-title">📋 Move to</div>
+              <div className="quick-action-subtitle">{quickActionOrder.nama}</div>
+            </div>
+            <div className="quick-action-list">
+              {ALL_STATUSES.filter(s => s !== quickActionOrder.status).map(status => (
+                <button
+                  key={status}
+                  className="quick-action-item"
+                  onClick={() => handleQuickMove(quickActionOrder, status)}
+                  onTouchEnd={(e) => {
+                    e.stopPropagation();
+                    handleQuickMove(quickActionOrder, status);
+                  }}
+                >
+                  <span
+                    className="quick-action-dot"
+                    style={{ background: ORDER_STATUS_COLORS[status] }}
+                  />
+                  {ORDER_STATUS_LABELS[status]}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {selectedOrder && (
         <OrderModal

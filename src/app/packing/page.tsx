@@ -88,6 +88,21 @@ export default function PackingPage() {
     if (size === 'Mobil - Japan' && ['Velcro', 'Velcro+Keychain'].includes(bundle)) velcroJapan++;
   });
 
+  // Sticker Putih calculations — sum qty for each size in production
+  let stickerMobilIndo = 0;
+  let stickerMobilEuro = 0;
+  let stickerMobilJapan = 0;
+  let stickerMotorIndo = 0;
+
+  packedOrders.forEach(o => {
+    const size = o.ukuran_plat || '';
+    const qty = o.qty || 1;
+    if (size === 'Mobil - Indo') stickerMobilIndo += qty;
+    if (size === 'Mobil - Euro') stickerMobilEuro += qty;
+    if (size === 'Mobil - Japan') stickerMobilJapan += qty;
+    if (size === 'Motor - Indo') stickerMotorIndo += qty;
+  });
+
   const totalCards = packIndo + packJapan + packKeychain + packCustom;
   const qrWarranty = (packIndo + packJapan + packCustom) * 2;
 
@@ -116,7 +131,7 @@ export default function PackingPage() {
               <div style={{ display: 'flex', gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
                 
                 {/* Packaging Table */}
-                <table className="data-table" style={{ width: '200px', background: 'var(--bg-secondary)', flexShrink: 0 }}>
+                <table className="data-table" style={{ width: 'auto', minWidth: '140px', background: 'var(--bg-secondary)', flexShrink: 0 }}>
                   <thead>
                     <tr><th colSpan={2} style={{ textAlign: 'center', background: 'var(--bg-tertiary)', fontStyle: 'italic' }}>Packaging</th></tr>
                   </thead>
@@ -128,7 +143,7 @@ export default function PackingPage() {
                 </table>
 
                 {/* Velcro Table */}
-                <table className="data-table" style={{ width: '150px', background: 'var(--bg-secondary)', flexShrink: 0 }}>
+                <table className="data-table" style={{ width: 'auto', minWidth: '110px', background: 'var(--bg-secondary)', flexShrink: 0 }}>
                   <thead>
                     <tr><th colSpan={2} style={{ textAlign: 'center', background: 'var(--bg-tertiary)', fontStyle: 'italic' }}>Velcro</th></tr>
                   </thead>
@@ -139,7 +154,7 @@ export default function PackingPage() {
                 </table>
 
                 {/* Cards & Sticker Table */}
-                <table className="data-table" style={{ width: '220px', background: 'var(--bg-secondary)', flexShrink: 0 }}>
+                <table className="data-table" style={{ width: 'auto', minWidth: '180px', background: 'var(--bg-secondary)', flexShrink: 0 }}>
                   <thead>
                     <tr><th colSpan={2} style={{ textAlign: 'center', background: 'var(--bg-tertiary)', fontStyle: 'italic' }}>Cards & Sticker</th></tr>
                   </thead>
@@ -147,6 +162,19 @@ export default function PackingPage() {
                     <tr><td>Thank You</td><td style={{ textAlign: 'right', fontWeight: 700 }}>{totalCards}</td></tr>
                     <tr><td>Sticker</td><td style={{ textAlign: 'right', fontWeight: 700 }}>{totalCards}</td></tr>
                     <tr><td>QR Warranty</td><td style={{ textAlign: 'right', fontWeight: 700 }}>{qrWarranty}</td></tr>
+                  </tbody>
+                </table>
+
+                {/* Sticker Putih Table */}
+                <table className="data-table" style={{ width: 'auto', minWidth: '180px', background: 'var(--bg-secondary)', flexShrink: 0 }}>
+                  <thead>
+                    <tr><th colSpan={2} style={{ textAlign: 'center', background: 'var(--bg-tertiary)', fontStyle: 'italic' }}>Sticker Putih</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Mobil - Indo</td><td style={{ textAlign: 'right', fontWeight: 700 }}>{stickerMobilIndo}</td></tr>
+                    <tr><td>Mobil - Euro</td><td style={{ textAlign: 'right', fontWeight: 700 }}>{stickerMobilEuro}</td></tr>
+                    <tr><td>Mobil - Japan</td><td style={{ textAlign: 'right', fontWeight: 700 }}>{stickerMobilJapan}</td></tr>
+                    <tr><td>Motor - Indo</td><td style={{ textAlign: 'right', fontWeight: 700 }}>{stickerMotorIndo}</td></tr>
                   </tbody>
                 </table>
 
