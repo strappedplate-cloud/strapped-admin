@@ -38414,7 +38414,7 @@
     "ukuran_plat": "Mobil - Indo",
     "qty": 2,
     "urutan_order": 1,
-    "status": "production",
+    "status": "design_approved",
     "payment_status": "Have Not Paid",
     "nomor_plat": "Carbonized",
     "finishing": "",
@@ -38429,7 +38429,7 @@
     "notes": "",
     "shipped_at": null,
     "created_at": "2026-04-28T14:29:38.171Z",
-    "updated_at": "2026-04-29T17:13:54.509Z"
+    "updated_at": "2026-04-29T17:14:27.647Z"
   },
   {
     "id": "2f118d06-2839-408f-9122-740de4ebc8f8",
