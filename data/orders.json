@@ -38495,13 +38495,13 @@
     "ukuran_plat": "Mobil - Indo",
     "qty": 2,
     "urutan_order": 1,
-    "status": "design_approved",
+    "status": "production",
     "payment_status": "Have Not Paid",
     "nomor_plat": "B1416JNT",
     "finishing": "Polos",
     "revision_note": "",
     "editor_name": "William",
-    "production_number": "",
+    "production_number": "PP-265",
     "reseller_name": "",
     "event_name": "",
     "nama_penerima": "William",
@@ -38510,6 +38510,6 @@
     "notes": "",
     "shipped_at": null,
     "created_at": "2026-04-28T14:40:05.153Z",
-    "updated_at": "2026-04-29T02:37:13.856Z"
+    "updated_at": "2026-04-29T17:13:38.206Z"
   }
 ]
