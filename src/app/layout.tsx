@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './marketing.css';
 import Providers from '@/components/Providers';
 import Sidebar from '@/components/Sidebar';
 

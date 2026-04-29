@@ -24,6 +24,16 @@ const NAVIGATION = [
     ]
   },
   {
+    category: 'Marketing',
+    id: 'marketing',
+    items: [
+      { label: 'Content', href: '/marketing/content', icon: '📸' },
+      { label: 'Photoshoot', href: '/marketing/photoshoot', icon: '📷' },
+      { label: 'Copywriting AI', href: '/marketing/copywriting', icon: '✍️' },
+      { label: 'Story Generator', href: '/marketing/generator', icon: '🎨' },
+    ]
+  },
+  {
     category: 'Management',
     id: 'management',
     items: [

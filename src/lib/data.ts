@@ -19,7 +19,7 @@ function ensureDataDir() {
   }
 }
 
-async function readJsonFile<T>(filename: string, defaultValue: T[] = []): Promise<T[]> {
+export async function readJsonFile<T>(filename: string, defaultValue: T[] = []): Promise<T[]> {
   if (USE_GITHUB) {
     const { data } = await readGithubJson<T>(`data/${filename}`, defaultValue);
     return data;
