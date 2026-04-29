@@ -38494,7 +38494,7 @@
     "ukuran_plat": "Mobil - Indo",
     "qty": 2,
     "urutan_order": 1,
-    "status": "editing_progress",
+    "status": "design_approved",
     "payment_status": "Have Not Paid",
     "nomor_plat": "B1416JNT",
     "finishing": "Polos",
@@ -38509,6 +38509,6 @@
     "notes": "",
     "shipped_at": null,
     "created_at": "2026-04-28T14:40:05.153Z",
-    "updated_at": "2026-04-29T02:37:03.926Z"
+    "updated_at": "2026-04-29T02:37:13.856Z"
   }
 ]
