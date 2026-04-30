@@ -38538,5 +38538,32 @@
     "shipped_at": null,
     "created_at": "2026-04-30T04:31:02.545Z",
     "updated_at": "2026-04-30T04:31:02.545Z"
+  },
+  {
+    "id": "ee0d84b2-0c3b-4632-97fb-60fca06fe552",
+    "form_detail": "Ukuran : Mobil - Indo, Bundling Velcro\nQty : Double (2 pcs)\nNomor Plat : B-2007-BNR\nBulan - Tahun Pajak : 05-31\nWarna Plat : Putih - bawah\nList : Hitam\nJenis Font : Baru\nNotes : Polos , Lambang lantas dan logo nya tolong terlihat jelas",
+    "nama": "Ronal",
+    "tanggal_pembelian": "2026-04-30",
+    "channel_pembelian": "Instagram",
+    "jenis_bundling": "Non-Bundle",
+    "ukuran_plat": "Mobil - Indo, Bundling Velcro",
+    "qty": 2,
+    "urutan_order": 1,
+    "status": "not_started",
+    "payment_status": "Paid",
+    "nomor_plat": "B2007BNR",
+    "finishing": "Polos , Lambang lantas dan logo nya tolong terlihat jelas",
+    "revision_note": "",
+    "editor_name": "",
+    "production_number": "",
+    "reseller_name": "",
+    "event_name": "",
+    "nama_penerima": "Ronal",
+    "no_hp": "+62 811-107-909",
+    "alamat_pengiriman": "Citra Garden 6 Cluster Blue Ginger blok H6/30, RT.1/RW.5, Tegal Alur, Kec. Kalideres,  Jakarta Barat 11820",
+    "notes": "",
+    "shipped_at": null,
+    "created_at": "2026-04-30T04:34:40.582Z",
+    "updated_at": "2026-04-30T04:34:40.582Z"
   }
 ]
