@@ -122,7 +122,7 @@
     "notes": "",
     "shipped_at": null,
     "created_at": "2026-04-26T08:31:26.112Z",
-    "updated_at": "2026-04-26T19:38:34.634Z"
+    "updated_at": "2026-04-30T05:17:37.133Z"
   },
   {
     "id": "333f9d51-a161-432a-9697-c4126208f199",
@@ -38549,7 +38549,7 @@
     "ukuran_plat": "Mobil - Indo, Bundling Velcro",
     "qty": 2,
     "urutan_order": 1,
-    "status": "editing_done",
+    "status": "revision_done",
     "payment_status": "Paid",
     "nomor_plat": "B2007BNR",
     "finishing": "Polos , Lambang lantas dan logo nya tolong terlihat jelas",
@@ -38564,6 +38564,6 @@
     "notes": "",
     "shipped_at": null,
     "created_at": "2026-04-30T04:34:40.582Z",
-    "updated_at": "2026-04-30T04:57:46.326Z"
+    "updated_at": "2026-04-30T05:17:36.544Z"
   }
 ]

@@ -9,9 +9,9 @@ export async function POST(req: NextRequest) {
     const { type, mobil, context, tone, language, image_base64, image_media_type } = body;
 
     const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) {
+    if (!apiKey || apiKey === 'your-api-key-here' || !apiKey.startsWith('sk-ant-')) {
       return NextResponse.json(
-        { error: 'ANTHROPIC_API_KEY tidak dikonfigurasi. Tambahkan di environment variables.' },
+        { error: 'ANTHROPIC_API_KEY belum dikonfigurasi. Dapatkan API key di console.anthropic.com lalu masukkan di .env.local (lokal) atau Vercel Environment Variables (production).' },
         { status: 500 }
       );
     }
