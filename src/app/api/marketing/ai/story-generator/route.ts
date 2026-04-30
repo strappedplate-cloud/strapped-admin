@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Google Gemini API for generating Instagram Story concepts (FREE)
-const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
 export async function POST(req: NextRequest) {
   try {
@@ -63,7 +63,7 @@ ${include_promo ? `Promo yang ingin disampaikan: ${include_promo}` : ''}`;
 
     return NextResponse.json({
       result: generatedText,
-      model: 'gemini-2.0-flash',
+      model: 'gemini-1.5-flash',
     });
   } catch (err: any) {
     console.error('Story generator AI error:', err);

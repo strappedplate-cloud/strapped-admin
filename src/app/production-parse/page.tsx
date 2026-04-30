@@ -55,7 +55,7 @@ export default function ProductionParsePage() {
         const folderName = pathParts[pathParts.length - 2];
         const fileName = pathParts[pathParts.length - 1];
         
-        if (fileName.startsWith('.') || fileName.startsWith('__') || fileName.includes('/.')) continue;
+        if (fileName.startsWith('.') || fileName.startsWith('__') || fileName.includes('/.') || fileName.includes('File Cutting')) continue;
 
         const nameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
         const parts = nameWithoutExt.split('_');
@@ -237,6 +237,8 @@ export default function ProductionParsePage() {
                     folderName = parts[0];
                     fileName = parts[1];
                   }
+
+                  if (fileName.includes('File Cutting')) return;
                   
                   const nameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
                   const parts = nameWithoutExt.split('_');

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Google Gemini API for generating Instagram captions and article text (FREE)
-const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
 export async function POST(req: NextRequest) {
   try {
@@ -93,7 +93,7 @@ ${image_base64 ? '\nSaya juga melampirkan foto referensi. Analisis foto tersebut
     return NextResponse.json({
       result: generatedText,
       type,
-      model: 'gemini-2.0-flash',
+      model: 'gemini-1.5-flash',
     });
   } catch (err: any) {
     console.error('Copywriting AI error:', err);
