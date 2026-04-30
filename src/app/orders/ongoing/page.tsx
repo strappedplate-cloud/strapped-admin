@@ -22,6 +22,7 @@ export default function OngoingOrdersPage() {
   const [showForm, setShowForm] = React.useState(false);
   const [search, setSearch] = React.useState('');
   const [loading, setLoading] = React.useState(true);
+  const [refreshing, setRefreshing] = React.useState(false);
 
 
   const [selectedIds, setSelectedIds] = React.useState<Set<string>>(new Set());
@@ -32,7 +33,8 @@ export default function OngoingOrdersPage() {
     production_number: ''
   });
 
-  const fetchOrders = async () => {
+  const fetchOrders = async (showRefreshing = false) => {
+    if (showRefreshing) setRefreshing(true);
     try {
       const res = await fetch('/api/orders?filter=ongoing');
       if (res.ok) setOrders(await res.json());
@@ -40,6 +42,7 @@ export default function OngoingOrdersPage() {
       console.error(err);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -172,6 +175,16 @@ export default function OngoingOrdersPage() {
           <p className="page-subtitle">{filtered.length} active orders</p>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
+          <button
+            className="btn btn-secondary"
+            onClick={() => fetchOrders(true)}
+            disabled={refreshing}
+            title="Refresh orders"
+            style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+          >
+            <span style={{ display: 'inline-block', transition: 'transform 0.6s', transform: refreshing ? 'rotate(360deg)' : 'none' }}>🔄</span>
+            <span className="hide-mobile">Refresh</span>
+          </button>
           <button className="btn btn-primary" onClick={() => setShowForm(true)}>✚ Order Baru</button>
         </div>
 

@@ -6,7 +6,7 @@ const ANTHROPIC_API = 'https://api.anthropic.com/v1/messages';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { type, mobil, context, tone, language } = body;
+    const { type, mobil, context, tone, language, image_base64, image_media_type } = body;
 
     const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) {
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     }
 
     let systemPrompt = '';
-    let userPrompt = '';
+    let userTextPrompt = '';
 
     if (type === 'instagram_caption') {
       systemPrompt = `Kamu adalah copywriter profesional untuk brand mobil premium "Strapped Indonesia" yang menjual custom plate frame (bingkai plat nomor kustom premium). 
@@ -27,10 +27,11 @@ Sertakan emoji yang relevan tapi jangan berlebihan.
 Tambahkan 5-10 hashtag relevan di akhir.
 Tone: ${tone || 'premium, modern, automotive enthusiast'}.`;
 
-      userPrompt = `Buatkan caption Instagram untuk konten berikut:
+      userTextPrompt = `Buatkan caption Instagram untuk konten berikut:
 Mobil: ${mobil || 'tidak disebutkan'}
 Konteks/Deskripsi: ${context || 'konten produk plate frame'}
-${body.additional_info ? `Info tambahan: ${body.additional_info}` : ''}`;
+${body.additional_info ? `Info tambahan: ${body.additional_info}` : ''}
+${image_base64 ? '\nSaya juga melampirkan foto produk/konten. Analisis foto tersebut dan gunakan detail visual dari foto untuk membuat caption yang lebih relevan dan deskriptif.' : ''}`;
 
     } else if (type === 'article') {
       systemPrompt = `Kamu adalah content writer profesional untuk brand "Strapped Indonesia" yang menjual custom plate frame premium. 
@@ -39,15 +40,35 @@ Gunakan bahasa ${language === 'en' ? 'Inggris' : 'Indonesia'}.
 Format dengan heading, subheading, dan paragraf yang rapi.
 Tone: ${tone || 'informatif, profesional, automotive enthusiast'}.`;
 
-      userPrompt = `Buatkan artikel dengan topik berikut:
+      userTextPrompt = `Buatkan artikel dengan topik berikut:
 Topik: ${context || 'plate frame kustom'}
 Mobil yang dibahas: ${mobil || 'umum'}
 ${body.word_count ? `Target kata: ${body.word_count}` : 'Target kata: 500-800'}
-${body.additional_info ? `Info tambahan: ${body.additional_info}` : ''}`;
+${body.additional_info ? `Info tambahan: ${body.additional_info}` : ''}
+${image_base64 ? '\nSaya juga melampirkan foto referensi. Analisis foto tersebut dan gunakan detail visual dari foto untuk membuat artikel yang lebih relevan dan deskriptif.' : ''}`;
 
     } else {
       return NextResponse.json({ error: 'Invalid type. Use "instagram_caption" or "article".' }, { status: 400 });
     }
+
+    // Build message content - with or without image
+    const userContent: any[] = [];
+    
+    if (image_base64) {
+      userContent.push({
+        type: 'image',
+        source: {
+          type: 'base64',
+          media_type: image_media_type || 'image/jpeg',
+          data: image_base64,
+        },
+      });
+    }
+    
+    userContent.push({
+      type: 'text',
+      text: userTextPrompt,
+    });
 
     const response = await fetch(ANTHROPIC_API, {
       method: 'POST',
@@ -60,7 +81,7 @@ ${body.additional_info ? `Info tambahan: ${body.additional_info}` : ''}`;
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1500,
         system: systemPrompt,
-        messages: [{ role: 'user', content: userPrompt }],
+        messages: [{ role: 'user', content: userContent }],
       }),
     });
 

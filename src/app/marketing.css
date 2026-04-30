@@ -269,8 +269,70 @@
 
 .mkt-history-item:hover { background: var(--bg-tertiary); border-color: var(--border-hover); }
 
+/* Photo Upload */
+
+.mkt-photo-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  border: 2px dashed var(--border-hover);
+  border-radius: var(--radius-md);
+  background: var(--bg-tertiary);
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+}
+
+.mkt-photo-upload:hover,
+.mkt-photo-upload.dragover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.mkt-photo-preview {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  max-height: 200px;
+}
+
+.mkt-photo-preview img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.mkt-photo-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all var(--transition);
+  backdrop-filter: blur(4px);
+}
+
+.mkt-photo-remove:hover {
+  background: rgba(239, 68, 68, 0.9);
+  transform: scale(1.1);
+}
+
 @media (max-width: 768px) {
   .mkt-ai-layout { grid-template-columns: 1fr; }
   .mkt-occasion-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
   .mkt-stat-grid { grid-template-columns: repeat(2, 1fr); }
 }
+

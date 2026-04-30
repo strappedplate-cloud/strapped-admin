@@ -22,14 +22,64 @@ export default function CopywritingPage() {
   const [error, setError] = React.useState('');
   const [history, setHistory] = React.useState<{ type: string; mobil: string; result: string; timestamp: string }[]>([]);
 
+  // Image state
+  const [imageBase64, setImageBase64] = React.useState('');
+  const [imageMediaType, setImageMediaType] = React.useState('');
+  const [imagePreview, setImagePreview] = React.useState('');
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    if (!validTypes.includes(file.type)) {
+      setError('Format foto tidak didukung. Gunakan JPG, PNG, WebP, atau GIF.');
+      return;
+    }
+
+    // Validate file size (max 5MB for API)
+    if (file.size > 5 * 1024 * 1024) {
+      setError('Ukuran foto maksimal 5MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const dataUrl = ev.target?.result as string;
+      setImagePreview(dataUrl);
+      // Extract base64 data (remove "data:image/jpeg;base64," prefix)
+      const base64 = dataUrl.split(',')[1];
+      setImageBase64(base64);
+      setImageMediaType(file.type);
+      setError('');
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removeImage = () => {
+    setImageBase64('');
+    setImageMediaType('');
+    setImagePreview('');
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
   const handleGenerate = async () => {
     if (!context) return;
     setLoading(true); setError(''); setResult('');
     try {
+      const payload: any = { type, mobil, context, tone, language, additional_info: additionalInfo };
+      if (type === 'article') payload.word_count = wordCount;
+      if (imageBase64) {
+        payload.image_base64 = imageBase64;
+        payload.image_media_type = imageMediaType;
+      }
+
       const res = await fetch('/api/marketing/ai/copywriting', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type, mobil, context, tone, language, additional_info: additionalInfo, word_count: type === 'article' ? wordCount : undefined }),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (!res.ok) { setError(data.error || 'Terjadi kesalahan'); return; }
@@ -65,6 +115,47 @@ export default function CopywritingPage() {
                 <button className={`mkt-type-btn ${type === 'instagram_caption' ? 'active' : ''}`} onClick={() => setType('instagram_caption')}>📷 Caption Instagram</button>
                 <button className={`mkt-type-btn ${type === 'article' ? 'active' : ''}`} onClick={() => setType('article')}>📝 Artikel</button>
               </div>
+            </div>
+
+            {/* Photo Upload */}
+            <div className="form-group">
+              <label className="form-label">📸 Foto Referensi (opsional)</label>
+              {!imagePreview ? (
+                <div
+                  className="mkt-photo-upload"
+                  onClick={() => fileInputRef.current?.click()}
+                  onDragOver={e => { e.preventDefault(); e.currentTarget.classList.add('dragover'); }}
+                  onDragLeave={e => e.currentTarget.classList.remove('dragover')}
+                  onDrop={e => {
+                    e.preventDefault();
+                    e.currentTarget.classList.remove('dragover');
+                    const file = e.dataTransfer.files[0];
+                    if (file && fileInputRef.current) {
+                      const dt = new DataTransfer();
+                      dt.items.add(file);
+                      fileInputRef.current.files = dt.files;
+                      fileInputRef.current.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                  }}
+                >
+                  <div style={{ fontSize: 32, marginBottom: 8 }}>📷</div>
+                  <div style={{ fontWeight: 600, fontSize: 13 }}>Klik atau drag foto ke sini</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-tertiary)', marginTop: 4 }}>JPG, PNG, WebP, GIF • Maks 5MB</div>
+                  <div style={{ fontSize: 11, color: 'var(--accent)', marginTop: 4 }}>AI akan analisis foto untuk caption yang lebih akurat</div>
+                </div>
+              ) : (
+                <div className="mkt-photo-preview">
+                  <img src={imagePreview} alt="Preview" />
+                  <button className="mkt-photo-remove" onClick={removeImage} title="Hapus foto">✕</button>
+                </div>
+              )}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                onChange={handleImageChange}
+                style={{ display: 'none' }}
+              />
             </div>
 
             <div className="form-grid">
@@ -104,7 +195,7 @@ export default function CopywritingPage() {
             </div>
 
             <button className="btn btn-primary" style={{ width: '100%', marginTop: 8, padding: '12px 20px', fontSize: 14 }} onClick={handleGenerate} disabled={loading || !context}>
-              {loading ? '⏳ Generating...' : '✨ Generate dengan AI'}
+              {loading ? '⏳ Generating...' : `✨ Generate ${imageBase64 ? '(+ Foto)' : ''}`}
             </button>
           </div>
         </div>
@@ -121,7 +212,7 @@ export default function CopywritingPage() {
             {loading && (
               <div className="mkt-ai-loading">
                 <div className="mkt-ai-loading-dots"><span></span><span></span><span></span></div>
-                <p>Claude sedang menulis...</p>
+                <p>Claude sedang {imageBase64 ? 'menganalisis foto & ' : ''}menulis...</p>
               </div>
             )}
             {result && !loading && (
