@@ -38387,7 +38387,7 @@
     "ukuran_plat": "Keychain",
     "qty": 50,
     "urutan_order": 1,
-    "status": "production",
+    "status": "design_approved",
     "payment_status": "Have Not Paid",
     "nomor_plat": "Carbonized",
     "finishing": "",
@@ -38402,7 +38402,7 @@
     "notes": "",
     "shipped_at": null,
     "created_at": "2026-04-28T14:18:07.043Z",
-    "updated_at": "2026-04-30T03:11:56.995Z"
+    "updated_at": "2026-04-30T03:12:08.385Z"
   },
   {
     "id": "191a6f18-f6bd-4d9c-aecf-f926e3825c31",
