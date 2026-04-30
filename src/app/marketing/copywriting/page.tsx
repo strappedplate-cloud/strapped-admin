@@ -98,7 +98,7 @@ export default function CopywritingPage() {
     <main className="main-content">
       <div className="page-header">
         <h1 className="page-title">✍️ AI Copywriting</h1>
-        <p className="page-subtitle">Generate caption Instagram & artikel dengan AI Claude</p>
+        <p className="page-subtitle">Generate caption Instagram & artikel dengan AI</p>
       </div>
 
       <div className="mkt-ai-layout">
@@ -212,7 +212,7 @@ export default function CopywritingPage() {
             {loading && (
               <div className="mkt-ai-loading">
                 <div className="mkt-ai-loading-dots"><span></span><span></span><span></span></div>
-                <p>Claude sedang {imageBase64 ? 'menganalisis foto & ' : ''}menulis...</p>
+                <p>AI sedang {imageBase64 ? 'menganalisis foto & ' : ''}menulis...</p>
               </div>
             )}
             {result && !loading && (

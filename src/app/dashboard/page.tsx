@@ -36,11 +36,7 @@ function DashboardContent() {
   const longPressTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const longPressTriggered = React.useRef(false);
 
-  // Mouse-drag scroll refs (desktop)
   const kanbanRef = React.useRef<HTMLDivElement>(null);
-  const isDraggingKanban = React.useRef(false);
-  const dragStartX = React.useRef(0);
-  const dragScrollLeft = React.useRef(0);
 
   // ─── Data fetching ─────────────────────────────────────────
   const fetchOrders = React.useCallback(async (showRefreshing = false) => {
@@ -191,43 +187,7 @@ function DashboardContent() {
     }
   };
 
-  // ─── Mouse-drag scroll (desktop) ───────────────────────────
-  const handleKanbanMouseDown = (e: React.MouseEvent) => {
-    if (!kanbanRef.current) return;
-    // Only drag on the wrapper itself (not on cards)
-    if ((e.target as HTMLElement).closest('.order-card')) return;
-    isDraggingKanban.current = true;
-    dragStartX.current = e.pageX - kanbanRef.current.offsetLeft;
-    dragScrollLeft.current = kanbanRef.current.scrollLeft;
-    kanbanRef.current.style.cursor = 'grabbing';
-    kanbanRef.current.style.userSelect = 'none';
-  };
 
-  React.useEffect(() => {
-    const el = kanbanRef.current;
-    if (!el) return;
-
-    const onMouseMove = (e: MouseEvent) => {
-      if (!isDraggingKanban.current) return;
-      const x = e.pageX - el.offsetLeft;
-      const walk = (x - dragStartX.current) * 1.2;
-      el.scrollLeft = dragScrollLeft.current - walk;
-    };
-
-    const onMouseUp = () => {
-      if (!isDraggingKanban.current) return;
-      isDraggingKanban.current = false;
-      el.style.cursor = 'grab';
-      el.style.userSelect = '';
-    };
-
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
-    return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
-    };
-  }, []);
 
   // ─── Close quick action on outside click ───────────────────
   React.useEffect(() => {
@@ -287,8 +247,6 @@ function DashboardContent() {
         <div
           className="kanban-wrapper"
           ref={kanbanRef}
-          onMouseDown={handleKanbanMouseDown}
-          style={{ cursor: 'grab' }}
         >
           {ALL_STATUSES.map(status => {
             const isEmpty = ordersByStatus[status].length === 0;

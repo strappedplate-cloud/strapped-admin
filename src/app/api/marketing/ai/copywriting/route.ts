@@ -1,107 +1,99 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Claude AI API for generating Instagram captions and article text
-const ANTHROPIC_API = 'https://api.anthropic.com/v1/messages';
+// Google Gemini API for generating Instagram captions and article text (FREE)
+const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { type, mobil, context, tone, language, image_base64, image_media_type } = body;
 
-    const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (!apiKey || apiKey === 'your-api-key-here' || !apiKey.startsWith('sk-ant-')) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey || apiKey === 'your-api-key-here') {
       return NextResponse.json(
-        { error: 'ANTHROPIC_API_KEY belum dikonfigurasi. Dapatkan API key di console.anthropic.com lalu masukkan di .env.local (lokal) atau Vercel Environment Variables (production).' },
+        { error: 'GEMINI_API_KEY belum dikonfigurasi. Dapatkan API key GRATIS di aistudio.google.com/apikey lalu masukkan di .env.local' },
         { status: 500 }
       );
     }
 
-    let systemPrompt = '';
-    let userTextPrompt = '';
+    let prompt = '';
 
     if (type === 'instagram_caption') {
-      systemPrompt = `Kamu adalah copywriter profesional untuk brand mobil premium "Strapped Indonesia" yang menjual custom plate frame (bingkai plat nomor kustom premium). 
-Tulis caption Instagram yang menarik, engaging, dan sesuai tone brand. 
+      prompt = `Kamu adalah copywriter profesional untuk brand mobil premium "Strapped Indonesia" yang menjual custom plate frame (bingkai plat nomor kustom premium).
+
+Tulis caption Instagram yang menarik, engaging, dan sesuai tone brand.
 Gunakan bahasa ${language === 'en' ? 'Inggris' : 'Indonesia'} yang natural.
 Sertakan emoji yang relevan tapi jangan berlebihan.
 Tambahkan 5-10 hashtag relevan di akhir.
-Tone: ${tone || 'premium, modern, automotive enthusiast'}.`;
+Tone: ${tone || 'premium, modern, automotive enthusiast'}.
 
-      userTextPrompt = `Buatkan caption Instagram untuk konten berikut:
+Buatkan caption Instagram untuk konten berikut:
 Mobil: ${mobil || 'tidak disebutkan'}
 Konteks/Deskripsi: ${context || 'konten produk plate frame'}
 ${body.additional_info ? `Info tambahan: ${body.additional_info}` : ''}
 ${image_base64 ? '\nSaya juga melampirkan foto produk/konten. Analisis foto tersebut dan gunakan detail visual dari foto untuk membuat caption yang lebih relevan dan deskriptif.' : ''}`;
 
     } else if (type === 'article') {
-      systemPrompt = `Kamu adalah content writer profesional untuk brand "Strapped Indonesia" yang menjual custom plate frame premium. 
+      prompt = `Kamu adalah content writer profesional untuk brand "Strapped Indonesia" yang menjual custom plate frame premium.
+
 Tulis artikel yang informatif, SEO-friendly, dan engaging.
 Gunakan bahasa ${language === 'en' ? 'Inggris' : 'Indonesia'}.
 Format dengan heading, subheading, dan paragraf yang rapi.
-Tone: ${tone || 'informatif, profesional, automotive enthusiast'}.`;
+Tone: ${tone || 'informatif, profesional, automotive enthusiast'}.
 
-      userTextPrompt = `Buatkan artikel dengan topik berikut:
+Buatkan artikel dengan topik berikut:
 Topik: ${context || 'plate frame kustom'}
 Mobil yang dibahas: ${mobil || 'umum'}
 ${body.word_count ? `Target kata: ${body.word_count}` : 'Target kata: 500-800'}
 ${body.additional_info ? `Info tambahan: ${body.additional_info}` : ''}
-${image_base64 ? '\nSaya juga melampirkan foto referensi. Analisis foto tersebut dan gunakan detail visual dari foto untuk membuat artikel yang lebih relevan dan deskriptif.' : ''}`;
+${image_base64 ? '\nSaya juga melampirkan foto referensi. Analisis foto tersebut dan gunakan detail visual dari foto untuk membuat artikel yang lebih relevan.' : ''}`;
 
     } else {
       return NextResponse.json({ error: 'Invalid type. Use "instagram_caption" or "article".' }, { status: 400 });
     }
 
-    // Build message content - with or without image
-    const userContent: any[] = [];
-    
+    // Build request parts
+    const parts: any[] = [];
+
     if (image_base64) {
-      userContent.push({
-        type: 'image',
-        source: {
-          type: 'base64',
-          media_type: image_media_type || 'image/jpeg',
+      parts.push({
+        inlineData: {
+          mimeType: image_media_type || 'image/jpeg',
           data: image_base64,
         },
       });
     }
-    
-    userContent.push({
-      type: 'text',
-      text: userTextPrompt,
-    });
 
-    const response = await fetch(ANTHROPIC_API, {
+    parts.push({ text: prompt });
+
+    const response = await fetch(`${GEMINI_API}?key=${apiKey}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1500,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: userContent }],
+        contents: [{ parts }],
+        generationConfig: {
+          maxOutputTokens: 2000,
+          temperature: 0.8,
+        },
       }),
     });
 
     if (!response.ok) {
       const errText = await response.text();
-      console.error('Anthropic API error:', errText);
+      console.error('Gemini API error:', errText);
       return NextResponse.json(
-        { error: `AI API error: ${response.status}` },
+        { error: `AI API error: ${response.status}. Pastikan GEMINI_API_KEY valid.` },
         { status: 502 }
       );
     }
 
     const data = await response.json();
-    const generatedText = data.content?.[0]?.text || '';
+    const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
     return NextResponse.json({
       result: generatedText,
       type,
-      model: data.model,
-      usage: data.usage,
+      model: 'gemini-2.0-flash',
     });
   } catch (err: any) {
     console.error('Copywriting AI error:', err);

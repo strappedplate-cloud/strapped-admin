@@ -1,22 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Claude AI API for generating Instagram Story text/concepts
-const ANTHROPIC_API = 'https://api.anthropic.com/v1/messages';
+// Google Gemini API for generating Instagram Story concepts (FREE)
+const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { occasion, theme, brand_message, style, include_promo } = body;
 
-    const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (!apiKey || apiKey === 'your-api-key-here' || !apiKey.startsWith('sk-ant-')) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey || apiKey === 'your-api-key-here') {
       return NextResponse.json(
-        { error: 'ANTHROPIC_API_KEY belum dikonfigurasi. Dapatkan API key di console.anthropic.com lalu masukkan di .env.local (lokal) atau Vercel Environment Variables (production).' },
+        { error: 'GEMINI_API_KEY belum dikonfigurasi. Dapatkan API key GRATIS di aistudio.google.com/apikey lalu masukkan di .env.local' },
         { status: 500 }
       );
     }
 
-    const systemPrompt = `Kamu adalah creative designer dan copywriter untuk brand "Strapped Indonesia" (custom plate frame premium mobil).
+    const prompt = `Kamu adalah creative designer dan copywriter untuk brand "Strapped Indonesia" (custom plate frame premium mobil).
 Kamu akan membuat konsep dan copywriting untuk Instagram Story.
 Hasilkan output dengan format berikut:
 
@@ -28,46 +28,42 @@ Hasilkan output dengan format berikut:
 6. **COPY VARIATIONS** — 3 variasi teks alternatif
 
 Gunakan bahasa Indonesia yang natural dan engaging.
-Brand tone: premium, modern, automotive lifestyle.`;
+Brand tone: premium, modern, automotive lifestyle.
 
-    const userPrompt = `Buatkan konsep Instagram Story untuk:
+Buatkan konsep Instagram Story untuk:
 Occasion/Hari Raya: ${occasion || 'umum'}
 Theme: ${theme || 'automotive lifestyle'}
 Brand Message: ${brand_message || 'Strapped - Premium Plate Frame'}
 Style: ${style || 'modern minimalist'}
 ${include_promo ? `Promo yang ingin disampaikan: ${include_promo}` : ''}`;
 
-    const response = await fetch(ANTHROPIC_API, {
+    const response = await fetch(`${GEMINI_API}?key=${apiKey}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: userPrompt }],
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          maxOutputTokens: 2000,
+          temperature: 0.8,
+        },
       }),
     });
 
     if (!response.ok) {
       const errText = await response.text();
-      console.error('Anthropic API error:', errText);
+      console.error('Gemini API error:', errText);
       return NextResponse.json(
-        { error: `AI API error: ${response.status}` },
+        { error: `AI API error: ${response.status}. Pastikan GEMINI_API_KEY valid.` },
         { status: 502 }
       );
     }
 
     const data = await response.json();
-    const generatedText = data.content?.[0]?.text || '';
+    const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
     return NextResponse.json({
       result: generatedText,
-      model: data.model,
-      usage: data.usage,
+      model: 'gemini-2.0-flash',
     });
   } catch (err: any) {
     console.error('Story generator AI error:', err);

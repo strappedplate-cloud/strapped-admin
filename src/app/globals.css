@@ -433,17 +433,10 @@ input:focus, textarea:focus, select:focus {
   align-items: flex-start;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
-  cursor: grab;
-}
-
-.kanban-wrapper:active {
-  cursor: grabbing;
 }
 
 /* Utility */
-.hide-mobile {
-  display: inline;
-}
+.hide-mobile { display: inline; }
 
 .kanban-column {
   min-width: 260px;
