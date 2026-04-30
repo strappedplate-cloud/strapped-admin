@@ -38538,32 +38538,5 @@
     "shipped_at": null,
     "created_at": "2026-04-30T04:31:02.545Z",
     "updated_at": "2026-04-30T04:31:02.545Z"
-  },
-  {
-    "id": "aeaf7c4f-5dc2-4f2d-b995-5c156045c180",
-    "form_detail": "Ukuran : Mobil - Japan\nQty : Double (2 pcs)\nWarna Plat : Hitam",
-    "nama": "Ervii",
-    "tanggal_pembelian": "2026-04-29",
-    "channel_pembelian": "Shopee",
-    "jenis_bundling": "Keychain",
-    "ukuran_plat": "Mobil - Japan",
-    "qty": 2,
-    "urutan_order": 1,
-    "status": "editing_progress",
-    "payment_status": "Have Not Paid",
-    "nomor_plat": "Vezel Hybrid",
-    "finishing": "",
-    "revision_note": "",
-    "editor_name": "Joshua",
-    "production_number": "",
-    "reseller_name": "",
-    "event_name": "",
-    "nama_penerima": "Ervii",
-    "no_hp": "",
-    "alamat_pengiriman": "",
-    "notes": "",
-    "shipped_at": null,
-    "created_at": "2026-04-30T04:31:04.644Z",
-    "updated_at": "2026-04-30T04:31:04.644Z"
   }
 ]
