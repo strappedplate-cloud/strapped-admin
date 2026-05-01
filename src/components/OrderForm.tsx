@@ -249,6 +249,9 @@ export default function OrderForm({ onSubmit, onCancel, initialData }: OrderForm
                   <option value="Text Plate">Text Plate</option>
                   <option value="Photo Plate">Photo Plate</option>
                   <option value="Custom Plate">Custom Plate</option>
+                  <option value="Keychain">Keychain</option>
+                  <option value="Velcro Plate Holder">Velcro Plate Holder</option>
+
                 </select>
               </div>
               <div className="form-group">
