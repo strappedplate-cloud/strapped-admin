@@ -78,16 +78,14 @@ export default function OrderModal({ order, onClose, onStatusChange, onSave, onD
                 <label className="form-label">2. Channel</label>
                 <select value={form.channel_pembelian || ''} onChange={e => setForm({ ...form, channel_pembelian: e.target.value })}>
                   <option value="">Pilih channel...</option>
-                  <option value="Tokopedia">Tokopedia</option>
                   <option value="WhatsApp">WhatsApp</option>
                   <option value="Instagram">Instagram</option>
+                  <option value="Tokopedia / Tiktok Shop">Tokopedia / Tiktok Shop</option>
                   <option value="Shopee">Shopee</option>
-                  <option value="TikTok Shop">TikTok Shop</option>
-                  <option value="Tokopedia/Tiktok">Tokopedia/Tiktok</option>
-                  <option value="Offline Pickup (COD)">Offline Pickup (COD)</option>
-                  <option value="Offline Pickup">Offline Pickup</option>
                   <option value="Reseller">Reseller</option>
-                  <option value="Other">Other</option>
+                  <option value="Offline">Offline</option>
+                  <option value="Event">Event</option>
+
                 </select>
               </div>
 
@@ -111,17 +109,30 @@ export default function OrderModal({ order, onClose, onStatusChange, onSave, onD
                 </select>
               </div>
 
-              {/* 4. Order Detail */}
               <div className="form-group full-width" style={{ borderBottom: '1px solid var(--border)', paddingBottom: 16, marginBottom: 8 }}>
                 <label className="form-label" style={{ fontSize: 16, fontWeight: 700 }}>4. Order Detail</label>
               </div>
               <div className="form-group">
-                <label className="form-label">4A. Design</label>
+                <label className="form-label">4A. Product</label>
+                <select value={form.product_type || ''} onChange={e => setForm({ ...form, product_type: e.target.value })}>
+                  <option value="">Pilih produk...</option>
+                  <option value="Indonesia License Plate">Indonesia License Plate</option>
+                  <option value="Indonesia EV License Plate">Indonesia EV License Plate</option>
+                  <option value="Japanese Plate">Japanese Plate</option>
+                  <option value="Dealer Plate">Dealer Plate</option>
+                  <option value="Logo Plate">Logo Plate</option>
+                  <option value="Text Plate">Text Plate</option>
+                  <option value="Photo Plate">Photo Plate</option>
+                  <option value="Custom Plate">Custom Plate</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">4B. Design</label>
                 <input value={form.nomor_plat || ''} onChange={e => setForm({ ...form, nomor_plat: e.target.value })} />
               </div>
 
               <div className="form-group full-width">
-                <label className="form-label">4B. Form Detail</label>
+                <label className="form-label">4C. Form Detail</label>
                 <textarea value={form.form_detail || ''} onChange={e => setForm({ ...form, form_detail: e.target.value })} style={{ minHeight: '80px' }} />
               </div>
 
@@ -139,7 +150,7 @@ export default function OrderModal({ order, onClose, onStatusChange, onSave, onD
               </div>
 
               <div className="form-group">
-                <label className="form-label">4D. Bundling</label>
+                <label className="form-label">4E. Bundling</label>
                 <select value={form.jenis_bundling || ''} onChange={e => setForm({ ...form, jenis_bundling: e.target.value })}>
                   <option value="Non-Bundle">Non-Bundle</option>
                   <option value="Velcro">Velcro</option>
@@ -149,11 +160,12 @@ export default function OrderModal({ order, onClose, onStatusChange, onSave, onD
               </div>
 
               <div className="form-group">
-                <label className="form-label">4E. Qty</label>
+                <label className="form-label">4F. Qty</label>
                 <input type="number" min={1} value={form.qty || 1} onChange={e => setForm({ ...form, qty: parseInt(e.target.value) || 1 })} />
               </div>
               <div className="form-group">
-                <label className="form-label">4F. Finishing</label>
+                <label className="form-label">4G. Finishing</label>
+
                 <input value={form.finishing || ''} onChange={e => setForm({ ...form, finishing: e.target.value })} />
               </div>
 
@@ -232,30 +244,37 @@ export default function OrderModal({ order, onClose, onStatusChange, onSave, onD
               </div>
 
               <div className="detail-section-title full-width">4. Order Detail</div>
+              {order.product_type && (
+                <div className="detail-field">
+                  <div className="detail-label">4A. Product</div>
+                  <div className="detail-value">{order.product_type}</div>
+                </div>
+              )}
               <div className="detail-field">
-                <div className="detail-label">4A. Design</div>
+                <div className="detail-label">4B. Design</div>
                 <div className="detail-value" style={{ color: 'var(--accent)', fontWeight: 600 }}>{order.nomor_plat || '—'}</div>
               </div>
               <div className="detail-field">
-                <div className="detail-label">4B. Form Detail</div>
-                <div className="detail-value">{order.form_detail || '—'}</div>
+                <div className="detail-label">4C. Form Detail</div>
+                <div className="detail-value" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.7 }}>{order.form_detail || '—'}</div>
               </div>
               <div className="detail-field">
-                <div className="detail-label">4C. Size</div>
+                <div className="detail-label">4D. Size</div>
                 <div className="detail-value">{order.ukuran_plat || '—'}</div>
               </div>
               <div className="detail-field">
-                <div className="detail-label">4D. Bundling</div>
+                <div className="detail-label">4E. Bundling</div>
                 <div className="detail-value">{order.jenis_bundling || '—'}</div>
               </div>
               <div className="detail-field">
-                <div className="detail-label">4E. Qty</div>
+                <div className="detail-label">4F. Qty</div>
                 <div className="detail-value">{order.qty}</div>
               </div>
               <div className="detail-field">
-                <div className="detail-label">4F. Finishing</div>
+                <div className="detail-label">4G. Finishing</div>
                 <div className="detail-value">{order.finishing || '—'}</div>
               </div>
+
 
               <div className="detail-field full-width">
                 <div className="detail-label">5. Revision Note</div>

@@ -238,17 +238,32 @@ export default function OrderForm({ onSubmit, onCancel, initialData }: OrderForm
                 <label className="form-label" style={{ fontSize: 16, fontWeight: 700 }}>4. Order Detail</label>
               </div>
               <div className="form-group">
-                <label className="form-label">4A. Design</label>
+                <label className="form-label">4A. Product</label>
+                <select value={form.product_type || ''} onChange={e => setForm({ ...form, product_type: e.target.value })}>
+                  <option value="">Pilih produk...</option>
+                  <option value="Indonesia License Plate">Indonesia License Plate</option>
+                  <option value="Indonesia EV License Plate">Indonesia EV License Plate</option>
+                  <option value="Japanese Plate">Japanese Plate</option>
+                  <option value="Dealer Plate">Dealer Plate</option>
+                  <option value="Logo Plate">Logo Plate</option>
+                  <option value="Text Plate">Text Plate</option>
+                  <option value="Photo Plate">Photo Plate</option>
+                  <option value="Custom Plate">Custom Plate</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">4B. Design</label>
                 <input value={form.nomor_plat || ''} onChange={e => setForm({ ...form, nomor_plat: e.target.value })} placeholder="e.g. B 1234 ABC" />
               </div>
 
               <div className="form-group full-width">
-                <label className="form-label">4B. Form Detail</label>
+                <label className="form-label">4C. Form Detail</label>
                 <textarea value={form.form_detail || ''} onChange={e => setForm({ ...form, form_detail: e.target.value })} placeholder="Detail order..." style={{ minHeight: '80px' }} />
               </div>
 
               <div className="form-group">
-                <label className="form-label">4C. Size (Ukuran Plat)</label>
+                <label className="form-label">4D. Size (Ukuran Plat)</label>
+
                 <select value={form.ukuran_plat || ''} onChange={e => setForm({ ...form, ukuran_plat: e.target.value })}>
                   <option value="">Pilih ukuran...</option>
                   <option value="Mobil - Indo">Mobil - Indo</option>

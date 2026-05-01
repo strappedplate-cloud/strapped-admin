@@ -83,7 +83,9 @@ export interface Order {
   status: OrderStatus;
   editor_name: string;
   production_number: string;
+  product_type?: string;
   event_name?: string;
+
   
   // Shipping Note
 
