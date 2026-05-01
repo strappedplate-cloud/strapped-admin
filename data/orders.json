@@ -38565,5 +38565,32 @@
     "shipped_at": null,
     "created_at": "2026-04-30T04:34:40.582Z",
     "updated_at": "2026-04-30T09:51:53.176Z"
+  },
+  {
+    "id": "d0e98a0c-ae70-4fa6-854d-03d1ba92d144",
+    "form_detail": "Ukuran : Mobil - Japan\nQty : Double (2 pcs)\nNomor Plat : D-1869-IG\nBulan - Tahun Pajak : 02-31\nWarna Plat : Putih\nList : Tanpa List\nJenis Font : Lama\nNotes : Polos, untuk frame honda access",
+    "nama": "Ade",
+    "tanggal_pembelian": "2026-05-01",
+    "channel_pembelian": "Instagram",
+    "jenis_bundling": "Non-Bundle",
+    "ukuran_plat": "Mobil - Japan",
+    "qty": 2,
+    "urutan_order": 1,
+    "status": "editing_done",
+    "payment_status": "Have Not Paid",
+    "nomor_plat": "D1869IG",
+    "finishing": "Polos, untuk frame honda access",
+    "revision_note": "",
+    "editor_name": "Joshua",
+    "production_number": "",
+    "reseller_name": "",
+    "event_name": "",
+    "nama_penerima": "Ade",
+    "no_hp": "08121103739",
+    "alamat_pengiriman": "Puri Bintaro PB14 No.20, Bintaro Jaya Sektor 9, RT004/RW009 Sawah Baru, Kec. Ciputat, Kota Tangerang Selatan, Banten 15413",
+    "notes": "",
+    "shipped_at": null,
+    "created_at": "2026-05-01T11:47:45.313Z",
+    "updated_at": "2026-05-01T11:47:45.313Z"
   }
 ]
