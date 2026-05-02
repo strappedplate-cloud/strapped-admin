@@ -38576,13 +38576,13 @@
     "ukuran_plat": "Mobil - Japan",
     "qty": 2,
     "urutan_order": 1,
-    "status": "editing_done",
+    "status": "production",
     "payment_status": "Have Not Paid",
     "nomor_plat": "D1869IG",
     "finishing": "Polos, untuk frame honda access",
     "revision_note": "",
     "editor_name": "Joshua",
-    "production_number": "",
+    "production_number": "PP-267",
     "reseller_name": "",
     "event_name": "",
     "nama_penerima": "Ade",
@@ -38591,6 +38591,6 @@
     "notes": "",
     "shipped_at": null,
     "created_at": "2026-05-01T11:47:45.313Z",
-    "updated_at": "2026-05-02T05:20:09.116Z"
+    "updated_at": "2026-05-02T05:22:09.100Z"
   }
 ]
