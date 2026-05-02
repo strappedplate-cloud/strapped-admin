@@ -38619,32 +38619,5 @@
     "shipped_at": null,
     "created_at": "2026-05-02T05:25:55.551Z",
     "updated_at": "2026-05-02T05:25:55.551Z"
-  },
-  {
-    "id": "eb09cd2a-d9af-473b-b67b-9e844e5af332",
-    "form_detail": "Ukuran : Mobil - Japan\nQty : Double (2 pcs)\nNomor Plat : B-2123-EBF\nBulan - Tahun Pajak : 06-29\nWarna Plat : Putih\nList : Hitam\nJenis Font : Baru\nNotes : Polos",
-    "nama": "Toped",
-    "tanggal_pembelian": "2026-05-02",
-    "channel_pembelian": "Tokopedia / Tiktok Shop",
-    "jenis_bundling": "Non-Bundle",
-    "ukuran_plat": "Mobil - Japan",
-    "qty": 2,
-    "urutan_order": 1,
-    "status": "editing_done",
-    "payment_status": "Paid",
-    "nomor_plat": "B2123EBF",
-    "finishing": "Polos",
-    "revision_note": "",
-    "editor_name": "Joshua",
-    "production_number": "",
-    "reseller_name": "",
-    "event_name": "",
-    "nama_penerima": "Toped",
-    "no_hp": "-",
-    "alamat_pengiriman": "-",
-    "notes": "",
-    "shipped_at": null,
-    "created_at": "2026-05-02T05:25:56.569Z",
-    "updated_at": "2026-05-02T05:25:56.569Z"
   }
 ]
