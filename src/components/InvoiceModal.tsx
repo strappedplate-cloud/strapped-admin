@@ -137,18 +137,40 @@ export default function InvoiceModal({ orders, onClose }: Props) {
   const [shippingTotal, setShippingTotal] = React.useState('');
   const [generating, setGenerating] = React.useState(false);
 
-  // ─── Derived price per order line ──────────────────────────
-  const orderLines = orders.map(o => {
-    const line = perOrder[o.id] ?? { vehicleType: 'Mobil', bundleOverride: '' };
-    const qtyLabel: 'Single' | 'Double' = (o.qty ?? 1) >= 2 ? 'Double' : 'Single';
-    const price = lookupPrice(customerType, line.vehicleType, qtyLabel, line.bundleOverride);
-    const subtotal = price; // invoice qty always 1 per row
-    return { order: o, line, qtyLabel, price, subtotal };
-  });
+  // ─── Derived line items (mirrors API logic) ────────────────
+  interface LineItem { label: string; price: number; qtyDisplay: string; subtotal: number; orderId: string; }
+  const lineItems: LineItem[] = [];
+
+  for (const o of orders) {
+    const line = perOrder[o.id] ?? { vehicleType: 'Mobil' as const, bundleOverride: '' };
+    const qty    = o.qty ?? 1;
+    const bundle = line.bundleOverride;
+    const isKc   = /keychain/i.test(o.product_type || '') || /keychain/i.test(o.ukuran_plat || '');
+    const isVc   = /velcro/i.test(o.product_type || '');
+
+    if (isKc) {
+      const price = PRICES[customerType]['Keychain'];
+      lineItems.push({ label: 'Keychain', price, qtyDisplay: String(qty), subtotal: price * qty, orderId: o.id });
+    } else if (isVc) {
+      const price = PRICES[customerType]['Velcro-Single'];
+      lineItems.push({ label: 'Velcro Plate Holder', price, qtyDisplay: String(qty), subtotal: price * qty, orderId: o.id });
+    } else {
+      const doubles = Math.floor(qty / 2);
+      const singles = qty % 2;
+      for (let i = 0; i < doubles; i++) {
+        const price = lookupPrice(customerType, line.vehicleType, 'Double', bundle);
+        lineItems.push({ label: `Plate Double${bundle ? ' ' + bundle : ''} (${line.vehicleType})`, price, qtyDisplay: '1', subtotal: price, orderId: o.id });
+      }
+      for (let i = 0; i < singles; i++) {
+        const price = lookupPrice(customerType, line.vehicleType, 'Single', bundle);
+        lineItems.push({ label: `Plate Single${bundle ? ' ' + bundle : ''} (${line.vehicleType})`, price, qtyDisplay: '1', subtotal: price, orderId: o.id });
+      }
+    }
+  }
 
   const validExtras = extras.filter(e => e.product.trim() && parseFloat(e.price) > 0 && parseInt(e.qty) > 0);
   const extraSubtotals = validExtras.map(e => parseFloat(e.price) * parseInt(e.qty));
-  const orderSubtotal = orderLines.reduce((s, l) => s + l.subtotal, 0);
+  const orderSubtotal = lineItems.reduce((s, l) => s + l.subtotal, 0);
   const extraSubtotal = extraSubtotals.reduce((s, v) => s + v, 0);
   const shipping = parseFloat(shippingTotal) || 0;
   const grandTotal = orderSubtotal + extraSubtotal + shipping;
@@ -283,61 +305,50 @@ export default function InvoiceModal({ orders, onClose }: Props) {
               Detail Order
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {orderLines.map(({ order, line, qtyLabel, price, subtotal }) => (
-                <div key={order.id} style={{
-                  padding: 14,
-                  background: 'var(--bg-tertiary)',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--border)',
-                }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10, gap: 8, flexWrap: 'wrap' }}>
-                    <div>
-                      <div style={{ fontWeight: 600, fontSize: 13 }}>
-                        {order.nomor_plat || '—'} &nbsp;
-                        <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>
-                          ({qtyLabel} · {order.ukuran_plat})
-                        </span>
+              {orders.map(order => {
+                const line = perOrder[order.id] ?? { vehicleType: 'Mobil' as const, bundleOverride: '' };
+                const orderTotal = lineItems.filter(li => li.orderId === order.id).reduce((s, li) => s + li.subtotal, 0);
+                const isKc = /keychain/i.test(order.product_type || '') || /keychain/i.test(order.ukuran_plat || '');
+                const isVc = /velcro/i.test(order.product_type || '');
+                const qty = order.qty ?? 1;
+                const qtyDesc = isKc || isVc ? `Qty: ${qty}` : qty <= 1 ? 'Single' : qty === 2 ? 'Double' : `${Math.floor(qty/2)}×Double${qty%2?' + Single':''}`;
+                return (
+                  <div key={order.id} style={{ padding: 14, background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10, gap: 8, flexWrap: 'wrap' }}>
+                      <div>
+                        <div style={{ fontWeight: 600, fontSize: 13 }}>
+                          {order.nomor_plat || '—'} &nbsp;
+                          <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>({qtyDesc} · {order.ukuran_plat})</span>
+                        </div>
+                        <div style={{ color: 'var(--text-secondary)', fontSize: 12, marginTop: 2 }}>{order.jenis_bundling || 'Non-Bundle'}</div>
                       </div>
-                      <div style={{ color: 'var(--text-secondary)', fontSize: 12, marginTop: 2 }}>
-                        {order.jenis_bundling || 'Non-Bundle'}
+                      <div style={{ fontWeight: 700, color: 'var(--accent)', fontSize: 14, whiteSpace: 'nowrap' }}>{formatRp(orderTotal)}</div>
+                    </div>
+                    {!isKc && !isVc && (
+                      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                        <div style={{ flex: 1, minWidth: 120 }}>
+                          <label style={{ fontSize: 11, color: 'var(--text-secondary)', display: 'block', marginBottom: 4 }}>Kendaraan</label>
+                          <select value={line.vehicleType} onChange={e => updatePerOrder(order.id, { vehicleType: e.target.value as 'Mobil' | 'Motor' })} style={{ width: '100%', fontSize: 13 }}>
+                            <option value="Mobil">🚗 Mobil</option>
+                            <option value="Motor">🏍️ Motor</option>
+                          </select>
+                        </div>
+                        <div style={{ flex: 2, minWidth: 160 }}>
+                          <label style={{ fontSize: 11, color: 'var(--text-secondary)', display: 'block', marginBottom: 4 }}>Bundle</label>
+                          <select value={line.bundleOverride} onChange={e => updatePerOrder(order.id, { bundleOverride: e.target.value })} style={{ width: '100%', fontSize: 13 }}>
+                            {BUNDLE_OPTIONS.map(b => <option key={b} value={b}>{b || 'Tidak ada bundle'}</option>)}
+                          </select>
+                        </div>
                       </div>
-                    </div>
-                    <div style={{ fontWeight: 700, color: 'var(--accent)', fontSize: 14, whiteSpace: 'nowrap' }}>
-                      {formatRp(subtotal)}
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                    {/* Mobil / Motor */}
-                    <div style={{ flex: 1, minWidth: 120 }}>
-                      <label style={{ fontSize: 11, color: 'var(--text-secondary)', display: 'block', marginBottom: 4 }}>Kendaraan</label>
-                      <select
-                        value={line.vehicleType}
-                        onChange={e => updatePerOrder(order.id, { vehicleType: e.target.value as 'Mobil' | 'Motor' })}
-                        style={{ width: '100%', fontSize: 13 }}
-                      >
-                        <option value="Mobil">🚗 Mobil</option>
-                        <option value="Motor">🏍️ Motor</option>
-                      </select>
-                    </div>
-                    {/* Bundle override */}
-                    <div style={{ flex: 2, minWidth: 160 }}>
-                      <label style={{ fontSize: 11, color: 'var(--text-secondary)', display: 'block', marginBottom: 4 }}>Bundle</label>
-                      <select
-                        value={line.bundleOverride}
-                        onChange={e => updatePerOrder(order.id, { bundleOverride: e.target.value })}
-                        style={{ width: '100%', fontSize: 13 }}
-                      >
-                        {BUNDLE_OPTIONS.map(b => (
-                          <option key={b} value={b}>{b || 'Tidak ada bundle'}</option>
-                        ))}
-                      </select>
+                    )}
+                    <div style={{ marginTop: 8, fontSize: 11, color: 'var(--text-secondary)' }}>
+                      {lineItems.filter(li => li.orderId === order.id).map((li, i) => (
+                        <span key={i} style={{ marginRight: 8 }}>{li.label}: {formatRp(li.subtotal)}</span>
+                      ))}
                     </div>
                   </div>
-                  <div style={{ marginTop: 8, fontSize: 11, color: 'var(--text-secondary)' }}>
-                    Harga: {formatRp(price)} × 1 = {formatRp(subtotal)}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

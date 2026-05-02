@@ -147,23 +147,51 @@ export async function POST(req: NextRequest) {
     }
 
     // ── 3. Build row data ────────────────────────────────────
-    interface RowData { col1: string; col2: string; price: number; qtyLabel: string; subtotal: number; }
+    interface RowData { col1: string; col2: string; price: number; qtyDisplay: string; subtotal: number; }
     const rows: RowData[] = [];
 
+    const isKeychainOrder = (o: Order) => /keychain/i.test(o.product_type || '') || /keychain/i.test(o.ukuran_plat || '');
+    const isVelcroOrder   = (o: Order) => /velcro/i.test(o.product_type || '');
+
     for (const order of orders) {
-      const ld = perOrder[order.id] ?? { vehicleType: 'Mobil', bundleOverride: '' };
-      const qtyLabel = (order.qty ?? 1) >= 2 ? 'Double' : 'Single';
-      const bundle   = ld.bundleOverride || '';
-      const price    = lookupPrice(customerType, ld.vehicleType, qtyLabel, bundle);
-      const col1     = `Plate - ${qtyLabel}${bundle ? ' ' + bundle : ''} (${ld.vehicleType})`;
-      const col2     = sanitize(order.nomor_plat || '') + (order.ukuran_plat ? ' · ' + sanitize(order.ukuran_plat) : '');
-      rows.push({ col1, col2, price, qtyLabel, subtotal: price });
+      const ld     = perOrder[order.id] ?? { vehicleType: 'Mobil', bundleOverride: '' };
+      const qty    = order.qty ?? 1;
+      const col2   = sanitize(order.nomor_plat || '') + (order.ukuran_plat ? ' · ' + sanitize(order.ukuran_plat) : '');
+      const bundle = ld.bundleOverride || '';
+
+      if (isKeychainOrder(order)) {
+        // Keychain: show actual qty, price per unit
+        const price = PRICES[customerType]?.['Keychain'] ?? 55000;
+        rows.push({ col1: 'Keychain', col2, price, qtyDisplay: String(qty), subtotal: price * qty });
+
+      } else if (isVelcroOrder(order)) {
+        // Velcro standalone: show actual qty, price per unit
+        const price = PRICES[customerType]?.['Velcro-Single'] ?? 90000;
+        rows.push({ col1: 'Velcro Plate Holder', col2, price, qtyDisplay: String(qty), subtotal: price * qty });
+
+      } else {
+        // Plate: split qty into Double pairs + Single remainder
+        // qty=1 → 1×Single; qty=2 → 1×Double; qty=3 → 1×Double+1×Single; qty=4 → 2×Double
+        const doubleCount = Math.floor(qty / 2);
+        const singleCount = qty % 2;
+
+        for (let i = 0; i < doubleCount; i++) {
+          const price = lookupPrice(customerType, ld.vehicleType, 'Double', bundle);
+          const col1  = `Plate - Double${bundle ? ' ' + bundle : ''} (${ld.vehicleType})`;
+          rows.push({ col1, col2, price, qtyDisplay: '1', subtotal: price });
+        }
+        for (let i = 0; i < singleCount; i++) {
+          const price = lookupPrice(customerType, ld.vehicleType, 'Single', bundle);
+          const col1  = `Plate - Single${bundle ? ' ' + bundle : ''} (${ld.vehicleType})`;
+          rows.push({ col1, col2, price, qtyDisplay: '1', subtotal: price });
+        }
+      }
     }
 
     for (const ex of extras) {
       const exPrice = parseFloat(ex.price) || 0;
       const exQty   = parseInt(ex.qty) || 1;
-      rows.push({ col1: sanitize(ex.product), col2: '', price: exPrice, qtyLabel: String(exQty), subtotal: exPrice * exQty });
+      rows.push({ col1: sanitize(ex.product), col2: '', price: exPrice, qtyDisplay: String(exQty), subtotal: exPrice * exQty });
     }
 
     const shippingAmt = parseFloat(shippingTotal) || 0;
@@ -217,8 +245,7 @@ export async function POST(req: NextRequest) {
       rtxt(rpFmt(row.price), C.price + (C.qty - C.price) - PAD, curY - PAD - FS, FS, reg, DARK);
 
       // Qty
-      const qtyDisp = (row.qtyLabel === 'Single' || row.qtyLabel === 'Double') ? '1' : row.qtyLabel;
-      txt(qtyDisp, C.qty + PAD, curY - PAD - FS, FS, reg, DARK);
+      txt(row.qtyDisplay, C.qty + PAD, curY - PAD - FS, FS, reg, DARK);
 
       // Subtotal (right-aligned)
       rtxt(rpFmt(row.subtotal), C.right - PAD, curY - PAD - FS, FS, reg, DARK);
