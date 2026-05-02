@@ -38607,7 +38607,7 @@
     "ukuran_plat": "Mobil - Japan",
     "qty": 2,
     "urutan_order": 1,
-    "status": "editing_done",
+    "status": "prompted_production",
     "payment_status": "Paid",
     "nomor_plat": "B2123EBF",
     "finishing": "Polos",
@@ -38622,6 +38622,6 @@
     "notes": "",
     "shipped_at": null,
     "created_at": "2026-05-02T05:25:55.551Z",
-    "updated_at": "2026-05-02T13:17:55.437Z"
+    "updated_at": "2026-05-02T13:17:58.624Z"
   }
 ]
