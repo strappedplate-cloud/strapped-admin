@@ -101,7 +101,8 @@ export default function ProductionParsePage() {
       text1 += `Job : Akrilik Clear 2 mm - Print UV (Mirror)\n`;
       text1 += `Total :\n`;
       Object.keys(sizeTotals).sort().forEach(size => {
-        text1 += `${size}: ${sizeTotals[size]}\n`;
+        const qty = sizeTotals[size];
+        text1 += `${size} : ${qty} ${qty === 1 ? 'pc' : 'pcs'}\n`;
       });
       text1 += `\nNote :\n`;
       text1 += `-. Masking kertas akriliknya buka sisi yang di print aja.\n`;
@@ -114,7 +115,8 @@ export default function ProductionParsePage() {
       text1 += `Job : Akrilik Clear 2 mm - Plat Rounded 10 mm - Print UV (Mirror)\n\n`;
       text1 += `Ukuran & Qty :\n`;
       Object.keys(sizeTotals).sort().forEach(size => {
-        text1 += `${size}: total ${sizeTotals[size]} pada folder ${size}\n`;
+        const qty = sizeTotals[size];
+        text1 += `${size} : ${qty} ${qty === 1 ? 'pc' : 'pcs'}\n`;
       });
       text1 += `\nLink gdrive : ${link || '[link drive]'}\n`;
       text1 += `Note : Pinggirnya yang rapih, bersih dan ring-nya yang rapet.`;
@@ -124,14 +126,16 @@ export default function ProductionParsePage() {
       text1 += `Job : Keychain 2 Sisi, Print Dalam\n\n`;
       text1 += `Ukuran & Qty :\n`;
       Object.keys(sizeTotals).sort().forEach(size => {
-        text1 += `${size}: total ${sizeTotals[size]} pada folder ${size}\n`;
+        const qty = sizeTotals[size];
+        text1 += `${size} : ${qty} ${qty === 1 ? 'pc' : 'pcs'}\n`;
       });
       text1 += `\nLink gdrive : ${link || '[link drive]'}\n`;
       text1 += `Note : Pinggirnya yang rapih, bersih dan ring-nya yang rapet.`;
     } else {
       text1 = `${name}\n\nJob : Custom Order\nTotal :\n`;
       Object.keys(sizeTotals).sort().forEach(size => {
-        text1 += `${size}: total ${sizeTotals[size]}\n`;
+        const qty = sizeTotals[size];
+        text1 += `${size} : ${qty} ${qty === 1 ? 'pc' : 'pcs'}\n`;
       });
       text1 += ``;
     }

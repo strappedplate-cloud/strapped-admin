@@ -83,11 +83,31 @@ function generateInvoiceNo(): string {
   return `${yy}${mm}${String(next).padStart(3, '0')}`;
 }
 
+// ─── Product options (matches OrderForm) ────────────────────
+const PRODUCT_OPTIONS = [
+  'Indonesia License Plate',
+  'Indonesia EV License Plate',
+  'Japanese Plate',
+  'Dealer Plate',
+  'Logo Plate',
+  'Text Plate',
+  'Photo Plate',
+  'Custom Plate',
+  'Keychain',
+  'Velcro Plate Holder',
+];
+
+function isPlateType(pt: string) {
+  return pt !== 'Keychain' && pt !== 'Velcro Plate Holder';
+}
+
 // ─── Types ────────────────────────────────────────────────────
 export interface ExtraProduct { product: string; price: string; qty: string; }
 export interface OrderLineData {
-  vehicleType: 'Mobil' | 'Motor';
-  bundleOverride: string; // e.g. "Bundle Velcro" or ""
+  productType: string;           // e.g. 'Indonesia License Plate', 'Keychain', etc.
+  vehicleType: 'Mobil' | 'Motor'; // only used if productType is a plate
+  bundleOverride: string;
+  priceOverride?: string;
 }
 export interface InvoicePayload {
   orders: Order[];
@@ -109,20 +129,27 @@ interface Props {
 export default function InvoiceModal({ orders, onClose }: Props) {
   const firstOrder = orders[0];
 
+  const [localOrders, setLocalOrders] = React.useState(orders);
   const [customerType, setCustomerType] = React.useState<'retail' | 'reseller'>('retail');
   const [bengkelName, setBengkelName] = React.useState('');
 
-  // Detect vehicle type from ukuran_plat
+  // Auto-detect from order fields
+  const detectProductType = (order: Order): string => {
+    if (order.product_type && PRODUCT_OPTIONS.includes(order.product_type)) return order.product_type;
+    if (/keychain/i.test(order.ukuran_plat || '')) return 'Keychain';
+    if (/velcro/i.test(order.product_type || '')) return 'Velcro Plate Holder';
+    return 'Indonesia License Plate';
+  };
   const detectVehicle = (order: Order): 'Mobil' | 'Motor' => {
     const u = (order.ukuran_plat || '').toLowerCase();
-    if (u.includes('motor')) return 'Motor';
-    return 'Mobil';
+    return u.includes('motor') ? 'Motor' : 'Mobil';
   };
 
   const [perOrder, setPerOrder] = React.useState<Record<string, OrderLineData>>(() => {
     const map: Record<string, OrderLineData> = {};
     orders.forEach(o => {
       map[o.id] = {
+        productType: detectProductType(o),
         vehicleType: detectVehicle(o),
         bundleOverride: getBundleLabel(o.jenis_bundling),
       };
@@ -141,28 +168,35 @@ export default function InvoiceModal({ orders, onClose }: Props) {
   interface LineItem { label: string; price: number; qtyDisplay: string; subtotal: number; orderId: string; }
   const lineItems: LineItem[] = [];
 
-  for (const o of orders) {
-    const line = perOrder[o.id] ?? { vehicleType: 'Mobil' as const, bundleOverride: '' };
+  for (const o of localOrders) {
+    const line = perOrder[o.id] ?? { productType: 'Indonesia License Plate', vehicleType: 'Mobil' as const, bundleOverride: '' };
     const qty    = o.qty ?? 1;
     const bundle = line.bundleOverride;
-    const isKc   = /keychain/i.test(o.product_type || '') || /keychain/i.test(o.ukuran_plat || '');
-    const isVc   = /velcro/i.test(o.product_type || '');
+    const isKc   = line.productType === 'Keychain';
+    const isVc   = line.productType === 'Velcro Plate Holder';
+
+    const getPrice = (defaultPrice: number) => {
+      if (line.priceOverride !== undefined && line.priceOverride !== '') {
+        return parseFloat(line.priceOverride) || 0;
+      }
+      return defaultPrice;
+    };
 
     if (isKc) {
-      const price = PRICES[customerType]['Keychain'];
+      const price = getPrice(PRICES[customerType]['Keychain']);
       lineItems.push({ label: 'Keychain', price, qtyDisplay: String(qty), subtotal: price * qty, orderId: o.id });
     } else if (isVc) {
-      const price = PRICES[customerType]['Velcro-Single'];
+      const price = getPrice(PRICES[customerType]['Velcro-Single']);
       lineItems.push({ label: 'Velcro Plate Holder', price, qtyDisplay: String(qty), subtotal: price * qty, orderId: o.id });
     } else {
       const doubles = Math.floor(qty / 2);
       const singles = qty % 2;
       for (let i = 0; i < doubles; i++) {
-        const price = lookupPrice(customerType, line.vehicleType, 'Double', bundle);
+        const price = getPrice(lookupPrice(customerType, line.vehicleType, 'Double', bundle));
         lineItems.push({ label: `Plate Double${bundle ? ' ' + bundle : ''} (${line.vehicleType})`, price, qtyDisplay: '1', subtotal: price, orderId: o.id });
       }
       for (let i = 0; i < singles; i++) {
-        const price = lookupPrice(customerType, line.vehicleType, 'Single', bundle);
+        const price = getPrice(lookupPrice(customerType, line.vehicleType, 'Single', bundle));
         lineItems.push({ label: `Plate Single${bundle ? ' ' + bundle : ''} (${line.vehicleType})`, price, qtyDisplay: '1', subtotal: price, orderId: o.id });
       }
     }
@@ -181,7 +215,7 @@ export default function InvoiceModal({ orders, onClose }: Props) {
     const invoiceNo = generateInvoiceNo();
 
     const payload: InvoicePayload = {
-      orders,
+      orders: localOrders,
       customerType,
       bengkelName,
       perOrder,
@@ -238,7 +272,7 @@ export default function InvoiceModal({ orders, onClose }: Props) {
     <div className="modal-overlay" onClick={onClose}>
       <div
         className="modal"
-        style={{ maxWidth: 700, width: '95vw', maxHeight: '90vh', overflowY: 'auto' }}
+        style={{ maxWidth: 900, width: '95vw', maxHeight: '90vh', overflowY: 'auto' }}
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
@@ -305,33 +339,93 @@ export default function InvoiceModal({ orders, onClose }: Props) {
               Detail Order
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {orders.map(order => {
-                const line = perOrder[order.id] ?? { vehicleType: 'Mobil' as const, bundleOverride: '' };
+              {localOrders.map((order, idx) => {
+                const line = perOrder[order.id] ?? { productType: 'Indonesia License Plate', vehicleType: 'Mobil' as const, bundleOverride: '' };
                 const orderTotal = lineItems.filter(li => li.orderId === order.id).reduce((s, li) => s + li.subtotal, 0);
-                const isKc = /keychain/i.test(order.product_type || '') || /keychain/i.test(order.ukuran_plat || '');
-                const isVc = /velcro/i.test(order.product_type || '');
+                const isKc = line.productType === 'Keychain';
+                const isVc = line.productType === 'Velcro Plate Holder';
+                const isPlate = isPlateType(line.productType);
                 const qty = order.qty ?? 1;
-                const qtyDesc = isKc || isVc ? `Qty: ${qty}` : qty <= 1 ? 'Single' : qty === 2 ? 'Double' : `${Math.floor(qty/2)}×Double${qty%2?' + Single':''}`;
+                const qtyDesc = !isPlate ? `Qty: ${qty}` : qty <= 1 ? 'Single' : qty === 2 ? 'Double' : `${Math.floor(qty/2)}×Double${qty%2?' + Single':''}`;
+                
+                const moveOrder = (dir: -1 | 1) => {
+                  const newOrders = [...localOrders];
+                  const targetIdx = idx + dir;
+                  if (targetIdx < 0 || targetIdx >= newOrders.length) return;
+                  const temp = newOrders[idx];
+                  newOrders[idx] = newOrders[targetIdx];
+                  newOrders[targetIdx] = temp;
+                  setLocalOrders(newOrders);
+                };
+
                 return (
                   <div key={order.id} style={{ padding: 14, background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10, gap: 8, flexWrap: 'wrap' }}>
-                      <div>
-                        <div style={{ fontWeight: 600, fontSize: 13 }}>
-                          {order.nomor_plat || '—'} &nbsp;
-                          <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>({qtyDesc} · {order.ukuran_plat})</span>
+                      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                        {/* Reorder controls */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                          <button onClick={() => moveOrder(-1)} disabled={idx === 0} style={{ padding: '0 4px', background: 'none', border: 'none', cursor: idx === 0 ? 'default' : 'pointer', opacity: idx === 0 ? 0.3 : 1 }}>▲</button>
+                          <button onClick={() => moveOrder(1)} disabled={idx === localOrders.length - 1} style={{ padding: '0 4px', background: 'none', border: 'none', cursor: idx === localOrders.length - 1 ? 'default' : 'pointer', opacity: idx === localOrders.length - 1 ? 0.3 : 1 }}>▼</button>
                         </div>
-                        <div style={{ color: 'var(--text-secondary)', fontSize: 12, marginTop: 2 }}>{order.jenis_bundling || 'Non-Bundle'}</div>
+                        <div>
+                          <div style={{ fontWeight: 600, fontSize: 13 }}>
+                            {order.nomor_plat || '—'} &nbsp;
+                            <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>({qtyDesc} · {order.ukuran_plat})</span>
+                          </div>
+                          <div style={{ color: 'var(--text-secondary)', fontSize: 12, marginTop: 2 }}>{order.jenis_bundling || 'Non-Bundle'}</div>
+                        </div>
                       </div>
                       <div style={{ fontWeight: 700, color: 'var(--accent)', fontSize: 14, whiteSpace: 'nowrap' }}>{formatRp(orderTotal)}</div>
                     </div>
-                    {!isKc && !isVc && (
+                    
+                    <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 8 }}>
+                      {/* Produk dropdown */}
+                      <div style={{ flex: 1, minWidth: 150 }}>
+                        <label style={{ fontSize: 11, color: 'var(--text-secondary)', display: 'block', marginBottom: 4 }}>Produk</label>
+                        <select
+                          value={line.productType}
+                          onChange={e => updatePerOrder(order.id, { productType: e.target.value })}
+                          style={{ width: '100%', fontSize: 13 }}
+                        >
+                          {PRODUCT_OPTIONS.map(p => <option key={p} value={p}>{p}</option>)}
+                        </select>
+                      </div>
+                      
+                      {/* Adjust Price override */}
+                      <div style={{ flex: 1, minWidth: 150 }}>
+                        <label style={{ fontSize: 11, color: 'var(--text-secondary)', display: 'block', marginBottom: 4 }}>Adjust Price (Manual)</label>
+                        <input
+                          type="number"
+                          placeholder="Default price"
+                          value={line.priceOverride ?? ''}
+                          onChange={e => updatePerOrder(order.id, { priceOverride: e.target.value })}
+                          style={{ width: '100%', fontSize: 13 }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Mobil/Motor toggle — only for Plate types */}
+                    {isPlate && (
                       <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                        <div style={{ flex: 1, minWidth: 120 }}>
+                        <div style={{ flex: 1, minWidth: 100 }}>
                           <label style={{ fontSize: 11, color: 'var(--text-secondary)', display: 'block', marginBottom: 4 }}>Kendaraan</label>
-                          <select value={line.vehicleType} onChange={e => updatePerOrder(order.id, { vehicleType: e.target.value as 'Mobil' | 'Motor' })} style={{ width: '100%', fontSize: 13 }}>
-                            <option value="Mobil">🚗 Mobil</option>
-                            <option value="Motor">🏍️ Motor</option>
-                          </select>
+                          <div style={{ display: 'flex', gap: 6 }}>
+                            {(['Mobil', 'Motor'] as const).map(v => (
+                              <button
+                                key={v}
+                                onClick={() => updatePerOrder(order.id, { vehicleType: v })}
+                                style={{
+                                  flex: 1, padding: '6px 0', fontSize: 12, fontWeight: 600, cursor: 'pointer',
+                                  borderRadius: 'var(--radius-sm)', border: `1.5px solid ${line.vehicleType === v ? 'var(--accent)' : 'var(--border)'}`,
+                                  background: line.vehicleType === v ? 'var(--accent)' : 'var(--bg-secondary)',
+                                  color: line.vehicleType === v ? '#fff' : 'var(--text-secondary)',
+                                  transition: 'all 0.1s',
+                                }}
+                              >
+                                {v === 'Mobil' ? '🚗' : '🏍️'} {v}
+                              </button>
+                            ))}
+                          </div>
                         </div>
                         <div style={{ flex: 2, minWidth: 160 }}>
                           <label style={{ fontSize: 11, color: 'var(--text-secondary)', display: 'block', marginBottom: 4 }}>Bundle</label>

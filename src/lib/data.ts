@@ -1,17 +1,17 @@
 // ============================================================
 // Strapped Admin - Data Access Layer (Async, Dual Backend)
 // ============================================================
-// In development (no GITHUB_TOKEN): uses local JSON files.
-// In production (GITHUB_TOKEN set): uses GitHub API.
+// In development (no SUPABASE_SERVICE_ROLE_KEY): uses local JSON files.
+// In production (SUPABASE_SERVICE_ROLE_KEY set): uses Supabase Storage.
 // All functions are async.
 
 import fs from 'fs';
 import path from 'path';
 import { Order, User, Reseller, PackingItem, AccessRequest } from './types';
-import { readGithubJson, writeGithubJson } from './github-storage';
+import { readSupabaseJson, writeSupabaseJson } from './supabase-storage';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
-const USE_GITHUB = !!process.env.GITHUB_TOKEN;
+const USE_SUPABASE = !!process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 function ensureDataDir() {
   if (!fs.existsSync(DATA_DIR)) {
@@ -20,8 +20,8 @@ function ensureDataDir() {
 }
 
 export async function readJsonFile<T>(filename: string, defaultValue: T[] = []): Promise<T[]> {
-  if (USE_GITHUB) {
-    const { data } = await readGithubJson<T>(`data/${filename}`, defaultValue);
+  if (USE_SUPABASE) {
+    const { data } = await readSupabaseJson<T>(`data/${filename}`, defaultValue);
     return data;
   }
 
@@ -41,8 +41,8 @@ export async function readJsonFile<T>(filename: string, defaultValue: T[] = []):
 }
 
 async function writeJsonFileInternal<T>(filename: string, data: T[]): Promise<void> {
-  if (USE_GITHUB) {
-    await writeGithubJson<T>(`data/${filename}`, data);
+  if (USE_SUPABASE) {
+    await writeSupabaseJson<T>(`data/${filename}`, data);
     return;
   }
 
