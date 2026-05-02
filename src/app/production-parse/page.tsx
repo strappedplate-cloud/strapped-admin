@@ -140,7 +140,7 @@ export default function ProductionParsePage() {
     Object.keys(folders).sort().forEach(size => {
       text2 += `${size}:\n`;
       folders[size].forEach(file => {
-        text2 += `-. ${file}\n`;
+        text2 += `-. ${file.replace(/\.png$/i, '')}\n`;
       });
       text2 += `\n`;
     });

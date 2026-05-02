@@ -4,6 +4,7 @@ import React from 'react';
 import { Order, ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '@/lib/types';
 import OrderModal from '@/components/OrderModal';
 import OrderForm from '@/components/OrderForm';
+import InvoiceModal from '@/components/InvoiceModal';
 import { OrderStatus } from '@/lib/types';
 import { formatOrderNumber } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
@@ -26,6 +27,7 @@ export default function OngoingOrdersPage() {
 
 
   const [selectedIds, setSelectedIds] = React.useState<Set<string>>(new Set());
+  const [showInvoiceModal, setShowInvoiceModal] = React.useState(false);
   const [bulkEdit, setBulkEdit] = React.useState({
     payment_status: '',
     status: '',
@@ -254,6 +256,20 @@ export default function OngoingOrdersPage() {
           <button className="btn btn-primary btn-sm" onClick={handleBulkUpdate}>Apply Changes</button>
           <button className="btn btn-secondary btn-sm" style={{ color: 'var(--accent)' }} onClick={handleForcePast}>Move to Past</button>
           <button className="btn btn-secondary btn-sm" onClick={() => setSelectedIds(new Set())}>Cancel</button>
+          <button
+            className="btn btn-sm"
+            onClick={() => setShowInvoiceModal(true)}
+            style={{
+              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+              color: '#fff',
+              fontWeight: 700,
+              letterSpacing: '0.08em',
+              border: '2px solid #f59e0b',
+              boxShadow: '0 0 10px rgba(245,158,11,0.4)',
+            }}
+          >
+            🧾 INVOICE
+          </button>
         </div>
       )}
 
@@ -365,6 +381,12 @@ export default function OngoingOrdersPage() {
         <OrderModal order={selectedOrder} onClose={() => setSelectedOrder(null)} onStatusChange={handleStatusChange} onSave={handleSave} onDelete={handleDelete} />
       )}
       {showForm && <OrderForm onSubmit={handleNew} onCancel={() => setShowForm(false)} />}
+      {showInvoiceModal && (
+        <InvoiceModal
+          orders={orders.filter(o => selectedIds.has(o.id))}
+          onClose={() => setShowInvoiceModal(false)}
+        />
+      )}
     </main>
   );
 }
