@@ -2,7 +2,7 @@
   {
     "id": "user-ocu",
     "username": "ocu",
-    "password": "$2b$10$ZXV1rvvz85YRDp9nIOne1u6klPyuMGRtSwPhQTBecR5b9Lsffk0Ry",
+    "password": "$2b$10$h6aFT2UkHJS6ze345WepMOarn7jSscNcuKGlf9OpbJ5vmEw2AJkuy",
     "name": "Ocu",
     "role": "admin",
     "permissions": [
