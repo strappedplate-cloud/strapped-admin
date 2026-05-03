@@ -101,7 +101,7 @@ interface InvoicePayload {
     productType: string;
     vehicleType: string;
     priceOverride?: number;
-    bundle?: string;
+    bundleOverride?: string;
   }>;
   extras: { product: string; price: string; qty: string }[];
   shippingService: string;
@@ -170,9 +170,9 @@ export async function POST(req: NextRequest) {
 
       let bundleKey = '';
       let bundleDisplay = '';
-      if (conf.bundle && conf.bundle !== 'Tidak ada bundle') {
-        bundleKey = conf.bundle;
-        bundleDisplay = conf.bundle.replace('Bundle ', '');
+      if (conf.bundleOverride && conf.bundleOverride !== 'Tidak ada bundle' && conf.bundleOverride !== 'Non-Bundle') {
+        bundleKey = conf.bundleOverride;
+        bundleDisplay = conf.bundleOverride.replace('Bundle ', '');
       } else {
         const mBundle = String(ord.produk || '').match(/Bundle ([^-]+)/i);
         if (mBundle) {
