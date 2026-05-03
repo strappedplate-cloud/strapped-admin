@@ -52,26 +52,34 @@ function lookupPrice(customerType: string, vehicle: string, qty: string, bundle:
   return table[key] ?? 0;
 }
 
-function rpFmt(n: number) { return 'Rp ' + n.toLocaleString('id-ID'); }
+function rpFmt(n: any) { 
+  const num = parseFloat(String(n).replace(/[^0-9.-]+/g,"")) || 0;
+  return 'Rp ' + num.toLocaleString('id-ID'); 
+}
 
 function sanitize(s: string) {
   return (s || '')
     .replace(/[\u2011-\u2015]/g, '-')
     .replace(/[\u2018\u2019]/g, "'")
     .replace(/[\u201C\u201D]/g, '"')
-    .replace(/[^\x00-\x7F]/g, '');
+    .replace(/\u2026/g, '...');
 }
 
 function wrapText(text: string, maxW: number, font: PDFFont, size: number): string[] {
-  const s = sanitize(text); if (!s) return ['-'];
-  const words = s.split(' ');
-  const lines: string[] = []; let cur = words[0] || '';
-  for (let i = 1; i < words.length; i++) {
-    const w = words[i];
-    if (font.widthOfTextAtSize(cur + ' ' + w, size) <= maxW) cur += ' ' + w;
-    else { lines.push(cur); cur = w; }
+  const s = sanitize(text); if (!s) return [];
+  const lines: string[] = [];
+  const explicitLines = s.split('\n');
+  
+  for (const expLine of explicitLines) {
+    const words = expLine.split(' ');
+    let cur = words[0] || '';
+    for (let i = 1; i < words.length; i++) {
+      const w = words[i];
+      if (font.widthOfTextAtSize(cur + ' ' + w, size) <= maxW) cur += ' ' + w;
+      else { lines.push(cur); cur = w; }
+    }
+    if (cur) lines.push(cur);
   }
-  lines.push(cur);
   return lines;
 }
 
@@ -150,14 +158,11 @@ export async function POST(req: NextRequest) {
     for (const ord of orders) {
       const conf = perOrder[ord.id] || { productType: 'Plate', vehicleType: 'Mobil' };
       const baseProduct = conf.productType;
+      const baseName = ord.produk_display || baseProduct;
       
-      const parts = (ord.produk || '').split('-').map((s: string) => s.trim());
       const rawQty = ord.qty || '1';
       const actualQty = parseInt(String(rawQty)) || 1;
       let qtyString = rawQty;
-      if (['Single', 'Double', 'Triple', 'Quadruple'].includes(parts[parts.length - 1])) {
-        qtyString = parts.pop()!;
-      }
 
       const mBundle = (ord.produk || '').match(/Bundle ([^-]+)/i);
       const bundle = mBundle ? mBundle[1].trim() : '';
@@ -168,7 +173,6 @@ export async function POST(req: NextRequest) {
         while (remaining > 0) {
           const isDouble = remaining >= 2;
           const lineQty = isDouble ? 2 : 1;
-          const lbl = isDouble ? 'Double (2 pcs)' : 'Single (1 pcs)';
           
           let linePrice = 0;
           if (conf.priceOverride !== undefined && conf.priceOverride !== null) {
@@ -178,16 +182,15 @@ export async function POST(req: NextRequest) {
           }
           
           const validNomor = ord.nomor_pesanan && ord.nomor_pesanan !== 'undefined';
-          let c1 = validNomor ? `[${ord.nomor_pesanan}] Plate - ${lbl}` : `Plate - ${lbl}`;
+          let titleText = baseProduct;
+          if (baseName && baseName.toLowerCase() !== baseProduct.toLowerCase()) {
+            titleText = `${baseProduct} - ${baseName}`;
+          }
+          let c1 = validNomor ? `[${ord.nomor_pesanan}] ${titleText}` : titleText;
           if (bundle) c1 += ` + Bundle ${bundle}`;
+          if (ord.nomor_plat && ord.nomor_plat !== '-') c1 += ` (${ord.nomor_plat})`;
           
-          let fontNotes = '';
-          if (ord.warna_plat) fontNotes += `Warna Plat: ${ord.warna_plat} `;
-          if (ord.jenis_font) fontNotes += `Font: ${ord.jenis_font} `;
-          if (ord.notes) fontNotes += `Notes: ${ord.notes}`;
-          
-          let c2 = `${conf.vehicleType} • ${ord.nomor_plat || '-'} • ${ord.bulan_tahun || '-'}`;
-          if (fontNotes) c2 += ` • ${fontNotes}`;
+          let c2 = ord.form_detail || '';
 
           rows.push({ col1: sanitize(c1), col2: sanitize(c2), price: linePrice, qtyDisplay: '1', subtotal: linePrice });
           remaining -= lineQty;
@@ -201,9 +204,18 @@ export async function POST(req: NextRequest) {
         }
         
         const validNomor = ord.nomor_pesanan && ord.nomor_pesanan !== 'undefined';
-        let c1 = validNomor ? `[${ord.nomor_pesanan}] ${baseProduct}` : baseProduct;
+        let titleText = baseProduct;
+        if (baseName && baseName.toLowerCase() !== baseProduct.toLowerCase()) {
+          titleText = `${baseProduct} - ${baseName}`;
+        }
+        let c1 = validNomor ? `[${ord.nomor_pesanan}] ${titleText}` : titleText;
         if (bundle) c1 += ` + Bundle ${bundle}`;
-        rows.push({ col1: sanitize(c1), col2: sanitize(ord.notes || ''), price: basePrice, qtyDisplay: String(actualQty), subtotal: basePrice * actualQty });
+        if (ord.nomor_plat && ord.nomor_plat !== '-') c1 += ` (${ord.nomor_plat})`;
+
+        let c2 = ord.form_detail || '';
+
+        const qtyDisplay = ['Triple', 'Quadruple'].includes(qtyString) ? qtyString : String(actualQty);
+        rows.push({ col1: sanitize(c1), col2: sanitize(c2), price: basePrice, qtyDisplay: sanitize(qtyDisplay), subtotal: basePrice * actualQty });
       }
     }
 
@@ -227,27 +239,24 @@ export async function POST(req: NextRequest) {
     txt('Subtotal', C.subtotal + 5, curY + 7, 9, bold, WHITE, page);
 
     // ── 6. Draw data rows ────────────────────────────────────
-    const FS  = 10;   // Increased to 10 for better readability based on user's 11pt request
+    const FS  = 10;
     const FS2 = 9;
     const PAD = 6;
     const ROW_H = 34;
 
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
-      const itemW    = C.price - C.item - PAD * 2;
-      const wrapped1 = wrapText(row.col1, itemW, reg, FS);
-      const wrapped2 = row.col2 ? wrapText(row.col2, itemW, reg, FS2) : [];
-      const dynH     = Math.max(ROW_H, (wrapped1.length + wrapped2.length) * (FS * 1.4) + PAD * 2 + 4);
+      const wrapped1Corrected = wrapText(row.col1, C.price - C.item - PAD * 2, bold, FS);
+      const wrapped2 = wrapText(row.col2 || '', C.price - C.item - PAD * 2, reg, FS2);
+      const textLines1 = wrapped1Corrected.length;
+      const textLines2 = wrapped2.length;
+      const totalTextH = (textLines1 * FS * 1.4) + (textLines2 > 0 ? (textLines2 * FS2 * 1.4) + 4 : 0);
+      
+      const dynH = Math.max(ROW_H, totalTextH + PAD * 2);
 
-      // Pagination
-      if (curY - dynH < 50) {
-        // Close table on current page
-        line(TABLE_X, curY, TABLE_R, curY);
-        [TABLE_X, C.item, C.price, C.qty, C.subtotal, TABLE_R].forEach(x => line(x, curY, x, TABLE_DATA_TOP, GRAY, 0.5, page));
-        
+      if (curY - dynH < FOOT_H + 50) {
         page = pdfDoc.addPage([596, 842]);
         curY = 750;
-        // Redraw table header
         rect(TABLE_X, curY, TABLE_W, 22, BLUE, page);
         const headerNoW2 = bold.widthOfTextAtSize('No', 9);
         txt('No', TABLE_X + ((C.item - TABLE_X) / 2) - (headerNoW2 / 2), curY + 7, 9, bold, WHITE, page);
@@ -259,28 +268,24 @@ export async function POST(req: NextRequest) {
 
       if (i % 2 === 1) rect(TABLE_X, curY - dynH, TABLE_W, dynH, rgb(0.925, 0.945, 0.975), page);
 
-      line(TABLE_X, curY - dynH, TABLE_R, curY - dynH, GRAY, 0.5, page);
-      [TABLE_X, C.item, C.price, C.qty, C.subtotal, TABLE_R].forEach(x => line(x, curY, x, curY - dynH, GRAY, 0.5, page));
+      const rowCenterY = curY - (dynH / 2);
 
-      // Draw text content
       const rowNumStr = String(i + 1);
       const rowNumW = reg.widthOfTextAtSize(rowNumStr, FS);
-      txt(rowNumStr, TABLE_X + ((C.item - TABLE_X) / 2) - (rowNumW / 2), curY - PAD - FS, FS, reg, DARK, page);
+      txt(rowNumStr, TABLE_X + ((C.item - TABLE_X) / 2) - (rowNumW / 2), rowCenterY - (FS/2) + 2, FS, reg, DARK, page);
 
-      let lineY = curY - PAD - FS;
-      for (const ln of wrapped1) { txt(ln, C.item + PAD, lineY, FS, reg, DARK, page); lineY -= FS * 1.4; }
+      let lineY = rowCenterY + (totalTextH / 2) - FS + 2;
+      for (const ln of wrapped1Corrected) { txt(ln, C.item + PAD, lineY, FS, bold, BLUE, page); lineY -= FS * 1.4; }
+      if (textLines2 > 0) lineY -= 4;
       for (const ln of wrapped2) { txt(ln, C.item + PAD, lineY, FS2, reg, GRAY, page); lineY -= FS2 * 1.4; }
 
-      rtxt(rpFmt(row.price), C.price + (C.qty - C.price) - PAD, curY - PAD - FS, FS, reg, DARK, page);
+      rtxt(rpFmt(row.price), C.price + (C.qty - C.price) - PAD, rowCenterY - (FS/2) + 2, FS, reg, DARK, page);
       const qtyW = reg.widthOfTextAtSize(row.qtyDisplay, FS);
-      txt(row.qtyDisplay, C.qty + 30 - (qtyW / 2), curY - PAD - FS, FS, reg, DARK, page);
-      rtxt(rpFmt(row.subtotal), TABLE_R - PAD, curY - PAD - FS, FS, reg, DARK, page);
+      txt(row.qtyDisplay, C.qty + 30 - (qtyW / 2), rowCenterY - (FS/2) + 2, FS, reg, DARK, page);
+      rtxt(rpFmt(row.subtotal), TABLE_R - PAD, rowCenterY - (FS/2) + 2, FS, reg, DARK, page);
 
       curY -= dynH;
     }
-
-    // Outer table border for current page
-    line(TABLE_X, curY, TABLE_R, curY, GRAY, 0.5, page);
 
     // ── 6. Shipping & Grand Total ────────────────────────────
     if (curY - (FOOT_H * 2) < 50) {
@@ -289,8 +294,6 @@ export async function POST(req: NextRequest) {
     }
 
     rect(TABLE_X, curY - FOOT_H, TABLE_W, FOOT_H, BLUE, page);
-    line(TABLE_X, curY - FOOT_H, TABLE_R, curY - FOOT_H, GRAY, 0.5, page);
-    [TABLE_X, TABLE_R].forEach(x => line(x, curY, x, curY - FOOT_H, GRAY, 0.5, page));
 
     const sanitizedShip = sanitize(shippingService);
     const shipLabel = sanitizedShip ? `Shipping - ${sanitizedShip}` : 'Shipping';
@@ -299,8 +302,6 @@ export async function POST(req: NextRequest) {
     curY -= FOOT_H;
 
     rect(TABLE_X, curY - FOOT_H, TABLE_W, FOOT_H, BLUE, page);
-    line(TABLE_X, curY - FOOT_H, TABLE_R, curY - FOOT_H, GRAY, 0.5, page);
-    [TABLE_X, TABLE_R].forEach(x => line(x, curY, x, curY - FOOT_H, GRAY, 0.5, page));
 
     rtxt('Grand Total', C.subtotal - PAD, curY - FOOT_H + 6, FS + 1, bold, WHITE, page);
     rtxt(rpFmt(grandTotal), TABLE_R - PAD * 2, curY - FOOT_H + 6, FS + 1, bold, WHITE, page);
@@ -339,9 +340,18 @@ export async function POST(req: NextRequest) {
     }
 
     const pdfBytes = await pdfDoc.save();
+    
+    const firstOrderData = orders[0] || {};
+    const namaExport = sanitize(firstOrderData.nama_penerima || firstOrderData.nama || 'Customer');
+    const designExport = firstOrderData.produk ? sanitize(firstOrderData.produk.split('(')[0].trim()) : '';
+    const exportFilename = `Strapped ${invoiceNo} - ${namaExport} ${designExport}.pdf`.replace(/\s+/g, ' ');
+
     return new NextResponse(pdfBytes as any, {
       status: 200,
-      headers: { 'Content-Type': 'application/pdf' },
+      headers: {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `inline; filename="${exportFilename}"`
+      }
     });
 
   } catch (error) {
