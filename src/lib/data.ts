@@ -10,9 +10,9 @@ import { Order, User, Reseller, PackingItem, AccessRequest } from './types';
 import { dbReadAll, dbReadById, dbInsert, dbUpdate, dbDelete } from './supabase-db';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
-const USE_SUPABASE = !!(
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-) && !!process.env.NEXT_PUBLIC_SUPABASE_URL;
+// Only use Supabase PostgreSQL tables when explicitly opted in via DATA_BACKEND=db
+// Default: local JSON files (dev) or Supabase Storage (production)
+const USE_SUPABASE = process.env.DATA_BACKEND === 'db';
 
 function ensureDataDir() {
   if (!fs.existsSync(DATA_DIR)) {
@@ -21,6 +21,12 @@ function ensureDataDir() {
 }
 
 export async function readJsonFile<T>(filename: string, defaultValue: T[] = []): Promise<T[]> {
+  if (process.env.DATA_BACKEND === 'storage') {
+    const { readSupabaseJson } = await import('./supabase-storage');
+    const { data } = await readSupabaseJson<T>(`data/${filename}`, defaultValue);
+    return data;
+  }
+
   // Map filename to table name
   const tableMap: Record<string, string> = {
     'orders.json': 'orders',
@@ -41,7 +47,7 @@ export async function readJsonFile<T>(filename: string, defaultValue: T[] = []):
   ensureDataDir();
   const filepath = path.join(DATA_DIR, filename);
   if (!fs.existsSync(filepath)) {
-    fs.writeFileSync(filepath, JSON.stringify(defaultValue, null, 2));
+    try { fs.writeFileSync(filepath, JSON.stringify(defaultValue, null, 2)); } catch {}
     return defaultValue;
   }
   try {
@@ -54,6 +60,12 @@ export async function readJsonFile<T>(filename: string, defaultValue: T[] = []):
 
 // Keep writeJsonFile for marketing-data.ts compatibility (it calls this directly)
 export async function writeJsonFile<T extends object>(filename: string, data: T[]): Promise<void> {
+  if (process.env.DATA_BACKEND === 'storage') {
+    const { writeSupabaseJson } = await import('./supabase-storage');
+    await writeSupabaseJson<T>(`data/${filename}`, data);
+    return;
+  }
+
   const tableMap: Record<string, string> = {
     'marketing_contents.json': 'marketing_contents',
     'photoshoot_items.json': 'photoshoot_items',
@@ -66,7 +78,7 @@ export async function writeJsonFile<T extends object>(filename: string, data: T[
   }
   ensureDataDir();
   const filepath = path.join(DATA_DIR, filename);
-  fs.writeFileSync(filepath, JSON.stringify(data, null, 2));
+  try { fs.writeFileSync(filepath, JSON.stringify(data, null, 2)); } catch(e) { console.error('Write error', e); }
 }
 
 // ─── Orders ──────────────────────────────────────────────────
@@ -89,7 +101,7 @@ export async function createOrder(order: Order): Promise<Order> {
   if (USE_SUPABASE) return dbInsert<Order>('orders', order);
   const orders = await getOrders();
   orders.push(order);
-  fs.writeFileSync(path.join(DATA_DIR, 'orders.json'), JSON.stringify(orders, null, 2));
+  await writeJsonFile('orders.json', orders);
   return order;
 }
 
@@ -110,7 +122,7 @@ export async function updateOrder(id: string, updates: Partial<Order>): Promise<
   if (updates.status === 'shipped' && !orders[index].shipped_at) {
     orders[index].shipped_at = new Date().toISOString();
   }
-  fs.writeFileSync(path.join(DATA_DIR, 'orders.json'), JSON.stringify(orders, null, 2));
+  await writeJsonFile('orders.json', orders);
   return orders[index];
 }
 
@@ -119,7 +131,7 @@ export async function deleteOrder(id: string): Promise<boolean> {
   const orders = await getOrders();
   const filtered = orders.filter(o => o.id !== id);
   if (filtered.length === orders.length) return false;
-  fs.writeFileSync(path.join(DATA_DIR, 'orders.json'), JSON.stringify(filtered, null, 2));
+  await writeJsonFile('orders.json', filtered);
   return true;
 }
 
@@ -164,8 +176,13 @@ export async function getPastOrders(): Promise<Order[]> {
 // ─── Users ───────────────────────────────────────────────────
 
 export async function getUsers(): Promise<User[]> {
-  if (USE_SUPABASE) return dbReadAll<User>('users');
-  return readJsonFile<User>('users.json', []);
+  // Always use local file for users so login doesn't break, bypassing Supabase entirely
+  try {
+    const data = fs.readFileSync(path.join(DATA_DIR, 'users.json'), 'utf-8');
+    return JSON.parse(data);
+  } catch {
+    return [];
+  }
 }
 
 export async function getUserByUsername(username: string): Promise<User | undefined> {
@@ -177,7 +194,7 @@ export async function createUser(user: User): Promise<User> {
   if (USE_SUPABASE) return dbInsert<User>('users', user);
   const users = await getUsers();
   users.push(user);
-  fs.writeFileSync(path.join(DATA_DIR, 'users.json'), JSON.stringify(users, null, 2));
+  await writeJsonFile('users.json', users);
   return user;
 }
 
@@ -193,7 +210,7 @@ export async function updateUser(id: string, updates: Partial<User>): Promise<Us
   const index = users.findIndex(u => u.id === id);
   if (index === -1) return null;
   users[index] = { ...users[index], ...updates };
-  fs.writeFileSync(path.join(DATA_DIR, 'users.json'), JSON.stringify(users, null, 2));
+  await writeJsonFile('users.json', users);
   return users[index];
 }
 
@@ -202,7 +219,7 @@ export async function deleteUser(id: string): Promise<boolean> {
   const users = await getUsers();
   const filtered = users.filter(u => u.id !== id);
   if (filtered.length === users.length) return false;
-  fs.writeFileSync(path.join(DATA_DIR, 'users.json'), JSON.stringify(filtered, null, 2));
+  await writeJsonFile('users.json', filtered);
   return true;
 }
 
@@ -226,7 +243,7 @@ export async function createReseller(reseller: Reseller): Promise<Reseller> {
   if (USE_SUPABASE) return dbInsert<Reseller>('resellers', reseller);
   const resellers = await getResellers();
   resellers.push(reseller);
-  fs.writeFileSync(path.join(DATA_DIR, 'resellers.json'), JSON.stringify(resellers, null, 2));
+  await writeJsonFile('resellers.json', resellers);
   return reseller;
 }
 
@@ -236,7 +253,7 @@ export async function updateReseller(id: string, updates: Partial<Reseller>): Pr
   const index = resellers.findIndex(r => r.id === id);
   if (index === -1) return null;
   resellers[index] = { ...resellers[index], ...updates, updated_at: new Date().toISOString() };
-  fs.writeFileSync(path.join(DATA_DIR, 'resellers.json'), JSON.stringify(resellers, null, 2));
+  await writeJsonFile('resellers.json', resellers);
   return resellers[index];
 }
 
@@ -245,7 +262,7 @@ export async function deleteReseller(id: string): Promise<boolean> {
   const resellers = await getResellers();
   const filtered = resellers.filter(r => r.id !== id);
   if (filtered.length === resellers.length) return false;
-  fs.writeFileSync(path.join(DATA_DIR, 'resellers.json'), JSON.stringify(filtered, null, 2));
+  await writeJsonFile('resellers.json', filtered);
   return true;
 }
 
@@ -260,7 +277,7 @@ export async function createPackingItem(item: PackingItem): Promise<PackingItem>
   if (USE_SUPABASE) return dbInsert<PackingItem>('packing_items', item);
   const items = await getPackingItems();
   items.push(item);
-  fs.writeFileSync(path.join(DATA_DIR, 'packing.json'), JSON.stringify(items, null, 2));
+  await writeJsonFile('packing.json', items);
   return item;
 }
 
@@ -270,7 +287,7 @@ export async function updatePackingItem(id: string, updates: Partial<PackingItem
   const index = items.findIndex(i => i.id === id);
   if (index === -1) return null;
   items[index] = { ...items[index], ...updates, updated_at: new Date().toISOString() };
-  fs.writeFileSync(path.join(DATA_DIR, 'packing.json'), JSON.stringify(items, null, 2));
+  await writeJsonFile('packing.json', items);
   return items[index];
 }
 
@@ -279,7 +296,7 @@ export async function deletePackingItem(id: string): Promise<boolean> {
   const items = await getPackingItems();
   const filtered = items.filter(i => i.id !== id);
   if (filtered.length === items.length) return false;
-  fs.writeFileSync(path.join(DATA_DIR, 'packing.json'), JSON.stringify(filtered, null, 2));
+  await writeJsonFile('packing.json', filtered);
   return true;
 }
 
@@ -294,7 +311,7 @@ export async function createAccessRequest(req: AccessRequest): Promise<AccessReq
   if (USE_SUPABASE) return dbInsert<AccessRequest>('access_requests', req);
   const requests = await getAccessRequests();
   requests.push(req);
-  fs.writeFileSync(path.join(DATA_DIR, 'access_requests.json'), JSON.stringify(requests, null, 2));
+  await writeJsonFile('access_requests.json', requests);
   return req;
 }
 
@@ -309,6 +326,6 @@ export async function updateAccessRequest(id: string, status: 'approved' | 'reje
   const index = requests.findIndex(r => r.id === id);
   if (index === -1) return null;
   requests[index].status = status;
-  fs.writeFileSync(path.join(DATA_DIR, 'access_requests.json'), JSON.stringify(requests, null, 2));
+  await writeJsonFile('access_requests.json', requests);
   return requests[index];
 }
