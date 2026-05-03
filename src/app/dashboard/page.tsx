@@ -32,12 +32,6 @@ function DashboardContent() {
   const [quickActionOrder, setQuickActionOrder] = React.useState<Order | null>(null);
   const [quickActionPos, setQuickActionPos] = React.useState({ x: 0, y: 0 });
 
-  // Long press refs
-  const longPressTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-  const longPressTriggered = React.useRef(false);
-
-  const kanbanRef = React.useRef<HTMLDivElement>(null);
-
   // ─── Data fetching ─────────────────────────────────────────
   const fetchOrders = React.useCallback(async (showRefreshing = false) => {
     if (showRefreshing) setRefreshing(true);
@@ -137,12 +131,16 @@ function DashboardContent() {
     }
   };
 
-  // ─── Quick action (hold press) ──────────────────────────────
+  // ─── Quick action ───────────────────────────────────────────
+  const openQuickAction = (e: React.MouseEvent, order: Order) => {
+    e.stopPropagation();
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    setQuickActionOrder(order);
+    setQuickActionPos({ x: rect.right, y: rect.top });
+  };
+
   const closeQuickAction = React.useCallback(() => {
     setQuickActionOrder(null);
-    // Reset flag a tick later so the click that closes the menu
-    // doesn't also open the order modal
-    setTimeout(() => { longPressTriggered.current = false; }, 100);
   }, []);
 
   const handleQuickMove = async (order: Order, newStatus: OrderStatus) => {
@@ -169,41 +167,23 @@ function DashboardContent() {
     }
   };
 
-  // ─── Long press (touch) ─────────────────────────────────────
-  const handleCardTouchStart = (e: React.TouchEvent, order: Order) => {
-    longPressTriggered.current = false;
-    const touch = e.touches[0];
-    longPressTimer.current = setTimeout(() => {
-      longPressTriggered.current = true;
-      setQuickActionOrder(order);
-      setQuickActionPos({ x: touch.clientX, y: touch.clientY });
-    }, 500);
+  // Also open on right-click for desktop
+  const handleContextMenu = (e: React.MouseEvent, order: Order) => {
+    e.preventDefault();
+    setQuickActionOrder(order);
+    setQuickActionPos({ x: e.clientX, y: e.clientY });
   };
 
-  const cancelLongPress = () => {
-    if (longPressTimer.current) {
-      clearTimeout(longPressTimer.current);
-      longPressTimer.current = null;
-    }
-  };
-
-
-
-  // ─── Close quick action on outside click ───────────────────
+  // Close on outside click
   React.useEffect(() => {
     if (!quickActionOrder) return;
-    const close = (e: MouseEvent | TouchEvent) => {
-      closeQuickAction();
-    };
-    // delay to avoid same-event closing immediately
+    const close = () => closeQuickAction();
     const t = setTimeout(() => {
-      window.addEventListener('click', close);
-      window.addEventListener('touchend', close);
+      window.addEventListener('pointerdown', close);
     }, 10);
     return () => {
       clearTimeout(t);
-      window.removeEventListener('click', close);
-      window.removeEventListener('touchend', close);
+      window.removeEventListener('pointerdown', close);
     };
   }, [quickActionOrder, closeQuickAction]);
 
@@ -244,10 +224,7 @@ function DashboardContent() {
       </div>
 
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div
-          className="kanban-wrapper"
-          ref={kanbanRef}
-        >
+        <div className="kanban-wrapper">
           {ALL_STATUSES.map(status => {
             const isEmpty = ordersByStatus[status].length === 0;
             return (
@@ -282,29 +259,32 @@ function DashboardContent() {
                               {...dragProvided.draggableProps}
                               {...dragProvided.dragHandleProps}
                               className={`order-card ${dragSnapshot.isDragging ? 'dragging' : ''}`}
-                              onClick={() => {
-                                if (!longPressTriggered.current) {
-                                  setSelectedOrder(order);
-                                }
-                              }}
-                              onTouchStart={(e) => handleCardTouchStart(e, order)}
-                              onTouchEnd={cancelLongPress}
-                              onTouchMove={cancelLongPress}
-                              onContextMenu={(e) => {
-                                e.preventDefault();
-                                longPressTriggered.current = true;
-                                setQuickActionOrder(order);
-                                setQuickActionPos({ x: e.clientX, y: e.clientY });
-                              }}
+                              onClick={() => setSelectedOrder(order)}
+                              onContextMenu={(e) => handleContextMenu(e, order)}
                             >
-                              <div className="order-card-name">
-                                {order.nama}
-                                {order.nomor_plat && (
-                                  <span className="order-card-plate"> {order.nomor_plat}</span>
-                                )}
+                              {/* Card content */}
+                              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 4 }}>
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                  <div className="order-card-name">
+                                    {order.nama}
+                                    {order.nomor_plat && (
+                                      <span className="order-card-plate"> {order.nomor_plat}</span>
+                                    )}
+                                  </div>
+                                  <div className="order-card-size">{order.ukuran_plat || '—'}</div>
+                                  <div className="order-card-bundle">{order.jenis_bundling || '—'}</div>
+                                </div>
+
+                                {/* >> Move button */}
+                                <button
+                                  className="card-move-btn"
+                                  title="Move to..."
+                                  onClick={(e) => openQuickAction(e, order)}
+                                  onPointerDown={(e) => e.stopPropagation()}
+                                >
+                                  ››
+                                </button>
                               </div>
-                              <div className="order-card-size">{order.ukuran_plat || '—'}</div>
-                              <div className="order-card-bundle">{order.jenis_bundling || '—'}</div>
                             </div>
                           )}
                         </Draggable>
@@ -333,24 +313,22 @@ function DashboardContent() {
         </div>
       </DragDropContext>
 
-      {/* Quick Action Context Menu */}
+      {/* Quick Action Popup */}
       {quickActionOrder && (
         <div
           className="quick-action-overlay"
-          onClick={(e) => { e.stopPropagation(); closeQuickAction(); }}
-          onTouchEnd={(e) => { e.stopPropagation(); closeQuickAction(); }}
+          onPointerDown={(e) => { e.stopPropagation(); closeQuickAction(); }}
         >
           <div
             className="quick-action-menu"
             style={{
-              top: Math.min(quickActionPos.y, window.innerHeight - 420),
-              left: Math.min(quickActionPos.x, window.innerWidth - 220),
+              top: Math.min(quickActionPos.y, window.innerHeight - 440),
+              left: Math.min(quickActionPos.x + 4, window.innerWidth - 224),
             }}
-            onClick={(e) => e.stopPropagation()}
-            onTouchEnd={(e) => e.stopPropagation()}
+            onPointerDown={(e) => e.stopPropagation()}
           >
             <div className="quick-action-header">
-              <div className="quick-action-title">📋 Move to</div>
+              <div className="quick-action-title">›› Move to</div>
               <div className="quick-action-subtitle">{quickActionOrder.nama}</div>
             </div>
             <div className="quick-action-list">

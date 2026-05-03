@@ -551,6 +551,37 @@ input:focus, textarea:focus, select:focus {
   margin-top: 2px;
 }
 
+/* ›› Move button inside order card */
+.card-move-btn {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-tertiary);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  line-height: 1;
+  padding: 0;
+  margin-top: 1px;
+}
+
+.card-move-btn:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.card-move-btn:active {
+  transform: scale(0.92);
+}
+
 /* ─── Modal / Popup ────────────────────────── */
 
 .modal-overlay {
