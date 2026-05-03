@@ -101,6 +101,7 @@ interface InvoicePayload {
     productType: string;
     vehicleType: string;
     priceOverride?: number;
+    bundle?: string;
   }>;
   extras: { product: string; price: string; qty: string }[];
   shippingService: string;
@@ -158,7 +159,7 @@ export async function POST(req: NextRequest) {
     // ── 3. Build row data ────────────────────────────────────
     const rows: OrderLineData[] = [];
     for (const ord of orders) {
-      const conf = perOrder[ord.id] || { productType: 'Plate', vehicleType: 'Mobil' };
+      const conf = perOrder[ord.id] || { productType: 'Plate', vehicleType: 'Mobil', bundle: '' };
       const baseProduct = String(conf.productType || 'Plate');
       const designMatch = String(ord.produk || '').split('(')[0].trim();
       const baseName = designMatch || baseProduct;
@@ -167,8 +168,19 @@ export async function POST(req: NextRequest) {
       const actualQty = parseInt(String(rawQty)) || 1;
       let qtyString = rawQty;
 
-      const mBundle = (ord.produk || '').match(/Bundle ([^-]+)/i);
-      const bundle = mBundle ? mBundle[1].trim() : '';
+      let bundleKey = '';
+      let bundleDisplay = '';
+      if (conf.bundle && conf.bundle !== 'Tidak ada bundle') {
+        bundleKey = conf.bundle;
+        bundleDisplay = conf.bundle.replace('Bundle ', '');
+      } else {
+        const mBundle = String(ord.produk || '').match(/Bundle ([^-]+)/i);
+        if (mBundle) {
+          bundleDisplay = mBundle[1].trim();
+          bundleKey = 'Bundle ' + bundleDisplay;
+        }
+      }
+
       const isPlate = baseProduct.includes('Plate');
 
       if (isPlate) {
@@ -178,10 +190,11 @@ export async function POST(req: NextRequest) {
           const lineQty = isDouble ? 2 : 1;
           
           let linePrice = 0;
-          if (conf.priceOverride !== undefined && conf.priceOverride !== null) {
-            linePrice = conf.priceOverride;
+          if (conf.priceOverride !== undefined && conf.priceOverride !== null && String(conf.priceOverride).trim() !== '') {
+            linePrice = Number(conf.priceOverride);
           } else {
-            linePrice = lookupPrice(customerType, conf.vehicleType, isDouble ? 'Double' : 'Single', bundle);
+            linePrice = lookupPrice(customerType, conf.vehicleType, isDouble ? 'Double' : 'Single', bundleKey);
+            if (!linePrice) linePrice = PRICES.retail[baseProduct] || 0;
           }
           
           const validNomor = ord.nomor_pesanan && ord.nomor_pesanan !== 'undefined';
@@ -190,7 +203,7 @@ export async function POST(req: NextRequest) {
             titleText = `${baseProduct} - ${baseName}`;
           }
           let c1 = validNomor ? `[${ord.nomor_pesanan}] ${titleText}` : titleText;
-          if (bundle) c1 += ` + Bundle ${bundle}`;
+          if (bundleDisplay) c1 += ` + Bundle ${bundleDisplay}`;
           if (ord.nomor_plat && ord.nomor_plat !== '-') c1 += ` (${ord.nomor_plat})`;
           
           let c2 = ord.form_detail || '';
@@ -200,8 +213,8 @@ export async function POST(req: NextRequest) {
         }
       } else {
         let basePrice = 0;
-        if (conf.priceOverride !== undefined && conf.priceOverride !== null) {
-          basePrice = conf.priceOverride;
+        if (conf.priceOverride !== undefined && conf.priceOverride !== null && String(conf.priceOverride).trim() !== '') {
+          basePrice = Number(conf.priceOverride);
         } else {
           basePrice = lookupPrice(customerType, '', '', '') || PRICES.retail[baseProduct] || 0;
         }
@@ -212,7 +225,7 @@ export async function POST(req: NextRequest) {
           titleText = `${baseProduct} - ${baseName}`;
         }
         let c1 = validNomor ? `[${ord.nomor_pesanan}] ${titleText}` : titleText;
-        if (bundle) c1 += ` + Bundle ${bundle}`;
+        if (bundleDisplay) c1 += ` + Bundle ${bundleDisplay}`;
         if (ord.nomor_plat && ord.nomor_plat !== '-') c1 += ` (${ord.nomor_plat})`;
 
         let c2 = ord.form_detail || '';
@@ -351,7 +364,12 @@ export async function POST(req: NextRequest) {
     
     const firstOrderData = orders[0] || {};
     const namaExport = sanitize(firstOrderData.nama_penerima || firstOrderData.nama || 'Customer');
-    const designExport = firstOrderData.produk ? sanitize(String(firstOrderData.produk).split('(')[0].trim()) : '';
+    
+    let designExport = firstOrderData.nomor_plat ? sanitize(String(firstOrderData.nomor_plat)) : '';
+    if (!designExport && firstOrderData.produk) {
+      designExport = sanitize(String(firstOrderData.produk).split('(')[0].trim());
+    }
+
     const exportFilename = `Strapped ${invoiceNo} - ${namaExport} ${designExport}.pdf`.replace(/\s+/g, ' ');
     const safeFilename = exportFilename.replace(/[^\x20-\x7E]/g, '');
 
