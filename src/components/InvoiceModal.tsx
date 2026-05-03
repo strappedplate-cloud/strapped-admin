@@ -247,7 +247,14 @@ export default function InvoiceModal({ orders, onClose }: Props) {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Invoice-${invoiceNo}.pdf`;
+      
+      let filename = `Invoice-${invoiceNo}.pdf`;
+      const disposition = res.headers.get('Content-Disposition');
+      if (disposition) {
+        const match = disposition.match(/filename="?([^"]+)"?/);
+        if (match && match[1]) filename = match[1];
+      }
+      a.download = filename;
       a.click();
       URL.revokeObjectURL(url);
       onClose();
