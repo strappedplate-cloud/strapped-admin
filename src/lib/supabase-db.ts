@@ -51,7 +51,7 @@ export async function dbReadById<T>(table: string, id: string): Promise<T | null
  */
 export async function dbInsert<T>(table: string, row: T): Promise<T> {
   const supabase = getSupabase();
-  const { data, error } = await supabase.from(table).insert(row).select().single();
+  const { data, error } = await supabase.from(table).insert(row as any).select().single();
   if (error) throw new Error(`DB insert error [${table}]: ${error.message}`);
   return data as T;
 }
@@ -63,7 +63,7 @@ export async function dbUpdate<T>(table: string, id: string, updates: Partial<T>
   const supabase = getSupabase();
   const { data, error } = await supabase
     .from(table)
-    .update({ ...updates, updated_at: new Date().toISOString() })
+    .update({ ...(updates as any), updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
     .single();
@@ -93,7 +93,7 @@ export async function dbUpsertMany<T extends object>(table: string, rows: T[], c
   const CHUNK_SIZE = 100;
   for (let i = 0; i < rows.length; i += CHUNK_SIZE) {
     const chunk = rows.slice(i, i + CHUNK_SIZE);
-    const { error } = await supabase.from(table).upsert(chunk, { onConflict: conflictColumn });
+    const { error } = await supabase.from(table).upsert(chunk as any[], { onConflict: conflictColumn });
     if (error) throw new Error(`DB upsert error [${table}]: ${error.message}`);
   }
 }
