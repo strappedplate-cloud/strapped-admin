@@ -57,12 +57,13 @@ function rpFmt(n: any) {
   return 'Rp ' + num.toLocaleString('id-ID'); 
 }
 
-function sanitize(s: string) {
-  return (s || '')
+function sanitize(s: any) {
+  return String(s || '')
     .replace(/[\u2011-\u2015]/g, '-')
     .replace(/[\u2018\u2019]/g, "'")
     .replace(/[\u201C\u201D]/g, '"')
-    .replace(/\u2026/g, '...');
+    .replace(/\u2026/g, '...')
+    .replace(/[^\x00-\x7F]/g, '');
 }
 
 function wrapText(text: string, maxW: number, font: PDFFont, size: number): string[] {
@@ -157,8 +158,9 @@ export async function POST(req: NextRequest) {
     const rows: OrderLineData[] = [];
     for (const ord of orders) {
       const conf = perOrder[ord.id] || { productType: 'Plate', vehicleType: 'Mobil' };
-      const baseProduct = conf.productType;
-      const baseName = ord.produk_display || baseProduct;
+      const baseProduct = String(conf.productType || 'Plate');
+      const designMatch = String(ord.produk || '').split('(')[0].trim();
+      const baseName = designMatch || baseProduct;
       
       const rawQty = ord.qty || '1';
       const actualQty = parseInt(String(rawQty)) || 1;
@@ -348,19 +350,20 @@ export async function POST(req: NextRequest) {
     
     const firstOrderData = orders[0] || {};
     const namaExport = sanitize(firstOrderData.nama_penerima || firstOrderData.nama || 'Customer');
-    const designExport = firstOrderData.produk ? sanitize(firstOrderData.produk.split('(')[0].trim()) : '';
+    const designExport = firstOrderData.produk ? sanitize(String(firstOrderData.produk).split('(')[0].trim()) : '';
     const exportFilename = `Strapped ${invoiceNo} - ${namaExport} ${designExport}.pdf`.replace(/\s+/g, ' ');
+    const safeFilename = exportFilename.replace(/[^\x20-\x7E]/g, '');
 
     return new NextResponse(pdfBytes as any, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `inline; filename="${exportFilename}"`
+        'Content-Disposition': `inline; filename="${safeFilename}"`
       }
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Failed to generate PDF:', error);
-    return NextResponse.json({ error: 'Failed to generate PDF' }, { status: 500 });
+    return NextResponse.json({ error: `Failed to generate PDF: ${error.message}`, stack: error.stack }, { status: 500 });
   }
 }
