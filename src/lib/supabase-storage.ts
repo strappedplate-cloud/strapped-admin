@@ -10,7 +10,7 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 // Use service role key to bypass RLS for server-side storage access
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null;
 
 const BUCKET_NAME = 'data-storage';
 
@@ -29,6 +29,11 @@ export async function readSupabaseJson<T>(
 
   // Remove leading 'data/' if it exists, as the bucket root is the data folder
   const cleanPath = filepath.startsWith('data/') ? filepath.substring(5) : filepath;
+
+  if (!supabase) {
+    console.warn(`Supabase client not initialized. Cannot read ${filepath}`);
+    return { data: defaultValue, sha: '' };
+  }
 
   const { data, error } = await supabase.storage.from(BUCKET_NAME).download(cleanPath);
 
@@ -57,6 +62,10 @@ export async function writeSupabaseJson<T>(
 ): Promise<void> {
   const cleanPath = filepath.startsWith('data/') ? filepath.substring(5) : filepath;
   const content = JSON.stringify(data, null, 2);
+
+  if (!supabase) {
+    throw new Error(`Supabase client not initialized. Cannot write ${filepath}`);
+  }
 
   const { error } = await supabase.storage.from(BUCKET_NAME).upload(cleanPath, content, {
     contentType: 'application/json',
