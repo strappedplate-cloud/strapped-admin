@@ -360,8 +360,6 @@ export async function POST(req: NextRequest) {
       tY -= 14;
     }
 
-    const pdfBytes = await pdfDoc.save();
-    
     const firstOrderData = orders[0] || {};
     const namaExport = sanitize(firstOrderData.nama_penerima || firstOrderData.nama || 'Customer');
     
@@ -372,6 +370,10 @@ export async function POST(req: NextRequest) {
 
     const exportFilename = `Strapped ${invoiceNo} - ${namaExport} ${designExport}.pdf`.replace(/\s+/g, ' ');
     const safeFilename = exportFilename.replace(/[^\x20-\x7E]/g, '');
+
+    pdfDoc.setTitle(safeFilename.replace('.pdf', ''));
+    pdfDoc.setAuthor('Strapped');
+    const pdfBytes = await pdfDoc.save();
 
     return new NextResponse(pdfBytes as any, {
       status: 200,
