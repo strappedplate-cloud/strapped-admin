@@ -25,7 +25,12 @@ export default function PastOrdersPage() {
   const [filterChannel, setFilterChannel] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [showExportModal, setShowExportModal] = React.useState(false);
-  const [exportSettings, setExportSettings] = React.useState({ type: 'month' as 'month' | 'year', month: new Date().getMonth() + 1, year: new Date().getFullYear() });
+  const [exportSettings, setExportSettings] = React.useState({ 
+    type: 'month' as 'month' | 'quarter' | 'year', 
+    month: new Date().getMonth() + 1, 
+    quarter: Math.floor(new Date().getMonth() / 3) + 1,
+    year: new Date().getFullYear() 
+  });
 
 
   const fetchOrders = async () => {
@@ -96,6 +101,9 @@ export default function PastOrdersPage() {
       const d = new Date(o.tanggal_pembelian);
       if (exportSettings.type === 'month') {
         return (d.getMonth() + 1) === exportSettings.month && d.getFullYear() === exportSettings.year;
+      } else if (exportSettings.type === 'quarter') {
+        const q = Math.floor(d.getMonth() / 3) + 1;
+        return q === exportSettings.quarter && d.getFullYear() === exportSettings.year;
       } else {
         return d.getFullYear() === exportSettings.year;
       }
@@ -133,9 +141,15 @@ export default function PastOrdersPage() {
     const csvContent = "\uFEFF" + [headers.join(','), ...rows].join('\r\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
-    const filename = exportSettings.type === 'month' 
-      ? `strapped past order- ${exportSettings.year}-${String(exportSettings.month).padStart(2, '0')}.csv`
-      : `strapped past order- ${exportSettings.year}.csv`;
+    
+    let filename = '';
+    if (exportSettings.type === 'month') {
+      filename = `strapped past order- ${exportSettings.year}-${String(exportSettings.month).padStart(2, '0')}.csv`;
+    } else if (exportSettings.type === 'quarter') {
+      filename = `strapped past order- ${exportSettings.year}-Q${exportSettings.quarter}.csv`;
+    } else {
+      filename = `strapped past order- ${exportSettings.year}.csv`;
+    }
       
     const link = document.createElement('a');
     link.href = url;
@@ -323,6 +337,10 @@ export default function PastOrdersPage() {
                     Bulanan
                   </label>
                   <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+                    <input type="radio" checked={exportSettings.type === 'quarter'} onChange={() => setExportSettings({ ...exportSettings, type: 'quarter' })} />
+                    Kuartal
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
                     <input type="radio" checked={exportSettings.type === 'year'} onChange={() => setExportSettings({ ...exportSettings, type: 'year' })} />
                     Tahunan
                   </label>
@@ -337,6 +355,17 @@ export default function PastOrdersPage() {
                       {['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'].map((m, i) => (
                         <option key={m} value={i + 1}>{m}</option>
                       ))}
+                    </select>
+                  </div>
+                )}
+                {exportSettings.type === 'quarter' && (
+                  <div className="form-group" style={{ flex: 1 }}>
+                    <label className="form-label">Kuartal</label>
+                    <select value={exportSettings.quarter} onChange={e => setExportSettings({ ...exportSettings, quarter: parseInt(e.target.value) })}>
+                      <option value={1}>Q1 (Jan - Mar)</option>
+                      <option value={2}>Q2 (Apr - Jun)</option>
+                      <option value={3}>Q3 (Jul - Sep)</option>
+                      <option value={4}>Q4 (Okt - Des)</option>
                     </select>
                   </div>
                 )}
