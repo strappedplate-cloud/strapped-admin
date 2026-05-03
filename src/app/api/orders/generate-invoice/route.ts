@@ -231,12 +231,18 @@ export async function POST(req: NextRequest) {
     // ── 5. Draw Table Header ─────────────────────────────────
     let curY = 595;
     rect(TABLE_X, curY, TABLE_W, 22, BLUE, page);
-    const headerNoW = bold.widthOfTextAtSize('No', 9);
-    txt('No', TABLE_X + ((C.item - TABLE_X) / 2) - (headerNoW / 2), curY + 7, 9, bold, WHITE, page);
-    txt('Item', C.item + 5, curY + 7, 9, bold, WHITE, page);
-    txt('Price', C.price + 5, curY + 7, 9, bold, WHITE, page);
-    txt('Qty', C.qty + 5, curY + 7, 9, bold, WHITE, page);
-    txt('Subtotal', C.subtotal + 5, curY + 7, 9, bold, WHITE, page);
+    
+    const hy = curY + 7;
+    const centerT = (t: string, x1: number, x2: number, yPos: number = hy) => {
+      const w = bold.widthOfTextAtSize(t, 9);
+      txt(t, x1 + (x2 - x1) / 2 - w / 2, yPos, 9, bold, WHITE, page);
+    };
+
+    centerT('No', TABLE_X, C.item);
+    centerT('Item', C.item, C.price);
+    centerT('Price', C.price, C.qty);
+    centerT('Qty', C.qty, C.subtotal);
+    centerT('Subtotal', C.subtotal, TABLE_R);
 
     // ── 6. Draw data rows ────────────────────────────────────
     const FS  = 10;
@@ -258,12 +264,11 @@ export async function POST(req: NextRequest) {
         page = pdfDoc.addPage([596, 842]);
         curY = 750;
         rect(TABLE_X, curY, TABLE_W, 22, BLUE, page);
-        const headerNoW2 = bold.widthOfTextAtSize('No', 9);
-        txt('No', TABLE_X + ((C.item - TABLE_X) / 2) - (headerNoW2 / 2), curY + 7, 9, bold, WHITE, page);
-        txt('Item', C.item + 5, curY + 7, 9, bold, WHITE, page);
-        txt('Price', C.price + 5, curY + 7, 9, bold, WHITE, page);
-        txt('Qty', C.qty + 5, curY + 7, 9, bold, WHITE, page);
-        txt('Subtotal', C.subtotal + 5, curY + 7, 9, bold, WHITE, page);
+        centerT('No', TABLE_X, C.item, curY + 7);
+        centerT('Item', C.item, C.price, curY + 7);
+        centerT('Price', C.price, C.qty, curY + 7);
+        centerT('Qty', C.qty, C.subtotal, curY + 7);
+        centerT('Subtotal', C.subtotal, TABLE_R, curY + 7);
       }
 
       if (i % 2 === 1) rect(TABLE_X, curY - dynH, TABLE_W, dynH, rgb(0.925, 0.945, 0.975), page);

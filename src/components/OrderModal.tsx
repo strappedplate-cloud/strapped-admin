@@ -3,6 +3,7 @@
 import React from 'react';
 import { Order, ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, OrderStatus, PaymentStatus } from '@/lib/types';
 import { formatOrderNumber } from '@/lib/utils';
+import InvoiceModal from '@/components/InvoiceModal';
 
 
 
@@ -16,6 +17,7 @@ interface OrderModalProps {
 
 export default function OrderModal({ order, onClose, onStatusChange, onSave, onDelete }: OrderModalProps) {
   const [editing, setEditing] = React.useState(false);
+  const [showInvoiceModal, setShowInvoiceModal] = React.useState(false);
   const [form, setForm] = React.useState<Partial<Order>>({ ...order });
 
   const handleSave = () => {
@@ -338,10 +340,31 @@ export default function OrderModal({ order, onClose, onStatusChange, onSave, onD
               <button className="btn btn-primary" onClick={handleSave}>💾 Simpan</button>
             </>
           ) : (
-            <button className="btn btn-secondary" onClick={() => setEditing(true)}>✏️ Edit</button>
+            <>
+              <button
+                className="btn btn-sm"
+                onClick={() => setShowInvoiceModal(true)}
+                style={{
+                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                  color: '#fff',
+                  boxShadow: '0 0 10px rgba(245,158,11,0.4)',
+                  marginRight: 8
+                }}
+              >
+                📄 INVOICE
+              </button>
+              <button className="btn btn-secondary" onClick={() => setEditing(true)}>✏️ Edit</button>
+            </>
           )}
         </div>
       </div>
+      
+      {showInvoiceModal && (
+        <InvoiceModal
+          orders={[order]}
+          onClose={() => setShowInvoiceModal(false)}
+        />
+      )}
     </div>
   );
 }
