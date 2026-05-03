@@ -139,30 +139,24 @@ export default function PastOrdersPage() {
     ].map(val => `"${String(val || '').replace(/"/g, '""')}"`).join(','));
 
     const csvContent = "\uFEFF" + [headers.join(','), ...rows].join('\r\n');
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const blob = new Blob([csvContent], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     
-    let filename = '';
-    if (exportSettings.type === 'month') {
-      filename = `strapped past order- ${exportSettings.year}-${String(exportSettings.month).padStart(2, '0')}.csv`;
-    } else if (exportSettings.type === 'quarter') {
-      filename = `strapped past order- ${exportSettings.year}-Q${exportSettings.quarter}.csv`;
-    } else {
-      filename = `strapped past order- ${exportSettings.year}.csv`;
-    }
+    const filename = exportSettings.type === 'month' 
+      ? `strapped-past-order-${exportSettings.year}-${String(exportSettings.month).padStart(2, '0')}.csv`
+      : exportSettings.type === 'quarter'
+      ? `strapped-past-order-${exportSettings.year}-Q${exportSettings.quarter}.csv`
+      : `strapped-past-order-${exportSettings.year}.csv`;
       
     const link = document.createElement('a');
     link.href = url;
-    link.download = filename;
-    link.style.display = 'none';
+    link.setAttribute('download', filename);
     document.body.appendChild(link);
     link.click();
     
     // Clean up
-    setTimeout(() => {
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    }, 100);
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
     
     setShowExportModal(false);
   };
