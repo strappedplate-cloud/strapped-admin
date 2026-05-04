@@ -4,6 +4,8 @@ import { Order } from '@/lib/types';
 import fs from 'fs';
 import path from 'path';
 
+import fontkit from '@pdf-lib/fontkit';
+
 // ─── Colours ──────────────────────────────────────────────────
 const BLUE  = rgb(11/255, 83/255, 148/255); // exact match for template #0b5394
 const WHITE = rgb(1, 1, 1);
@@ -73,6 +75,7 @@ function wrapText(text: string, maxW: number, font: PDFFont, size: number): stri
   const explicitLines = s.split('\n');
   
   for (const expLine of explicitLines) {
+    if (!expLine) { lines.push(''); continue; }
     const words = expLine.split(' ');
     let cur = words[0] || '';
     for (let i = 1; i < words.length; i++) {
@@ -118,10 +121,18 @@ export async function POST(req: NextRequest) {
     const templatePath = path.join(process.cwd(), 'public', 'invoice-template.pdf');
     const templateBytes = fs.readFileSync(templatePath);
     const pdfDoc = await PDFDocument.load(templateBytes);
+    
+    pdfDoc.registerFontkit(fontkit);
+    
+    const michelinBytes = fs.readFileSync(path.join(process.cwd(), 'public', 'fonts', 'Michelin-Black.ttf'));
+    const helvBoldBytes = fs.readFileSync(path.join(process.cwd(), 'public', 'fonts', 'HelveticaNeue-bold.ttf'));
+    const helvRegBytes = fs.readFileSync(path.join(process.cwd(), 'public', 'fonts', 'HelveticaNeue-regular.ttf'));
+    
+    const michelin = await pdfDoc.embedFont(michelinBytes);
+    const bold = await pdfDoc.embedFont(helvBoldBytes);
+    const reg  = await pdfDoc.embedFont(helvRegBytes);
+    
     let page = pdfDoc.getPage(0);
-
-    const bold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-    const reg  = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
     const txt = (text: string, x: number, y: number, size: number, font: PDFFont, color: any, targetPage: PDFPage = page) =>
       targetPage.drawText(text, { x, y, size, font, color });
@@ -138,11 +149,27 @@ export async function POST(req: NextRequest) {
       ? new Date(firstOrder.tanggal_pembelian).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })
       : new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
 
-    rect(350, 717, 230, 20, BLUE); // cover [Date] area
-    rtxt(invoiceDate, TABLE_R, 722, 10.5, reg, WHITE);
+    // Wipe out the baked-in blue header texts
+    rect(20, 690, 560, 110, BLUE);
 
-    rect(350, 702, 230, 20, BLUE); // cover [Invoice_No] area
-    rtxt(invoiceNo, TABLE_R, 707, 10.5, reg, WHITE);
+    // Redraw Header
+    txt('STRAPPED', TABLE_X, 765, 21, michelin, WHITE);
+    rtxt('INVOICE', TABLE_R, 765, 21, bold, WHITE);
+
+    const labelX = TABLE_X;
+    const colonX = TABLE_X + 110;
+    
+    txt('Phone Number', labelX, 735, 11, reg, WHITE);
+    txt(': 0895 - 7001 - 57777', colonX, 735, 11, reg, WHITE);
+    
+    txt('Instagram / Tiktok', labelX, 720, 11, reg, WHITE);
+    txt(': strapped.id', colonX, 720, 11, reg, WHITE);
+    
+    txt('Email Address', labelX, 705, 11, reg, WHITE);
+    txt(': marketing@strapped.com', colonX, 705, 11, reg, WHITE);
+
+    rtxt(invoiceDate, TABLE_R, 720, 11, reg, WHITE);
+    rtxt(invoiceNo, TABLE_R, 705, 11, reg, WHITE);
 
     // ── 2. White-out EVERYTHING below Issued To ───────────────────
     rect(0, 0, 596, 655, WHITE); 
