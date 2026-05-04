@@ -11,10 +11,10 @@ const DARK  = BLUE; // Changed from rgb(0.1, 0.1, 0.1) as requested
 const GRAY  = rgb(0.4, 0.4, 0.4);
 
 // ─── Template coordinates (from grid calibration, page 596×842) ──
-const TABLE_X = 38;
-const TABLE_R = 558;
+const TABLE_X = 28;
+const TABLE_R = 568;
 const TABLE_W = TABLE_R - TABLE_X;
-const C = { no: 50, item: 70, price: 315, qty: 410, subtotal: 470, right: 546 };
+const C = { no: 40, item: 60, price: 325, qty: 420, subtotal: 480, right: 556 };
 
 const ROW_H  = 36;
 const FOOT_H = 20;
