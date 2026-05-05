@@ -75,6 +75,8 @@ export interface Order {
   nomor_plat: string;
   form_detail: string;
   ukuran_plat: string;
+  mix_size_1?: string;
+  mix_size_2?: string;
   jenis_bundling: string;
   qty: number;
   finishing: string;

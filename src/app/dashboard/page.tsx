@@ -271,7 +271,11 @@ function DashboardContent() {
                                       <span className="order-card-plate"> {order.nomor_plat}</span>
                                     )}
                                   </div>
-                                  <div className="order-card-size">{order.ukuran_plat || '—'}</div>
+                                  <div className="order-card-size">
+                                    {order.ukuran_plat === 'Mix Size' 
+                                      ? `Mix Size (${order.mix_size_1 || '?'} & ${order.mix_size_2 || '?'})` 
+                                      : order.ukuran_plat || '—'}
+                                  </div>
                                   <div className="order-card-bundle">{order.jenis_bundling || '—'}</div>
                                 </div>
 

@@ -283,7 +283,9 @@ export default function PastOrdersPage() {
                     <td>
                       <div className="detail-stack">
                         <div className="detail-primary">{order.nomor_plat || '—'} <span className="detail-secondary">({order.form_detail})</span></div>
-                        <div className="detail-secondary">{order.ukuran_plat} • {order.jenis_bundling}</div>
+                        <div className="detail-secondary">
+                          {order.ukuran_plat === 'Mix Size' ? `Mix Size (${order.mix_size_1 || '?'} & ${order.mix_size_2 || '?'})` : order.ukuran_plat} • {order.jenis_bundling}
+                        </div>
                       </div>
                     </td>
 

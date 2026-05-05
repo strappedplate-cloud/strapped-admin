@@ -274,8 +274,37 @@ export default function OrderForm({ onSubmit, onCancel, initialData }: OrderForm
                   <option value="Motor - Indo">Motor - Indo</option>
                   <option value="Keychain">Keychain</option>
                   <option value="Custom Size">Custom Size</option>
+                  <option value="Mix Size">Mix Size</option>
                 </select>
               </div>
+
+              {form.ukuran_plat === 'Mix Size' && (
+                <div className="form-group full-width" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div className="form-group">
+                    <label className="form-label">Ukuran Plat 1</label>
+                    <select value={form.mix_size_1 || ''} onChange={e => setForm({ ...form, mix_size_1: e.target.value })}>
+                      <option value="">Pilih ukuran...</option>
+                      <option value="Mobil - Indo">Mobil - Indo</option>
+                      <option value="Mobil - Japan">Mobil - Japan</option>
+                      <option value="Mobil - Euro">Mobil - Euro</option>
+                      <option value="Motor - Indo">Motor - Indo</option>
+                      <option value="Custom Size">Custom Size</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Ukuran Plat 2</label>
+                    <select value={form.mix_size_2 || ''} onChange={e => setForm({ ...form, mix_size_2: e.target.value })}>
+                      <option value="">Pilih ukuran...</option>
+                      <option value="Mobil - Indo">Mobil - Indo</option>
+                      <option value="Mobil - Japan">Mobil - Japan</option>
+                      <option value="Mobil - Euro">Mobil - Euro</option>
+                      <option value="Motor - Indo">Motor - Indo</option>
+                      <option value="Custom Size">Custom Size</option>
+                    </select>
+                  </div>
+                </div>
+              )}
+
 
               <div className="form-group">
                 <label className="form-label">4D. Bundling</label>
