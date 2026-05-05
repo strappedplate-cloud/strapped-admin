@@ -162,13 +162,13 @@ export default function PastOrdersPage() {
   };
 
   return (
-    <main className="main-content">
-      <div className="page-header">
+    <main className="main-content" style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <div className="page-header" style={{ flexShrink: 0 }}>
         <h1 className="page-title">Past Orders</h1>
         <p className="page-subtitle">Order yang sudah shipped lebih dari 7 hari • {filtered.length} orders</p>
       </div>
 
-      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: 20 }}>
+      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: 20, flexShrink: 0 }}>
         <div className="search-bar" style={{ flex: 1, minWidth: '200px', marginBottom: 0, position: 'relative' }}>
           <span className="search-bar-icon" style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>🔍</span>
           <input placeholder="Cari nama, plat, prod #..." value={search} onChange={e => setSearch(e.target.value)} style={{ paddingLeft: 36, width: '100%' }} />
@@ -243,9 +243,9 @@ export default function PastOrdersPage() {
           <div className="empty-state-text">Order yang sudah shipped selama 7 hari akan otomatis muncul di sini.</div>
         </div>
       ) : (
-        <div className="data-table-wrapper" style={{ overflowX: 'auto' }}>
-          <table className="data-table">
-            <thead>
+        <div className="data-table-wrapper" style={{ overflowX: 'auto', overflowY: 'auto', flex: 1, minHeight: 0 }}>
+          <table className="data-table" style={{ position: 'relative' }}>
+            <thead style={{ position: 'sticky', top: 0, zIndex: 10, background: 'var(--bg-secondary)', boxShadow: '0 1px 0 var(--border)' }}>
               <tr>
                 <th>Order Number</th>
 

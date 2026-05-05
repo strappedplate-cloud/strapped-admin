@@ -170,8 +170,8 @@ export default function OngoingOrdersPage() {
   };
 
   return (
-    <main className="main-content">
-      <div className="page-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <main className="main-content" style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <div className="page-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
         <div>
           <h1 className="page-title">Ongoing Orders</h1>
           <p className="page-subtitle">{filtered.length} active orders</p>
@@ -192,7 +192,7 @@ export default function OngoingOrdersPage() {
 
       </div>
 
-      <div className="search-bar" style={{ marginBottom: 20, display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+      <div className="search-bar" style={{ marginBottom: 20, display: 'flex', gap: '12px', flexWrap: 'wrap', flexShrink: 0 }}>
         <div style={{ flex: 1, position: 'relative', minWidth: '200px' }}>
           <span className="search-bar-icon" style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>🔍</span>
           <input 
@@ -215,8 +215,8 @@ export default function OngoingOrdersPage() {
           border: '1px solid var(--accent-soft)',
           display: 'flex',
           gap: '16px',
-          alignItems: 'center',
-          flexWrap: 'wrap'
+          flexWrap: 'wrap',
+          flexShrink: 0
         }}>
           <div style={{ fontWeight: 600, color: 'var(--accent)', marginRight: '8px' }}>
             {selectedIds.size} selected
@@ -283,9 +283,9 @@ export default function OngoingOrdersPage() {
           <div className="empty-state-text">Belum ada order aktif. Klik &quot;Order Baru&quot; untuk menambahkan.</div>
         </div>
       ) : (
-        <div className="data-table-wrapper" style={{ overflowX: 'auto' }}>
-          <table className="data-table">
-            <thead>
+        <div className="data-table-wrapper" style={{ overflowX: 'auto', overflowY: 'auto', flex: 1, minHeight: 0 }}>
+          <table className="data-table" style={{ position: 'relative' }}>
+            <thead style={{ position: 'sticky', top: 0, zIndex: 10, background: 'var(--bg-secondary)', boxShadow: '0 1px 0 var(--border)' }}>
               <tr>
                 <th style={{ width: '40px', textAlign: 'center' }}>
                   <input 
