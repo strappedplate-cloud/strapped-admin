@@ -33,7 +33,6 @@ export default function OrderForm({ onSubmit, onCancel, initialData }: OrderForm
     alamat_pengiriman: '',
     // Metadata
     tanggal_pembelian: new Date().toISOString().split('T')[0],
-    urutan_order: 1,
     notes: '',
     ...initialData,
   });
