@@ -304,7 +304,10 @@ export async function POST(req: NextRequest) {
       
       const dynH = Math.max(ROW_H, totalTextH + PAD * 2);
 
-      if (curY - dynH < FOOT_H + 50) {
+      // For the last row, also reserve space for the Shipping + Grand Total footer
+      const isLastRow = i === rows.length - 1;
+      const minSpace = isLastRow ? FOOT_H * 2 + 60 : FOOT_H + 50;
+      if (curY - dynH < minSpace) {
         page = pdfDoc.addPage([596, 842]);
         allPages.push(page);
         curY = 750;
