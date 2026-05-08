@@ -133,6 +133,7 @@ export async function POST(req: NextRequest) {
     const reg  = await pdfDoc.embedFont(helvRegBytes);
     
     let page = pdfDoc.getPage(0);
+    const allPages: PDFPage[] = [page];
 
     const txt = (text: string, x: number, y: number, size: number, font: PDFFont, color: any, targetPage: PDFPage = page) =>
       targetPage.drawText(text, { x, y, size, font, color });
@@ -305,6 +306,7 @@ export async function POST(req: NextRequest) {
 
       if (curY - dynH < FOOT_H + 50) {
         page = pdfDoc.addPage([596, 842]);
+        allPages.push(page);
         curY = 750;
         rect(TABLE_X, curY, TABLE_W, 22, BLUE, page);
         centerT('No', TABLE_X, C.item, curY + 7);
@@ -338,6 +340,7 @@ export async function POST(req: NextRequest) {
     // ── 6. Shipping & Grand Total ────────────────────────────
     if (curY - (FOOT_H * 2) < 50) {
       page = pdfDoc.addPage([596, 842]);
+      allPages.push(page);
       curY = 750;
     }
 
@@ -358,6 +361,7 @@ export async function POST(req: NextRequest) {
     // ── 7. Payment Info ──────────────────────────────────────
     if (curY - 140 < 50) {
       page = pdfDoc.addPage([596, 842]);
+      allPages.push(page);
       curY = 750;
     }
 
@@ -386,6 +390,20 @@ export async function POST(req: NextRequest) {
       txt(termLine, C.no, tY, 9.5, reg, DARK, page);
       tY -= 14;
     }
+
+    // ── 9. Page numbers ─────────────────────────────────────────
+    const totalPages = allPages.length;
+    allPages.forEach((pg, idx) => {
+      const pageLabel = `Page ${idx + 1} of ${totalPages}`;
+      const labelW = reg.widthOfTextAtSize(pageLabel, 9);
+      pg.drawText(pageLabel, {
+        x: (596 - labelW) / 2,
+        y: 20,
+        size: 9,
+        font: reg,
+        color: GRAY,
+      });
+    });
 
     const firstOrderData = orders[0] || {};
     const namaExport = sanitize(firstOrderData.nama_penerima || firstOrderData.nama || 'Customer');
