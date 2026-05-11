@@ -4,6 +4,7 @@ import React, { useState, useCallback } from 'react';
 import JSZip from 'jszip';
 import { useSession } from 'next-auth/react';
 import AccessDenied from '@/components/AccessDenied';
+import { Order } from '@/lib/types';
 
 // ─── PP Tab Types ────────────────────────────────────────────────────────────
 interface FileData {
@@ -78,6 +79,13 @@ export default function ProductionParsePage() {
   const [plDriveLink, setPlDriveLink] = useState('');
   const [plOutput, setPlOutput] = useState('');
 
+  // Order Picker State
+  const [showOrderPicker, setShowOrderPicker] = useState(false);
+  const [pickerProdCode, setPickerProdCode] = useState('');
+  const [designApprovedOrders, setDesignApprovedOrders] = useState<Order[]>([]);
+  const [selectedOrderIds, setSelectedOrderIds] = useState<Set<string>>(new Set());
+  const [pickerSaving, setPickerSaving] = useState(false);
+
   // ── Access Control ──────────────────────────────────────────────────────────
   if (session?.user && (session.user as any).role !== 'admin' && !(session.user as any).permissions?.includes('/production-parse')) {
     if ((session.user as any).role !== 'admin') {
@@ -115,6 +123,8 @@ export default function ProductionParsePage() {
 
       setPpParsedData({ folders, files });
       ppGenerateOutputs(zipName, folders, files, ppDriveLink);
+      // Open order picker after ZIP parsed
+      await openOrderPicker(zipName);
     } catch (err) {
       console.error(err);
       setPpError('Failed to parse ZIP file. Please ensure it is a valid ZIP.');
@@ -199,7 +209,7 @@ export default function ProductionParsePage() {
 
   const plGetSizes = (job: PlJob): string[] => SIZE_OPTIONS[job] || [];
 
-  const plGenerate = () => {
+  const plGenerate = async () => {
     const note = plGetNote(plJob);
     let text = `Client : Strapped\n`;
     text += `Kode Order : ${plOrderNumber || '[Order Number]'}\n`;
@@ -215,11 +225,52 @@ export default function ProductionParsePage() {
     text += `\nLink gdrive : ${plDriveLink || '[link drive]'}\n`;
     text += `Note : ${note}`;
     setPlOutput(text);
+    // Open order picker after PL text generated
+    await openOrderPicker(plOrderNumber);
   };
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     alert('Copied to clipboard!');
+  };
+
+  // ── Order Picker Logic ──────────────────────────────────────────────────────
+  const openOrderPicker = async (prodCode: string) => {
+    setPickerProdCode(prodCode);
+    setSelectedOrderIds(new Set());
+    try {
+      const res = await fetch('/api/orders?filter=ongoing');
+      if (res.ok) {
+        const all: Order[] = await res.json();
+        setDesignApprovedOrders(all.filter(o => o.status === 'design_approved'));
+      }
+    } catch {}
+    setShowOrderPicker(true);
+  };
+
+  const toggleOrderSelection = (id: string) => {
+    setSelectedOrderIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
+
+  const handlePickerConfirm = async () => {
+    if (selectedOrderIds.size === 0) { setShowOrderPicker(false); return; }
+    setPickerSaving(true);
+    await Promise.all(
+      Array.from(selectedOrderIds).map(id =>
+        fetch(`/api/orders/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'production', production_number: pickerProdCode }),
+        })
+      )
+    );
+    setPickerSaving(false);
+    setShowOrderPicker(false);
+    setSelectedOrderIds(new Set());
   };
 
   const sizeOptions = plGetSizes(plJob);
@@ -540,72 +591,89 @@ export default function ProductionParsePage() {
       )}
 
       <style jsx>{`
-        .pp-tabs {
-          display: flex;
-          gap: 4px;
-          margin-bottom: 24px;
-          background: var(--bg-secondary);
-          border: 1px solid var(--border);
-          border-radius: var(--radius-lg);
-          padding: 6px;
-          width: fit-content;
-        }
-        .pp-tab {
-          padding: 10px 24px;
-          border-radius: var(--radius-md);
-          border: none;
-          background: none;
-          color: var(--text-secondary);
-          font-size: 14px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all var(--transition);
-        }
-        .pp-tab.active {
-          background: var(--accent);
-          color: white;
-          box-shadow: 0 2px 8px var(--accent-soft);
-        }
-        .pp-tab:not(.active):hover {
-          background: var(--bg-hover);
-          color: var(--text-primary);
-        }
-        .card-premium {
-          background: var(--bg-card);
-          border: 1px solid var(--border);
-          border-radius: var(--radius-lg);
-          padding: 24px;
-          box-shadow: var(--shadow-sm);
-        }
-        .input-premium {
-          background: var(--bg-secondary);
-          border: 1px solid var(--border);
-          border-radius: var(--radius-md);
-          padding: 12px 16px;
-          color: white;
-          width: 100%;
-        }
-        .input-premium:focus {
-          border-color: var(--accent);
-          box-shadow: 0 0 0 3px var(--accent-soft);
-          outline: none;
-        }
-        select.input-premium option {
-          background: var(--bg-card);
-          color: var(--text-primary);
-        }
-        .output-box {
-          background: var(--bg-primary);
-          padding: 20px;
-          border-radius: var(--radius-md);
-          font-size: 13px;
-          line-height: 1.6;
-          white-space: pre-wrap;
-          font-family: 'JetBrains Mono', 'Monaco', monospace;
-          border: 1px solid var(--border);
-          color: var(--text-primary);
-        }
+        /* ... existing styles ... */
+        .pp-tabs { display:flex; gap:4px; margin-bottom:24px; background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-lg); padding:6px; width:fit-content; }
+        .pp-tab { padding:10px 24px; border-radius:var(--radius-md); border:none; background:none; color:var(--text-secondary); font-size:14px; font-weight:600; cursor:pointer; transition:all var(--transition); }
+        .pp-tab.active { background:var(--accent); color:white; box-shadow:0 2px 8px var(--accent-soft); }
+        .pp-tab:not(.active):hover { background:var(--bg-hover); color:var(--text-primary); }
+        .card-premium { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px; box-shadow:var(--shadow-sm); }
+        .input-premium { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 16px; color:white; width:100%; }
+        .input-premium:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); outline:none; }
+        select.input-premium option { background:var(--bg-card); color:var(--text-primary); }
+        .output-box { background:var(--bg-primary); padding:20px; border-radius:var(--radius-md); font-size:13px; line-height:1.6; white-space:pre-wrap; font-family:'JetBrains Mono','Monaco',monospace; border:1px solid var(--border); color:var(--text-primary); }
+        /* Picker */
+        .picker-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
+        .picker-modal { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); width:100%; max-width:560px; max-height:80vh; display:flex; flex-direction:column; box-shadow:0 24px 60px rgba(0,0,0,0.5); }
+        .picker-header { padding:20px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+        .picker-body { padding:16px 24px; overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:8px; }
+        .picker-footer { padding:16px 24px; border-top:1px solid var(--border); display:flex; justify-content:flex-end; gap:10px; }
+        .picker-order-row { display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:var(--radius-md); border:1px solid var(--border); cursor:pointer; transition:all var(--transition); }
+        .picker-order-row:hover { border-color:var(--accent); background:var(--accent-soft); }
+        .picker-order-row.selected { border-color:var(--accent); background:var(--accent-soft); }
+        .picker-checkbox { width:18px; height:18px; border-radius:4px; border:2px solid var(--border); background:var(--bg-secondary); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all var(--transition); }
+        .picker-order-row.selected .picker-checkbox { background:var(--accent); border-color:var(--accent); color:white; font-size:11px; }
       `}</style>
+
+      {/* ── Order Picker Modal ── */}
+      {showOrderPicker && (
+        <div className="picker-overlay" onClick={() => setShowOrderPicker(false)}>
+          <div className="picker-modal" onClick={e => e.stopPropagation()}>
+            <div className="picker-header">
+              <div>
+                <div style={{ fontWeight: 800, fontSize: '16px', color: 'var(--text-primary)' }}>Pindahkan ke Production</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-tertiary)', marginTop: '4px' }}>
+                  Kode Produksi: <strong style={{ color: 'var(--accent)' }}>{pickerProdCode || '(kosong)'}</strong>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowOrderPicker(false)}
+                style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '22px', cursor: 'pointer', lineHeight: 1 }}
+              >×</button>
+            </div>
+
+            <div className="picker-body">
+              {designApprovedOrders.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '32px 0', color: 'var(--text-tertiary)' }}>
+                  <div style={{ fontSize: '32px', marginBottom: '8px' }}>📋</div>
+                  <div>Tidak ada order dengan status Design Approved</div>
+                </div>
+              ) : (
+                designApprovedOrders.map(o => {
+                  const isSelected = selectedOrderIds.has(o.id);
+                  return (
+                    <div
+                      key={o.id}
+                      className={`picker-order-row ${isSelected ? 'selected' : ''}`}
+                      onClick={() => toggleOrderSelection(o.id)}
+                    >
+                      <div className="picker-checkbox">{isSelected && '✓'}</div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '14px' }}>{o.nama}</div>
+                        <div style={{ fontSize: '12px', color: 'var(--accent)', marginTop: '2px' }}>{o.nomor_plat || 'NO DESIGN'}</div>
+                        <div style={{ fontSize: '11px', color: 'var(--text-tertiary)', marginTop: '2px' }}>
+                          {o.ukuran_plat} · {o.jenis_bundling || 'Non-Bundle'}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+
+            <div className="picker-footer">
+              <button className="btn btn-secondary btn-sm" onClick={() => setShowOrderPicker(false)}>Lewati</button>
+              <button
+                className="btn btn-primary btn-sm"
+                onClick={handlePickerConfirm}
+                disabled={pickerSaving || selectedOrderIds.size === 0}
+                style={{ opacity: selectedOrderIds.size === 0 ? 0.5 : 1 }}
+              >
+                {pickerSaving ? '⏳ Menyimpan...' : `✅ Pindahkan ${selectedOrderIds.size > 0 ? `(${selectedOrderIds.size})` : ''} ke Production`}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

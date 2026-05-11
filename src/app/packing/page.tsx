@@ -69,6 +69,19 @@ export default function PackingPage() {
     fetchData();
   };
 
+  const handleShipped = async (group: Order[]) => {
+    await Promise.all(
+      group.map(o =>
+        fetch(`/api/orders/${o.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'shipped' }),
+        })
+      )
+    );
+    fetchData();
+  };
+
   const getOrderName = (orderId: string) => {
     const order = orders.find(o => o.id === orderId);
     return order ? `${order.nama} — ${order.form_detail}` : orderId || 'General';
@@ -92,6 +105,9 @@ export default function PackingPage() {
 
   let stickerMobilIndo = 0, stickerMobilEuro = 0, stickerMobilJapan = 0, stickerMotorIndo = 0;
   packedOrders.forEach(o => {
+    // Sticker putih hanya untuk produk selain Keychain dan Velcro Plate Holder
+    if (o.ukuran_plat === 'Keychain') return;
+    if (o.product_type === 'Velcro Plate Holder') return;
     const size = o.ukuran_plat || '';
     const qty = o.qty || 1;
     if (size === 'Mobil - Indo') stickerMobilIndo += qty;
@@ -237,6 +253,29 @@ export default function PackingPage() {
                         marginTop: 8, borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: 8,
                       }}>
                         {first.alamat_pengiriman || '—'}
+                      </div>
+
+                      {/* Shipped Button */}
+                      <div style={{ marginTop: 12, display: 'flex', justifyContent: 'flex-end' }}>
+                        <button
+                          className="btn btn-sm"
+                          onClick={() => handleShipped(group)}
+                          style={{
+                            background: '#06b6d4',
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: 'var(--radius-sm)',
+                            padding: '6px 14px',
+                            fontSize: 12,
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                          }}
+                        >
+                          🚚 Shipped
+                        </button>
                       </div>
                     </div>
                   );

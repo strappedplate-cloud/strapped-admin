@@ -20,6 +20,7 @@ const NAVIGATION = [
     id: 'production',
     items: [
       { label: 'Production Parse', href: '/production-parse', icon: '🔍' },
+      { label: 'Production List', href: '/production-list', icon: '🏭' },
       { label: 'Packing List', href: '/packing', icon: '📦' },
     ]
   },
