@@ -74,7 +74,7 @@ export default function PackingPage() {
     return order ? `${order.nama} — ${order.form_detail}` : orderId || 'General';
   };
 
-  const packedOrders = orders.filter(o => o.status === 'production');
+  const packedOrders = orders.filter(o => o.status === 'production_done');
   const orderGroups = groupOrders(packedOrders);
 
   let packIndo = 0, packJapan = 0, packKeychain = 0, packCustom = 0, velcroIndo = 0, velcroJapan = 0;
