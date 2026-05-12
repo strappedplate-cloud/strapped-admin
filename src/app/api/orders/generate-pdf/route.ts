@@ -6,29 +6,36 @@ import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 function sanitizeText(str: string): string {
   if (!str) return '';
   return str
+    .replace(/[\r\n]+/g, ' ')          // convert newlines to spaces
     .replace(/[\u2011\u2012\u2013\u2014\u2015]/g, '-')
     .replace(/[\u2018\u2019]/g, "'")
     .replace(/[\u201C\u201D]/g, '"')
-    .replace(/[^\x00-\x7F]/g, '');
+    .replace(/[^\x20-\x7E]/g, '');     // strip all remaining non-printable / non-ASCII
 }
 
 function wrapText(text: string, maxWidth: number, font: any, fontSize: number): string[] {
   if (!text) return ['-'];
   const sanitized = sanitizeText(text);
-  const words = sanitized.split(' ');
+  // Pre-split on any remaining whitespace-only lines or explicit newlines in source
+  const segments = sanitized.split(/\n+/);
   const lines: string[] = [];
-  let currentLine = words[0] || '';
-  for (let i = 1; i < words.length; i++) {
-    const word = words[i];
-    if (font.widthOfTextAtSize(currentLine + ' ' + word, fontSize) < maxWidth) {
-      currentLine += ' ' + word;
-    } else {
-      lines.push(currentLine);
-      currentLine = word;
+  for (const segment of segments) {
+    const words = segment.trim().split(' ').filter(Boolean);
+    if (words.length === 0) continue;
+    let currentLine = words[0];
+    for (let i = 1; i < words.length; i++) {
+      const word = words[i];
+      const testLine = currentLine + ' ' + word;
+      if (font.widthOfTextAtSize(testLine, fontSize) < maxWidth) {
+        currentLine = testLine;
+      } else {
+        lines.push(currentLine);
+        currentLine = word;
+      }
     }
+    lines.push(currentLine);
   }
-  lines.push(currentLine);
-  return lines;
+  return lines.length > 0 ? lines : ['-'];
 }
 
 /** Group orders by same customer: nama + no_hp + alamat_pengiriman */
