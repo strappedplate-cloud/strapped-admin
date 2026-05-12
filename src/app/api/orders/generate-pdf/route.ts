@@ -74,11 +74,11 @@ export async function GET(req: NextRequest) {
   try {
     const orders = await getOrders();
     const production = orders
-      .filter(o => o.status === 'production')
+      .filter(o => o.status === 'production_done')
       .sort((a, b) => new Date(a.tanggal_pembelian).getTime() - new Date(b.tanggal_pembelian).getTime());
 
     if (production.length === 0) {
-      return NextResponse.json({ error: 'No orders in production stage' }, { status: 404 });
+      return NextResponse.json({ error: 'No orders in production_done stage' }, { status: 404 });
     }
 
     const groups = groupOrders(production);
