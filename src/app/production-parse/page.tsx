@@ -259,15 +259,20 @@ export default function ProductionParsePage() {
   const handlePickerConfirm = async () => {
     if (selectedOrderIds.size === 0) { setShowOrderPicker(false); return; }
     setPickerSaving(true);
-    await Promise.all(
-      Array.from(selectedOrderIds).map(id =>
-        fetch(`/api/orders/${id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ status: 'production', production_number: pickerProdCode }),
-        })
-      )
-    );
+    
+    try {
+      await fetch('/api/orders/batch', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          ids: Array.from(selectedOrderIds), 
+          updates: { status: 'production', production_number: pickerProdCode } 
+        }),
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    
     setPickerSaving(false);
     setShowOrderPicker(false);
     setSelectedOrderIds(new Set());

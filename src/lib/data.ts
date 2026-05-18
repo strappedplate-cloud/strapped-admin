@@ -126,6 +126,39 @@ export async function updateOrder(id: string, updates: Partial<Order>): Promise<
   return orders[index];
 }
 
+export async function updateOrdersBatch(ids: string[], updates: Partial<Order>): Promise<Order[]> {
+  if (USE_SUPABASE) {
+    const results: Order[] = [];
+    for (const id of ids) {
+      const updated = await updateOrder(id, updates);
+      if (updated) results.push(updated);
+    }
+    return results;
+  }
+  
+  const orders = await getOrders();
+  const updatedOrders: Order[] = [];
+  let changed = false;
+  
+  for (const id of ids) {
+    const index = orders.findIndex(o => o.id === id);
+    if (index !== -1) {
+      orders[index] = { ...orders[index], ...updates, updated_at: new Date().toISOString() };
+      if (updates.status === 'shipped' && !orders[index].shipped_at) {
+        orders[index].shipped_at = new Date().toISOString();
+      }
+      updatedOrders.push(orders[index]);
+      changed = true;
+    }
+  }
+  
+  if (changed) {
+    await writeJsonFile('orders.json', orders);
+  }
+  
+  return updatedOrders;
+}
+
 export async function deleteOrder(id: string): Promise<boolean> {
   if (USE_SUPABASE) return dbDelete('orders', id);
   const orders = await getOrders();

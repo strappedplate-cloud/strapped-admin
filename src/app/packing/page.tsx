@@ -70,15 +70,13 @@ export default function PackingPage() {
   };
 
   const handleShipped = async (group: Order[]) => {
-    await Promise.all(
-      group.map(o =>
-        fetch(`/api/orders/${o.id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ status: 'shipped' }),
-        })
-      )
-    );
+    for (const o of group) {
+      await fetch(`/api/orders/${o.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'shipped' }),
+      });
+    }
     fetchData();
   };
 

@@ -27,6 +27,9 @@ function DashboardContent() {
   const [showForm, setShowForm] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [isBatchMode, setIsBatchMode] = React.useState(false);
+  const [batchSelectedIds, setBatchSelectedIds] = React.useState<Set<string>>(new Set());
+  const [batchSaving, setBatchSaving] = React.useState(false);
 
   // Quick action menu state
   const [quickActionOrder, setQuickActionOrder] = React.useState<Order | null>(null);
@@ -167,6 +170,41 @@ function DashboardContent() {
     }
   };
 
+  const handleBatchMove = async () => {
+    const selectEl = document.getElementById('batchStatus') as HTMLSelectElement;
+    if (!selectEl || !selectEl.value) {
+      alert('Pilih status tujuan');
+      return;
+    }
+    const newStatus = selectEl.value as OrderStatus;
+    
+    let additionalUpdates: Partial<Order> = {};
+    if (newStatus === 'production') {
+      const prodNum = window.prompt(`Masukkan Production Number untuk ${batchSelectedIds.size} order:`);
+      if (prodNum !== null) additionalUpdates = { production_number: prodNum };
+      else return; 
+    }
+    
+    setBatchSaving(true);
+    try {
+      await fetch('/api/orders/batch', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          ids: Array.from(batchSelectedIds), 
+          updates: { status: newStatus, ...additionalUpdates } 
+        }),
+      });
+      await fetchOrders(true);
+      setBatchSelectedIds(new Set());
+      setIsBatchMode(false);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setBatchSaving(false);
+    }
+  };
+
   // Also open on right-click for desktop
   const handleContextMenu = (e: React.MouseEvent, order: Order) => {
     e.preventDefault();
@@ -207,6 +245,16 @@ function DashboardContent() {
           <p className="page-subtitle">{orders.length} total orders • Drag & drop untuk ubah status</p>
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
+          <button
+            className={`btn ${isBatchMode ? 'btn-primary' : 'btn-secondary'}`}
+            onClick={() => {
+              setIsBatchMode(!isBatchMode);
+              if (isBatchMode) setBatchSelectedIds(new Set());
+            }}
+            style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+          >
+            {isBatchMode ? '❌ Cancel Batch' : '📦 Batch Move'}
+          </button>
           <button
             className="btn btn-secondary"
             onClick={() => fetchOrders(true)}
@@ -258,12 +306,30 @@ function DashboardContent() {
                               ref={dragProvided.innerRef}
                               {...dragProvided.draggableProps}
                               {...dragProvided.dragHandleProps}
-                              className={`order-card ${dragSnapshot.isDragging ? 'dragging' : ''}`}
-                              onClick={() => setSelectedOrder(order)}
+                              className={`order-card ${dragSnapshot.isDragging ? 'dragging' : ''} ${isBatchMode && batchSelectedIds.has(order.id) ? 'selected-batch' : ''}`}
+                              onClick={() => {
+                                if (isBatchMode) {
+                                  setBatchSelectedIds(prev => {
+                                    const next = new Set(prev);
+                                    if (next.has(order.id)) next.delete(order.id);
+                                    else next.add(order.id);
+                                    return next;
+                                  });
+                                } else {
+                                  setSelectedOrder(order);
+                                }
+                              }}
                               onContextMenu={(e) => handleContextMenu(e, order)}
                             >
                               {/* Card content */}
                               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 4 }}>
+                                {isBatchMode && (
+                                  <div style={{ marginRight: 8, display: 'flex', alignItems: 'center', marginTop: 2 }}>
+                                    <div style={{ width: 16, height: 16, border: '2px solid var(--border)', borderRadius: 4, background: batchSelectedIds.has(order.id) ? 'var(--accent)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 10 }}>
+                                      {batchSelectedIds.has(order.id) && '✓'}
+                                    </div>
+                                  </div>
+                                )}
                                 <div style={{ flex: 1, minWidth: 0 }}>
                                   <div className="order-card-name">
                                     {order.nama}
@@ -316,6 +382,29 @@ function DashboardContent() {
           })}
         </div>
       </DragDropContext>
+
+      {/* Floating Action Bar for Batch Mode */}
+      {isBatchMode && batchSelectedIds.size > 0 && (
+        <div style={{
+          position: 'fixed', bottom: 32, left: '50%', transform: 'translateX(-50%)',
+          background: 'var(--bg-card)', padding: '16px 24px', borderRadius: 'var(--radius-lg)',
+          border: '1px solid var(--accent)', boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+          display: 'flex', gap: 16, alignItems: 'center', zIndex: 1000
+        }}>
+          <div style={{ fontWeight: 700, color: 'var(--text-primary)' }}>
+            {batchSelectedIds.size} terpilih
+          </div>
+          <select id="batchStatus" className="input-premium" style={{ width: 200, padding: '8px 12px' }} defaultValue="">
+            <option value="" disabled>Pindah ke...</option>
+            {ALL_STATUSES.map(s => (
+              <option key={s} value={s}>{ORDER_STATUS_LABELS[s]}</option>
+            ))}
+          </select>
+          <button className="btn btn-primary" onClick={handleBatchMove} disabled={batchSaving}>
+            {batchSaving ? '⏳ Menyimpan...' : '✅ Confirm'}
+          </button>
+        </div>
+      )}
 
       {/* Quick Action Popup */}
       {quickActionOrder && (

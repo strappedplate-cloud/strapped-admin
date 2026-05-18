@@ -44,15 +44,20 @@ export default function ProductionListPage() {
   const handleProductionDone = async (prodCode: string) => {
     setSaving(prodCode);
     const group = grouped[prodCode];
-    await Promise.all(
-      group.map(o =>
-        fetch(`/api/orders/${o.id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ status: 'production_done' }),
-        })
-      )
-    );
+    
+    try {
+      await fetch('/api/orders/batch', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          ids: group.map(o => o.id), 
+          updates: { status: 'production_done' } 
+        }),
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    
     setSaving(null);
     fetchData();
   };
